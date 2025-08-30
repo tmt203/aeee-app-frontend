@@ -1,0 +1,158 @@
+{
+	"undefined": "Undefined data",
+	"no_data": "No data",
+	"choose_file": "Choose file to upload",
+	"keyword": "Keyword",
+	"phone_number": "Phone number",
+	"under_construction": "Feature is under development. Please check back later.",
+	"table": {
+		"action": "Action",
+		"row": "Row",
+		"rows": "Rows",
+		"column": "Column",
+		"filter-columns": "Columns",
+		"no": "No.",
+		"time": "Time",
+		"sort_desc": "Sort descendant",
+		"sort_asc": "Sort ascendant",
+		"pin_col": "Pin column",
+		"unpin_col": "Remove pin column",
+		"hide_col": "Hide column",
+		"hide_or_show_col": "Hide/show column",
+		"resize_col": "Resize column"
+	},
+	"time": {
+		"seconds": "Seconds",
+		"minute": "Minute",
+		"hour": "Hour",
+		"created_at": "Created at",
+		"today": "Today",
+		"yesterday": "Yesterday",
+		"month": "Month",
+		"last_7_days": "Last 7 days",
+		"last_30_days": "Last 30 days",
+		"this_month": "This month",
+		"last_month": "Last month"
+	},
+	"ease_pick": {
+		"apply": "Apply",
+		"cancel": "Cancel"
+	},
+	"toast": {
+		"unauthorized": "Your session has expired.",
+		"get_api_failed": "Unable to retrieve {data} data.",
+		"success": {
+			"create": "Create {field} successfully",
+			"update": "Update {field} successfully",
+			"save": "Save {field} successfully",
+			"delete": "Delete {field} successfully",
+			"export": "Export file {field} successfully",
+			"copy": "Copy {field} successfully",
+			"upload": "Upload {field} successfully",
+			"reviewed": "Review successfully"
+		},
+		"fail": {
+			"get": "Get {field} failed",
+			"delete": "Delete {field} failed",
+			"create": "Create {field} failed",
+			"export": "Export file {field} failed",
+			"update": "Update {field} failed",
+			"copy": "Copy {field} failed",
+			"upload": "Upload {field} failed",
+			"reviewed": "Review failed"
+		}
+	},
+	"form": {
+		"view": "View",
+		"add": "Add",
+		"edit": "Edit",
+		"delete": "Delete",
+		"add_new": "Add new",
+		"reset": "Reset",
+		"back": "Back",
+		"next": "Next",
+		"save": "Save",
+		"completed": "Completed",
+		"cancel": "Cancel",
+		"yes": "Yes",
+		"no": "No",
+		"ok": "Ok",
+		"export": "Export",
+		"upload": "Upload",
+		"select_file": "Select File",
+		"submit": "Submit",
+		"filter": "Filter",
+		"add_filter": "Add filter",
+		"close": "Close",
+		"load_more": "Load more",
+		"confirm": "Confirm",
+		"confirm_delete": "Confirm delete",
+		"reviewed": "Reviewed",
+		"import_file": "Import file",
+		"export_file": "Export file"
+	},
+	"status": {
+		"enable": "Enable",
+		"disable": "Disable",
+		"in_progress": "In progress",
+		"in_progress_after_llm": "In progress",
+		"failed": "Failed",
+		"completed": "Completed",
+		"not_started": "Not started",
+		"stopped": "Stopped",
+		"success": "Success",
+		"error": "Error",
+		"undefined_script": "Undefined script",
+		"unknown": "-"
+	},
+	"input": {
+		"placeholder": {
+			"text": "Enter {field}",
+			"required_text": "* Enter {field}",
+			"file": "Select {field}",
+			"required_file": "* Select {field}",
+			"search": "Search {field}",
+			"required_search": "* Search {field}",
+			"email": "example@gmail.com",
+			"enter_value": "Enter value",
+			"required_enter_value": "Enter value",
+			"select_or_text": "Select/enter {field}"
+		}
+	},
+	"error": {
+		"select_required": "Please select valid value",
+		"input_required": "Please enter valid value",
+		"required": "{field} is a required field",
+		"invalid": "Invalid {field}",
+		"invalid_data": "Invalid data",
+		"min": "{field} must have at least {value} value",
+		"max": "{field} only have the maximum of {value} value",
+		"export_file_failed": "Export file failed!",
+		"file_type_not_supported": "File type not supported",
+		"forbidden": "You do not have permission to perform this action",
+		"email_invalid": "Email is invalid"
+	},
+	"tooltip": {
+		"view": "View",
+		"execute": "Execute",
+		"edit": "Edit",
+		"delete": "Delete",
+		"move_up": "Move up",
+		"move_down": "Move down",
+		"remove": "Remove",
+		"copy": "Copy"
+	},
+	"modal": {
+		"confirm": "Please confirm",
+		"delete": "Are you sure you want to to delete {field} ?",
+		"delete_body": "Related information and data will be deleted or hidden and cannot be recovered."
+	},
+	"file": {
+		"only_support": "Only support: {type}"
+	},
+	"nav_profile": {
+		"my_profile": "My profile",
+		"change_password": "Change password",
+		"sign_out": "Sign out"
+	}
+}

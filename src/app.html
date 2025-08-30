@@ -3,9 +3,19 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link rel="icon" type="image/png" href="%sveltekit.env.PUBLIC_FAVICON_URL%" />
+
+		<!-- Local Unicons CSS -->
+		<link rel="stylesheet" href="/assets/unicons/line.min.css" />
+		<link rel="stylesheet" href="/assets/unicons/solid.min.css" />
+
+		<!-- Local Google Fonts: Inter -->
+		<link rel="stylesheet" href="/assets/fonts/inter.css" />
+
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+	<body data-sveltekit-preload-data="hover" data-theme="aeee-theme">
+		<div style="display: contents" class="h-full overflow-hidden">%sveltekit.body%</div>
 	</body>
 </html>

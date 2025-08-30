@@ -1,0 +1,7 @@
+.container > footer .footer-buttons > button {
+	border: 1px solid transparent !important;
+	cursor: pointer;
+	padding: 5px 10px !important;
+	height: 28px !important;
+	border-radius: 8px !important;
+}
