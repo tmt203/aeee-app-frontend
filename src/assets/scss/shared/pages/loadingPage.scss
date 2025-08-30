@@ -1,0 +1,253 @@
+/* Circle loading */
+.circle-loader {
+	width: 50px;
+	aspect-ratio: 1;
+	display: grid;
+	border: 4px solid transparent;
+	border-radius: 50%;
+	border-right-color: rgb(var(--color-primary-500));
+	border-top-color: rgb(var(--color-primary-500));
+	animation: l15 1s infinite linear;
+}
+.circle-loader::after,
+.circle-loader::before {
+	content: "";
+	grid-area: 1/1;
+	margin: 2px;
+	border: 4px solid transparent;
+	border-radius: 50%;
+	animation: l15 2s infinite;
+}
+.circle-loader::before {
+	border-right-color: rgb(var(--color-secondary-500));
+	border-top-color: rgb(var(--color-secondary-500));
+}
+.circle-loader::after {
+	border-right-color: rgb(var(--color-success-500));
+	border-top-color: rgb(var(--color-success-500));
+	margin: 8px;
+	animation-duration: 3s;
+}
+@keyframes l15 {
+	100% {
+		transform: rotate(1turn);
+	}
+}
+
+/* Pac man loading */
+.pac-man-loader {
+	position: absolute;
+	z-index: 999;
+	width: 165px;
+	height: 24px;
+	padding: 2px 0;
+	box-sizing: border-box;
+	display: flex;
+	animation: l5-0 3s infinite steps(10);
+	background:
+		linear-gradient(black 0 0) 0 0/0% 100% no-repeat,
+		radial-gradient(circle 3px, rgb(var(--color-warning-300)) 90%, black) 0 0/10% 100% transparent;
+	overflow: hidden;
+}
+.pac-man-loader::before {
+	content: "";
+	width: 20px;
+	transform: translate(-100%);
+	border-radius: 50%;
+	background: rgb(var(--color-warning-400));
+	animation:
+		l5-1 0.15s 0.1s infinite steps(10) alternate,
+		l5-2 3s infinite linear;
+}
+.loader {
+	width: 165px;
+	font-size: 36px;
+	line-height: 68px;
+	font-weight: bold;
+	--c: no-repeat linear-gradient(black 0 0);
+	background:
+		var(--c), var(--c), var(--c), var(--c), var(--c), var(--c), var(--c), var(--c), var(--c),
+		var(--c);
+	background-size: calc(1ch + 1px) 100%;
+	position: relative;
+	animation: l8-0 3s infinite linear;
+	clip-path: inset(-20px 0);
+}
+.loader::before {
+	content: "Loading...";
+	color: black;
+	top: 8px;
+	position: relative;
+	width: 165px;
+}
+@keyframes l8-0 {
+	0%,
+	12.5% {
+		background-position:
+			calc(0 * 100% / 9) 0,
+			calc(1 * 100% / 9) 0,
+			calc(2 * 100% / 9) 0,
+			calc(3 * 100% / 9) 0,
+			calc(4 * 100% / 9) 0,
+			calc(5 * 100% / 9) 0,
+			calc(6 * 100% / 9) 0,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	21.25% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 0,
+			calc(2 * 100% / 9) 0,
+			calc(3 * 100% / 9) 0,
+			calc(4 * 100% / 9) 0,
+			calc(5 * 100% / 9) 0,
+			calc(6 * 100% / 9) 0,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	30% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 0,
+			calc(3 * 100% / 9) 0,
+			calc(4 * 100% / 9) 0,
+			calc(5 * 100% / 9) 0,
+			calc(6 * 100% / 9) 0,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	38.75% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 0,
+			calc(4 * 100% / 9) 0,
+			calc(5 * 100% / 9) 0,
+			calc(6 * 100% / 9) 0,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	47.5% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 100px,
+			calc(4 * 100% / 9) 0,
+			calc(5 * 100% / 9) 0,
+			calc(6 * 100% / 9) 0,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	56.25% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 100px,
+			calc(4 * 100% / 9) 100px,
+			calc(5 * 100% / 9) 0,
+			calc(6 * 100% / 9) 0,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	65% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 100px,
+			calc(4 * 100% / 9) 100px,
+			calc(5 * 100% / 9) 100px,
+			calc(6 * 100% / 9) 0,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	73.75% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 100px,
+			calc(4 * 100% / 9) 100px,
+			calc(5 * 100% / 9) 100px,
+			calc(6 * 100% / 9) 100px,
+			calc(7 * 100% / 9) 0,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	82.5% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 100px,
+			calc(4 * 100% / 9) 100px,
+			calc(5 * 100% / 9) 100px,
+			calc(6 * 100% / 9) 100px,
+			calc(7 * 100% / 9) 100px,
+			calc(8 * 100% / 9) 0,
+			calc(9 * 100% / 9) 0;
+	}
+	91.25% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 100px,
+			calc(4 * 100% / 9) 100px,
+			calc(5 * 100% / 9) 100px,
+			calc(6 * 100% / 9) 100px,
+			calc(7 * 100% / 9) 100px,
+			calc(8 * 100% / 9) 100px,
+			calc(9 * 100% / 9) 0;
+	}
+	100% {
+		background-position:
+			calc(0 * 100% / 9) 100px,
+			calc(1 * 100% / 9) 100px,
+			calc(2 * 100% / 9) 100px,
+			calc(3 * 100% / 9) 100px,
+			calc(4 * 100% / 9) 100px,
+			calc(5 * 100% / 9) 100px,
+			calc(6 * 100% / 9) 100px,
+			calc(7 * 100% / 9) 100px,
+			calc(8 * 100% / 9) 100px,
+			calc(9 * 100% / 9) 100px;
+	}
+}
+@keyframes l8-1 {
+	100% {
+		left: 115%;
+	}
+}
+@keyframes l5-1 {
+	0% {
+		clip-path: polygon(50% 50%, 100% 0, 100% 0, 0 0, 0 100%, 100% 100%, 100% 100%);
+	}
+	100% {
+		clip-path: polygon(50% 50%, 100% 65%, 100% 0, 0 0, 0 100%, 100% 100%, 100% 35%);
+	}
+}
+@keyframes l5-2 {
+	100% {
+		transform: translate(165px);
+	}
+}
+@keyframes l5-0 {
+	100% {
+		background-size:
+			115% 100%,
+			10% 100%;
+	}
+}
