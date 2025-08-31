@@ -24,7 +24,15 @@
 		confirmDeleteModal: { ref: ConfirmDeleteModal }
 	};
 
+	let showLoadingOverlay = false;
 	let isInitializing: boolean = true;
+
+	$: if (!isInitializing) {
+		showLoadingOverlay = true;
+		setTimeout(() => {
+			showLoadingOverlay = false;
+		}, 2000);
+	}
 
 	/**
 	 * Run as soon as the component has been mounted to the DOM.
@@ -47,7 +55,14 @@
 		<LoadingPage />
 	</div>
 {:else}
-	<slot />
+	<div class="layout-container">
+		<slot />
+		{#if showLoadingOverlay}
+			<div class="loading-overlay">
+				<LoadingPage />
+			</div>
+		{/if}
+	</div>
 {/if}
 
 <Drawer zIndex="z-[9999]" rounded="none">
@@ -57,3 +72,18 @@
 
 <Toast position="t" zIndex="z-[9999] !top-24" />
 <Modal zIndex="z-[999]" components={modalRegistry} />
+
+<style>
+	.layout-container {
+		position: relative;
+	}
+	.loading-overlay {
+		position: absolute;
+		inset: 0;
+		z-index: 9999;
+		background: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+</style>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getModalStore } from "@skeletonlabs/skeleton";
 	import { locale, t } from "svelte-i18n";
-	import Button from "./Button.svelte";
+	import { Button } from ".";
 	import Icon from "../atoms/Icon.svelte";
 
 	const modalStore = getModalStore();
