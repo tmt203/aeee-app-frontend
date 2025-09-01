@@ -16,7 +16,7 @@
 
 		<!-- Area: Footer -->
 		<footer
-			class="container flex flex-row flex-wrap items-start justify-between gap-6 border-t bg-[#fcfcfc] px-4 py-16 text-surface-700 xl:flex-nowrap xl:gap-20 xl:px-20"
+			class="container flex flex-row flex-wrap items-start justify-between gap-6 border-t px-4 py-16 text-surface-700 xl:flex-nowrap xl:gap-20 xl:px-20"
 		>
 			<div class="float-left w-full sm:w-1/2 lg:w-1/4">
 				<div class="flex flex-col gap-2 xl:gap-6">

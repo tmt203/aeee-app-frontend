@@ -51,7 +51,7 @@
 							href={item.path}
 							class={`relative block cursor-pointer rounded-md border border-transparent px-4 py-3 capitalize transition-all duration-300 ease-in-out
         hover:border-surface-400 hover:text-blue-500
-        ${item.children && hoveredIndex === i ? "border-surface-400 text-blue-500" : ""}`}
+        ${item.children && hoveredIndex === i ? "!border-surface-400 text-blue-500" : ""}`}
 						>
 							{#if item.icon}
 								<i class={`${item.icon}`}></i>
@@ -74,7 +74,7 @@
 						>
 							<ul
 								use:motion
-								class="absolute left-0 top-full z-50 min-w-[200px] rounded-md bg-white shadow-lg"
+								class="absolute left-0 top-full z-50 min-w-[200px] rounded-md border-2 border-b-0 border-l-0 border-r-0 border-t-primary-500 bg-white shadow-lg"
 							>
 								{#each item.children as child}
 									<li>

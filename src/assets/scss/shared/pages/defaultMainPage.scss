@@ -1,0 +1,16 @@
+@use "@scss/common/colors.scss" as colors;
+
+.default-main-page {
+	background-color: colors.$bg-primary;
+
+	.home-banner > div > h1:before {
+		content: "";
+		left: 0;
+		bottom: 0;
+		height: 4px;
+		width: 170px;
+		position: absolute;
+		border-radius: 50px;
+		background: rgb(var(--color-primary-500));
+	}
+}
