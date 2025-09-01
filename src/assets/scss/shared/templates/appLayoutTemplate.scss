@@ -10,4 +10,16 @@
 		position: absolute;
 		background-image: url("/images/top-strip.jpg");
 	}
+
+	footer ul > li:before {
+		left: 0;
+		top: 50%;
+		width: 4px;
+		height: 4px;
+		content: "";
+		margin: -2px 0 0;
+		border-radius: 50%;
+		position: absolute;
+		background: rgb(var(--color-surface-700));
+	}
 }

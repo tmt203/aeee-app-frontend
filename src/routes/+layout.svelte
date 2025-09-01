@@ -31,7 +31,7 @@
 		showLoadingOverlay = true;
 		setTimeout(() => {
 			showLoadingOverlay = false;
-		}, 2000);
+		}, 1500);
 	}
 
 	/**

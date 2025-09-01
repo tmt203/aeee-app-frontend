@@ -30,7 +30,9 @@
 	class="container flex flex-col items-center justify-between bg-white px-4 py-8 text-surface-700 xl:flex-row xl:px-20"
 >
 	<!-- Area: Logo -->
-	<img src="images/logo.png" alt="AEEE Logo" class="h-auto w-auto xl:h-6" />
+	<a href="/">
+		<img src="images/logo.png" alt="AEEE Logo" class="h-auto w-auto xl:h-6" />
+	</a>
 
 	<!-- Area: Links (Desktop) -->
 	<nav class="hidden flex-col items-center xl:flex xl:flex-row">
