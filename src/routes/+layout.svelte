@@ -34,6 +34,16 @@
 		}, 1500);
 	}
 
+	$: {
+		if (!isInitializing) {
+			if (showLoadingOverlay) {
+				document.body.classList.add("overflow-hidden");
+			} else {
+				document.body.classList.remove("overflow-hidden");
+			}
+		}
+	}
+
 	/**
 	 * Run as soon as the component has been mounted to the DOM.
 	 */
@@ -76,6 +86,8 @@
 <style>
 	.layout-container {
 		position: relative;
+		max-height: 100%;
+		min-height: 100vh;
 	}
 	.loading-overlay {
 		position: absolute;

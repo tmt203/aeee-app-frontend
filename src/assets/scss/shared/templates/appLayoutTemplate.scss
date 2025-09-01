@@ -1,3 +1,5 @@
+@use "@scss/common/colors.scss" as colors;
+
 .app-layout-template {
 	background-image: url("/images/body-bg.png");
 
@@ -11,15 +13,19 @@
 		background-image: url("/images/top-strip.jpg");
 	}
 
-	footer ul > li:before {
-		left: 0;
-		top: 50%;
-		width: 4px;
-		height: 4px;
-		content: "";
-		margin: -2px 0 0;
-		border-radius: 50%;
-		position: absolute;
-		background: rgb(var(--color-surface-700));
+	footer {
+		background-color: colors.$bg-primary;
+
+		ul > li:before {
+			left: 0;
+			top: 50%;
+			width: 4px;
+			height: 4px;
+			content: "";
+			margin: -2px 0 0;
+			border-radius: 50%;
+			position: absolute;
+			background: rgb(var(--color-surface-700));
+		}
 	}
 }
