@@ -5,11 +5,6 @@ export const NAV_BAR_GROUPS: NavbarGroupProps[] = [
 		group: "main",
 		items: [
 			{
-				group: "home",
-				path: "",
-				icon: "uil uil-home"
-			},
-			{
 				group: "about",
 				label: "about us",
 				children: [
