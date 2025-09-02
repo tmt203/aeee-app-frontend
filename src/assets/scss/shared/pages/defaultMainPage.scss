@@ -5,12 +5,20 @@
 
 	.home-banner > div > h1:before {
 		content: "";
-		left: 0;
+		left: 25%;
 		bottom: 0;
 		height: 4px;
 		width: 170px;
 		position: absolute;
 		border-radius: 50px;
 		background: rgb(var(--color-primary-500));
+
+		@media screen and (min-width: 1280px) {
+			left: 0;
+		}
+	}
+
+	.previous-issues :global(.carousel-items) {
+		@apply w-full xl:w-10/12;
 	}
 }

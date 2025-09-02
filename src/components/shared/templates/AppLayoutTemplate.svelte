@@ -34,7 +34,7 @@
 				<div class="float-left w-full sm:w-1/2 lg:w-1/4">
 					<div class="flex flex-col">
 						<h5 class="h5 capitalize">{item.title}</h5>
-						<ul class="float-left w-full list-none text-sm">
+						<ul class="un-ordered-list-circle float-left w-full list-none text-sm">
 							{#each item.content as link}
 								<li
 									class="relative float-left w-full cursor-pointer list-none py-2 pl-4 pr-0 transition-colors duration-300 ease-in-out hover:text-blue-500"
