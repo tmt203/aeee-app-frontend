@@ -17,11 +17,11 @@
 		<img src="images/home-banner.png" alt="Banner" class="h-auto w-[440px] object-cover" />
 		<div class="flex flex-col gap-4">
 			<h1
-				class="h1 relative pb-6 text-center text-[28px] leading-[32px] xl:text-left xl:leading-[62px]"
+				class="h1 relative pb-6 text-center max-xl:text-[28px] leading-[32px] xl:text-left xl:leading-[62px]"
 			>
 				We Welcome Latest Research Articles in Electrical and Electronic Engineering
 			</h1>
-			<p class="text-center text-xl font-normal leading-[32px]">
+			<p class="text-center xl:text-left text-xl font-normal leading-[32px]">
 				The Advances in Electrical and Electronic Engineering is a peer-reviewed periodical
 				scientific journal aimed at publishing research results of the Journal focus areas. The role
 				of the Journal is to facilitate contacts between research centers and the industry...
