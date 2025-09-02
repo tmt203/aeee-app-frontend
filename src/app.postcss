@@ -46,3 +46,19 @@ html.dark {
 :focus {
 	outline: none;
 }
+
+ul.un-ordered-list-circle > li:before {
+	left: 0;
+	top: 50%;
+	width: 4px;
+	height: 4px;
+	content: "";
+	margin: -2px 0 0;
+	border-radius: 50%;
+	position: absolute;
+	background: rgb(var(--color-surface-700));
+}
+
+ul.un-ordered-list-circle > li.active:before {
+	background: rgb(var(--color-primary-500)) !important;
+}
