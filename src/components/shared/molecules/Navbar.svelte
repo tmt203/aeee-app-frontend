@@ -31,7 +31,7 @@
 >
 	<!-- Area: Logo -->
 	<a href="/">
-		<img src="images/logo.png" alt="AEEE Logo" class="h-auto w-auto xl:h-6" />
+		<img src="/images/logo.png" alt="AEEE Logo" class="h-auto w-auto xl:h-6" />
 	</a>
 
 	<!-- Area: Links (Desktop) -->
