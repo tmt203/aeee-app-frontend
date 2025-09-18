@@ -1,0 +1,11 @@
+{
+	"about_us_page": {
+		"table": {
+			"page": "Page",
+			"content": "Content"
+		},
+		"modal": {
+			"title": "Edit page"
+		}
+	}
+}

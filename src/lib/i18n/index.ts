@@ -6,6 +6,7 @@ let currentLocale = get(locale) || "en";
 // English
 register("en", () => import(`./${currentLocale}/common.json`));
 register("en", () => import(`./${currentLocale}/components.json`));
+register("en", () => import(`./${currentLocale}/about_us_page.json`));
 
 init({
 	fallbackLocale: currentLocale,

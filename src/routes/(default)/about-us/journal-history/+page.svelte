@@ -9,11 +9,11 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Aims & Scopes</title>
-	<meta name="description" content="Aims and scopes of the journal." />
+	<title>AEEE - Journal History</title>
+	<meta name="description" content="Journal history of the publication." />
 </svelte:head>
 
-<DefaultPageLayout breadcrumbs={["About Us", "Aims & Scopes"]}>
+<DefaultPageLayout breadcrumbs={["About Us", "Journal History"]}>
 	{#if page}
 		<div class="flex w-full flex-col gap-4 xl:w-9/12">
 			<!-- Area: Article -->

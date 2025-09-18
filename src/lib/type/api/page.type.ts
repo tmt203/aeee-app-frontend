@@ -1,8 +1,10 @@
-import type { AuditInfo } from "@type/common.type";
+import type { AuditInfo, Param } from "@type/common.type";
 
 export type PageQueryParams = {
-	slug?: string;
-};
+	slug_contains?: string;
+	slug_eq?: string;
+	sort?: string;
+} & Param;
 
 export type PageBody = {
 	slug: string;

@@ -19,6 +19,18 @@ export const apiGetPages = async (params: PageQueryParams) => {
 };
 
 /**
+ * Api get page by id
+ * @param id string
+ * @returns ApiResponseData<Page>
+ */
+export const apiGetPageById = async (id: string) => {
+	return await apiGet<ApiResponse<Page>>({
+		path: `${PATH}/${id}`,
+		token: "AUTH_TOKEN"
+	});
+};
+
+/**
  * Api put page by slug
  * @param body PageBody
  * @returns ApiResponseData<Page>

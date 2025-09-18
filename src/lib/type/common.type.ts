@@ -62,5 +62,4 @@ export type SelectOption = {
 export type Param = {
 	limit?: number;
 	offset?: number;
-	sort_by?: string;
 };

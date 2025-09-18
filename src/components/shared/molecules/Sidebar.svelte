@@ -24,19 +24,19 @@
 	};
 
 	// Reactivity to update currentGroup when subGroupId is valid
-	$: if (subGroupId) {
-		sideBar.map(({ group, items }) => {
-			items.map((item) => {
-				const { children } = item;
-				if (children) {
-					const isChildActive = children.some((item) => item.subGroup === subGroupId);
-					if (isChildActive) {
-						currentGroup = item.group;
-					}
-				}
-			});
-		});
-	}
+	// $: if (subGroupId) {
+	// 	sideBar.map(({ group, items }) => {
+	// 		items.map((item) => {
+	// 			const { children } = item;
+	// 			if (children) {
+	// 				const isChildActive = children.some((item) => item.subGroup === subGroupId);
+	// 				if (isChildActive) {
+	// 					currentGroup = item.group;
+	// 				}
+	// 			}
+	// 		});
+	// 	});
+	// }
 </script>
 
 {#if sidebarType === "desktop"}

@@ -2,7 +2,7 @@ import { PUBLIC_API_HOST } from "$env/static/public";
 import type { ApiMethod, Request } from "@type/api/api.type";
 import queryString from "query-string";
 
-const API_HOST = process.env.NEXT_PUBLIC_API_HOST ?? "";
+const API_HOST = PUBLIC_API_HOST ?? "";
 
 /**
  * Handle get request's headers

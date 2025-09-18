@@ -6,8 +6,8 @@ export const load: PageServerLoad = async () => {
     let page: Page | null = null;
 
     try {
-        const params: PageQueryParams = { slug: "about-us/aims-and-scopes" };
-        const response = await apiGetPages(params, true);
+        const params: PageQueryParams = { slug_eq: "about-us/journal-history" };
+        const response = await apiGetPages(params);
 
         page = response.data?.[0] ?? null;
 

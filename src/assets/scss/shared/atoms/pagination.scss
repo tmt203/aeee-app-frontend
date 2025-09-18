@@ -1,0 +1,23 @@
+:global(.paginator .paginator-controls) {
+	@apply rounded-xl border border-surface-500 bg-surface-200 text-surface-900 dark:!border-surface-200 dark:!bg-surface-900 dark:!text-surface-200;
+}
+
+:global(.paginator .paginator-controls button) {
+	@apply border-surface-500 dark:!border-surface-50;
+}
+
+:global(.paginator .paginator-controls .active) {
+	@apply bg-primary-500 !text-surface-50;
+}
+
+:global(.paginator .paginator-label select) {
+	@apply bg-surface-200 dark:!bg-surface-900;
+}
+
+:global(.paginator .paginator-label select > option) {
+	@apply dark:!bg-surface-900;
+}
+
+:global(.paginator-select) {
+	@apply py-[6px];
+}

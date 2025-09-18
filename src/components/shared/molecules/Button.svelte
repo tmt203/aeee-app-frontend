@@ -179,9 +179,7 @@
 		{#if isLoading}
 			<Spinner color={spinnerColor} size={iconSize} />
 		{:else}
-			<span class="-mb-1">
-				<Icon {icon} color={iconColor} size={iconSize} disabled={$$props.disabled} />
-			</span>
+			<Icon {icon} color={iconColor} size={iconSize} disabled={$$props.disabled} />
 		{/if}
 	{/if}
 

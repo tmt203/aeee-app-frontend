@@ -5,16 +5,18 @@
 	import type { SideBarGroupProps } from "@type/components/sidebar.type";
 	import clsx from "clsx";
 	import { Sidebar } from "../molecules";
+	import { page } from "$app/stores";
 
 	const drawerStore = getDrawerStore();
 
+	let subGroupId: string = "";
+	let currentGroup: string = "";
+	let previousPath: string = "";
+	let logo: string = "/images/logo.png";
+	let expanded: boolean = $sidebarExpanded;
 	let sideBar: SideBarGroupProps[] = SIDEBAR;
 	let asideElement: HTMLElement | null = null;
 	let mouseEnterTimeout: ReturnType<typeof setTimeout> | null = null;
-	let logo: string = "/images/logo.png";
-	let subGroupId: string = "";
-	let currentGroup: string = "";
-	let expanded: boolean = $sidebarExpanded;
 
 	/**
 	 * Handle sidebar toggle
@@ -64,6 +66,16 @@
 			expanded = false;
 		}
 	};
+
+	// Reactivity to update sidebar selected item based on current path
+	$: if ($page.url.pathname && $page.url.pathname !== previousPath) {
+		currentGroup = $page.url.pathname.split("/").filter(Boolean)[0];
+		subGroupId = $page.url.pathname.split("/").filter(Boolean)[1];
+		previousPath = $page.url.pathname;
+	}
+
+	$: console.log("currentGroup", currentGroup);
+	$: console.log("subGroupId", subGroupId);
 </script>
 
 <section class="admin-layout-template">
@@ -91,14 +103,14 @@
 
 	<main
 		class={clsx(
-			"bg-surface-50-900-token flex min-h-screen w-full flex-1 flex-col justify-between pl-0 text-surface-800 dark:text-surface-600",
+			"bg-surface-50-900-token flex min-h-screen w-full flex-col justify-between pl-0 text-surface-800 dark:text-surface-600",
 			{
 				"md:pl-72": $sidebarExpanded,
 				"md:pl-12": !$sidebarExpanded
 			}
 		)}
 	>
-		<div class="h-fit rounded-xl">
+		<div class="h-[calc(100vh-24px)]">
 			<slot />
 		</div>
 
@@ -106,7 +118,7 @@
 		<footer class="mx-3 flex items-center justify-end !bg-transparent">
 			<small>
 				©{new Date().getFullYear()}
-				<a target="_blank" href="https://pitel.vn/" class="text-primary-500">PITEL.VN</a>
+				<a target="_blank" href="https://trantri.site/" class="text-primary-500">Tran Minh Tri</a>
 			</small>
 		</footer>
 	</main>

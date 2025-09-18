@@ -19,7 +19,7 @@
 <div
 	class="container flex w-full flex-col items-center justify-between bg-surface-800 px-4 py-3 text-white xl:flex-row xl:px-20"
 >
-	<span>{breadcrumbs.join("/")}</span>
+	<span class="mr-auto">{breadcrumbs.join("/")}</span>
 </div>
 
 <div
