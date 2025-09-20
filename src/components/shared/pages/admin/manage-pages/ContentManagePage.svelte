@@ -1,21 +1,25 @@
 <script lang="ts">
 	import { apiGetPages, apiPutPageBySlug } from "@api/page.api";
-	import EditPageModal from "@components/non-shared/admin/about-us/EditPageModal.svelte";
+	import EditPageModal from "@components/non-shared/admin/modals/EditPageModal.svelte";
 	import { Icon } from "@components/shared/atoms";
-	import { Table } from "@components/shared/molecules";
+	import { InputSearch, Table } from "@components/shared/molecules";
 	import { AdminPageLayout } from "@components/shared/templates";
 	import { generateToast } from "@constants/toast.constants";
 	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
 	import type { PageBody, PageQueryParams } from "@type/api/page.type";
 	import { ColumnType, type TableColumn } from "@type/components/table.type";
+	import { removeEmptyFields } from "@utils/obj";
 	import { SquarePen } from "lucide-svelte";
 	import { onMount } from "svelte";
+	import { t } from "svelte-i18n";
 
 	const toastStore = getToastStore();
 	const modalStore = getModalStore();
 
+	let filterParams: Record<string, string> = {};
+
 	// Data Table
-	let bordered: boolean = true;
+	let bordered: boolean = false;
 	let isLoading: boolean = false;
 	let isCheckbox: boolean = false;
 	let currentPage: number = 1;
@@ -24,7 +28,7 @@
 	let dataTable: Record<string, unknown>[] = [];
 	let columns: TableColumn[] = [
 		{ key: "index", width: 80, label: "table.no", dataType: ColumnType.Text },
-		{ key: "slug", label: "about_us_page.table.page", dataType: ColumnType.Text },
+		{ key: "slug", width: 200, label: "about_us_page.table.page", dataType: ColumnType.Text },
 		{ key: "content", width: 480, label: "about_us_page.table.content", dataType: ColumnType.Text },
 		{ key: "updated_at", width: 200, label: "table.updated_at", dataType: ColumnType.DateTime },
 		{
@@ -102,13 +106,13 @@
 	};
 
 	/**
-	 * Handle get about us pages
+	 * Handle get pages
 	 * @param params PageQueryParams
 	 */
-	const handleGetAboutUsPages = async (params?: PageQueryParams) => {
+	const handleGetPages = async (params?: PageQueryParams) => {
 		try {
-			const queryParams: PageQueryParams = { ...params, slug_contains: "about-us" };
-			const response = await apiGetPages(queryParams);
+			const queryParams: PageQueryParams = { ...params, ...filterParams };
+			const response = await apiGetPages(removeEmptyFields(queryParams));
 
 			if (response.code !== "OK") {
 				toastStore.trigger(
@@ -144,7 +148,7 @@
 		let offset = (currentPage - 1) * pageSize;
 		offset = offset < 0 ? 0 : offset;
 
-		handleGetAboutUsPages({ limit: pageSize, offset });
+		handleGetPages({ limit: pageSize, offset });
 	};
 
 	/**
@@ -155,9 +159,10 @@
 	});
 </script>
 
-<AdminPageLayout breadcrumbs={[{ label: "About Us" }]}>
+<AdminPageLayout breadcrumbs={[{ label: "Manage Pages" }]}>
 	<div slot="content-body" class="flex flex-col">
 		<Table
+			rounded
 			{columns}
 			{bordered}
 			{isLoading}
@@ -169,6 +174,23 @@
 			bind:currentPage
 			bind:data={dataTable}
 			{handlePaging}
-		></Table>
+		>
+			<!-- Area: Left Table Header -->
+			<div slot="left-header" class="flex flex-wrap items-center gap-4">
+				<!-- Area: Search Input -->
+				<form on:submit|preventDefault={() => handlePaging(currentPage)}>
+					<InputSearch
+						placeholder={$t("input.placeholder.text", {
+							values: {
+								field: `${$t("keyword")}...`.toLowerCase()
+							}
+						})}
+						rounded="lg"
+						onSearch={() => handlePaging(currentPage)}
+						bind:value={filterParams.slug_contains}
+					/>
+				</form>
+			</div>
+		</Table>
 	</div>
 </AdminPageLayout>

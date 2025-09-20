@@ -4,6 +4,7 @@
 	import { Avatar, ListBox, ListBoxItem, popup, type PopupSettings } from "@skeletonlabs/skeleton";
 	import { sidebarExpanded } from "@store/sidebar";
 	import clsx from "clsx";
+	import { KeyRound, LogOut, UserRoundCog } from "lucide-svelte";
 	import { t } from "svelte-i18n";
 
 	export let expanded: boolean;
@@ -46,38 +47,37 @@
 </div>
 
 <div
-	class="bg-surface-50-900-token z-[999] w-72 rounded-lg p-2 shadow-custom-glass dark:border dark:border-surface-300"
+	class="z-[999] w-56 rounded-lg bg-white p-2 shadow-custom-glass dark:border dark:border-tertiary-800 dark:bg-gray-800"
 	data-popup="popupProfile"
 >
-	<ListBox active="bg-primary-500/20">
-		<div
-			class="flex h-fit cursor-default items-center gap-4 rounded-lg bg-surface-500 px-4 py-2 dark:bg-surface-800"
-		>
-			<Avatar
-				src="/images/avatar.png"
-				width="w-10"
-				rounded="rounded-full border-neutral-300 border"
-			/>
-			<div class="flex flex-col">
-				Admin
-				<span>Admin</span>
-			</div>
-		</div>
+	<ListBox
+		active="bg-[linear-gradient(135deg,var(--tw-gradient-stops))] from-primary-500/[0.12] to-primary-500/[0.04] dark:from-primary-500/[0.24] [&_.listbox-label-content>div>svg]:stroke-primary-500"
+		hover="hover:bg-primary-500/10"
+		padding="p-2"
+		rounded="rounded-lg"
+	>
+		<!-- Area: Account Info -->
 		<ListBoxItem bind:group={comboboxValue} name="profile" value="profile">
-			<i class="uil uil-user-exclamation pr-2" />
-			{$t("nav_profile.my_profile")}
+			<div class="flex items-center gap-2 text-sm font-semibold">
+				<UserRoundCog class="stroke-secondary-text-color" size={16} strokeWidth={2.5} />
+				{$t("nav_profile.my_profile")}
+			</div>
 		</ListBoxItem>
+
+		<!-- Area: Change Password -->
 		<ListBoxItem bind:group={comboboxValue} name="profile" value="change_password">
-			<i class="uil uil-key-skeleton-alt pr-2" />
-			{$t("nav_profile.change_password")}
+			<div class="flex items-center gap-2 text-sm font-semibold">
+				<KeyRound class="stroke-secondary-text-color" size={16} strokeWidth={2.5} />
+				{$t("nav_profile.change_password")}
+			</div>
 		</ListBoxItem>
 
 		<!-- Area: Sign out -->
-		<button
-			class="flex h-10 w-full items-center justify-center gap-2 rounded-b-lg border-t border-t-neutral-200 px-4 transition-colors duration-300 hover:font-semibold hover:text-primary-500"
-		>
-			<i class="uil uil-sign-out-alt text-xl" />
-			{$t("nav_profile.sign_out")}
-		</button>
+		<ListBoxItem bind:group={comboboxValue} name="profile" value="sign_out" on:click={() => {}}>
+			<div class="flex items-center gap-2 text-sm font-semibold">
+				<LogOut class="stroke-secondary-text-color" size={16} strokeWidth={2.5} />
+				{$t("nav_profile.sign_out")}
+			</div>
+		</ListBoxItem>
 	</ListBox>
 </div>

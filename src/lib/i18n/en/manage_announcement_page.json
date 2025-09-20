@@ -1,0 +1,8 @@
+{
+	"manage_announcement_page": {
+		"table": {
+			"author": "Author",
+			"content": "Content"
+		}
+	}
+}

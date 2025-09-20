@@ -94,17 +94,17 @@
 <div
 	use:portal={portalTarget}
 	bind:this={popupElement}
-	class="column-action card absolute w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-surface-900"
+	class="column-action card absolute w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-tertiary-600"
 	data-popup={`${columnId}-columnActionPopup`}
 >
 	{#each filterItems as item}
 		{#if item.label === "table.hide_or_show_col"}
 			<button
 				class={clsx(
-					"mb-1 flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:bg-surface-900 dark:hover:bg-surface-50/10",
+					"mb-1 flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:!bg-tertiary-600 dark:hover:!bg-surface-50/10",
 					{
-						"bg-surface-500 font-semibold dark:bg-surface-50/10": hideOrShowColumnOpen,
-						"bg-surface-300 font-normal": !hideOrShowColumnOpen
+						"bg-surface-500 dark:!bg-surface-50/10": hideOrShowColumnOpen,
+						"bg-surface-300": !hideOrShowColumnOpen
 					}
 				)}
 				use:popup={hideOrShowColumnPopup}
@@ -112,15 +112,18 @@
 				<svelte:component
 					this={item.icon}
 					size={16}
-					color={hideOrShowColumnOpen ? "black" : "gray"}
+					class={clsx({
+						"stroke-primary-500": hideOrShowColumnOpen,
+						"stroke-secondary-text-color": !hideOrShowColumnOpen
+					})}
 				/>
-				<span class="text-sm">{$t(item.label)}</span>
+				<span class="text-sm dark:text-surface-600">{$t(item.label)}</span>
 			</button>
 
 			<!-- Area: Hide/Show Column Dropdown -->
 			<div
 				data-popup="hideOrShowColumnPopup"
-				class="card !-top-1 z-20 rounded-lg bg-surface-300 p-2 text-sm shadow-custom-glass dark:!bg-surface-900"
+				class="card !-top-1 z-20 rounded-lg bg-surface-300 p-2 text-sm shadow-custom-glass dark:!bg-tertiary-600"
 			>
 				<div
 					class="max-h-[300px] w-36 space-y-1 overflow-auto rounded-lg scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 md:w-48"
@@ -154,11 +157,18 @@
 			</div>
 		{:else}
 			<button
-				class="listbox-item flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:bg-surface-900 dark:hover:bg-surface-50/10"
+				class="listbox-item flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:bg-tertiary-600 dark:hover:bg-surface-50/10"
 				on:click={handleResetColumnWidth}
 			>
-				<svelte:component this={item.icon} size={16} color="#aaaeb4" />
-				<span class="text-sm font-normal">{$t(item.label)}</span>
+				<svelte:component
+					this={item.icon}
+					size={16}
+					class={clsx({
+						"stroke-primary-500": hideOrShowColumnOpen,
+						"stroke-secondary-text-color": !hideOrShowColumnOpen
+					})}
+				/>
+				<span class="text-sm dark:text-surface-600">{$t(item.label)}</span>
 			</button>
 		{/if}
 	{/each}

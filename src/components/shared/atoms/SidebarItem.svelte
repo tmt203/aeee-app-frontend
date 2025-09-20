@@ -12,25 +12,45 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
 	class={clsx("sidebarItem relative my-1 w-full rounded-lg", $$props.class, {
-		"bg-surface-500 dark:bg-surface-50/10": active,
-		"transition-colors duration-300 hover:bg-surface-500 dark:hover:bg-surface-50/10": !active
+		"bg-[linear-gradient(135deg,var(--tw-gradient-stops))] from-primary-500/[0.12] to-primary-500/[0.04] dark:from-primary-500/[0.24]":
+			active,
+		"transition-colors hover:bg-primary-500/10": !active
 	})}
 >
-	<a
-		href={sideBarItem.path}
-		class={clsx("bg-initial flex w-full items-center space-x-2 px-2 py-2 text-start text-sm", {
-			"font-semibold": active,
-			"text-surface-900": !active
-		})}
-	>
-		<svelte:component
-			this={sideBarItem.icon}
-			color={active ? "#1075BA" : "#aaaeb4"}
-			size={16}
-			strokeWidth={active ? 3 : 2}
-		/>
-		<div class="flex-1 text-xs dark:text-surface-300">
-			{$t(sideBarItem.label)}
-		</div>
-	</a>
+	{#if sideBarItem.onClick}
+		<button
+			type="button"
+			class={clsx(
+				"bg-initial flex w-full items-center space-x-2 px-2 py-2 text-start text-sm font-medium"
+			)}
+			on:click={sideBarItem.onClick}
+		>
+			<svelte:component
+				this={sideBarItem.icon}
+				class={clsx({ "stroke-primary-500": active, "stroke-secondary-text-color": !active })}
+				size={16}
+				strokeWidth={active ? 3 : 2.5}
+			/>
+			<div class="flex-1 text-sm text-inherit">
+				{$t(sideBarItem.label)}
+			</div>
+		</button>
+	{:else}
+		<a
+			href={sideBarItem.path}
+			class={clsx(
+				"bg-initial flex w-full items-center space-x-2 px-2 py-2 text-start text-sm font-medium"
+			)}
+		>
+			<svelte:component
+				this={sideBarItem.icon}
+				class={clsx({ "stroke-primary-500": active, "stroke-secondary-text-color": !active })}
+				size={16}
+				strokeWidth={active ? 3 : 2.5}
+			/>
+			<div class="flex-1 text-sm text-inherit">
+				{$t(sideBarItem.label)}
+			</div>
+		</a>
+	{/if}
 </div>

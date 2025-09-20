@@ -1,5 +1,7 @@
+import { modeCurrent, setModeCurrent } from "@skeletonlabs/skeleton";
 import type { SideBarGroupProps } from "@type/components/sidebar.type";
-import { Newspaper } from "lucide-svelte";
+import { Moon, Newspaper } from "lucide-svelte";
+import { get } from "svelte/store";
 
 export const SIDEBAR: SideBarGroupProps[] = [
 	{
@@ -7,9 +9,32 @@ export const SIDEBAR: SideBarGroupProps[] = [
 		items: [
 			{
 				icon: Newspaper,
-				group: "about-us",
-				label: "About Us",
-				path: "/admin/about-us"
+				group: "manage-pages",
+				label: "Manage Static Pages",
+				path: "/admin/manage-pages"
+			},
+			{
+				icon: Newspaper,
+				group: "announcements",
+				label: "Manage Announcements",
+				path: "/admin/manage-announcements"
+			}
+		]
+	},
+	{
+		group: "additional",
+		items: [
+			{
+				icon: Moon,
+				label: "sidebar.appearance",
+				group: "appearance",
+				role: "",
+				onClick: () => {
+					console.log("enter here");
+					const value = get(modeCurrent);
+					setModeCurrent(!value);
+					localStorage.setItem("modeCurrent", JSON.stringify(!value));
+				}
 			}
 		]
 	}

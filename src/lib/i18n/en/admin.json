@@ -1,0 +1,9 @@
+{
+	"admin_page": {
+		"announcement": {
+			"author": "Author",
+			"content": "Content",
+			"title": "Title"
+		}
+	}
+}

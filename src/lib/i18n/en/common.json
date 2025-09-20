@@ -155,5 +155,13 @@
 		"my_profile": "My profile",
 		"change_password": "Change password",
 		"sign_out": "Sign out"
+	},
+	"sidebar": {
+		"expand": "Expand",
+		"collapse": "Collapse",
+		"search": "Search",
+		"support": "Support",
+		"language": "Language",
+		"appearance": "Appearance"
 	}
 }

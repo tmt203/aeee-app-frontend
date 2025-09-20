@@ -117,5 +117,5 @@
 </div>
 
 <style lang="scss">
-	@use "@scss/non-shared/admin/about-us/editPageModal.scss" as *;
+	@use "@scss/non-shared/admin/modals/editPageModal.scss" as *;
 </style>

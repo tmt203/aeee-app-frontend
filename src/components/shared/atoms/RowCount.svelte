@@ -10,7 +10,7 @@
 </script>
 
 <aside
-	class="mr-6 rounded-xl border border-surface-500/70 bg-surface-200 px-4 text-sm leading-8 dark:!bg-surface-900"
+	class="mr-6 h-9 rounded-lg border bg-surface-50 px-4 text-sm leading-8 dark:!border-surface-400/30 dark:!bg-tertiary-400"
 >
 	{#if totalItems > 0}
 		<b>{start}</b> - <b>{end}</b> / <b>{totalItems}</b>

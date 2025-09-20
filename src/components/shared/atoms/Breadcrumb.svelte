@@ -5,15 +5,15 @@
 	export let breadcrumbs: BreadcrumbProps[];
 </script>
 
-<ol class="text-surface-900-50-token breadcrumb [&>.crumb:nth-child(1)]:!ml-0">
+<ol class="breadcrumb [&>.crumb:nth-child(1)]:!ml-0">
 	{#each breadcrumbs as item, index}
 		<li class="crumb !ml-2">
 			{#if breadcrumbs.length > index + 1 || item.url}
-				<a class="anchor font-bold no-underline xl:text-sm" href={item.url}>
+				<a class="anchor text-lg font-bold no-underline md:text-xl" href={item.url}>
 					{$t(item.label)}
 				</a>
 			{:else}
-				<span class="font-bold xl:text-sm">
+				<span class="text-lg font-bold text-surface-800 md:text-xl dark:text-surface-600">
 					{$t(item.label)}
 				</span>
 			{/if}

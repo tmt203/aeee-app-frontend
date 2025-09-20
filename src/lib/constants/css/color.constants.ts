@@ -1,105 +1,114 @@
 export const PRIMARY_COLOR = {
-	"primary-50": "#dee7f4",
-	"primary-100": "#bdcfe8",
-	"primary-200": "#9bb8dd",
-	"primary-300": "#78a1d1",
-	"primary-400": "#518bc6",
-	"primary-500": "#1176ba",
-	"primary-600": "#196298",
-	"primary-700": "#1c4e78",
-	"primary-800": "#1b3b59",
-	"primary-900": "#17293c"
+	"primary-50": "#dbeaf5",
+	"primary-100": "#cfe3f1",
+	"primary-200": "#c3ddee",
+	"primary-300": "#9fc8e3",
+	"primary-400": "#589ecf",
+	"primary-500": "#1075ba",
+	"primary-600": "#0e69a7",
+	"primary-700": "#0c588c",
+	"primary-800": "#0a4670",
+	"primary-900": "#08395b"
 };
 
 export const SECONDARY_COLOR = {
-	"secondary-50": "#ffe5da",
-	"secondary-100": "#ffcab5",
-	"secondary-200": "#ffaf92",
-	"secondary-300": "#fe946f",
-	"secondary-400": "#f8784d",
-	"secondary-500": "#f0592b",
-	"secondary-600": "#c44b26",
-	"secondary-700": "#9a3e20",
-	"secondary-800": "#72301b",
-	"secondary-900": "#4d2315"
+	"secondary-50": "#fde6df",
+	"secondary-100": "#fcded5",
+	"secondary-200": "#fbd6ca",
+	"secondary-300": "#f9bdab",
+	"secondary-400": "#f58b6b",
+	"secondary-500": "#f0592c",
+	"secondary-600": "#d85028",
+	"secondary-700": "#b44321",
+	"secondary-800": "#90351a",
+	"secondary-900": "#651515"
 };
 
 export const SURFACE_COLOR = {
-	"surface-50": "#fafbfc",
-	"surface-100": "#f5f7fa",
-	"surface-200": "#f0f3f7",
-	"surface-300": "#ebf0f5",
-	"surface-400": "#e6ecf2",
-	"surface-500": "#e1e8f0",
-	"surface-600": "#b8bdc4",
-	"surface-700": "#909499",
-	"surface-800": "#6a6d70",
-	"surface-900": "#46484a"
+	"surface-50": "#f8f9fb",
+	"surface-100": "#f3f6f9",
+	"surface-200": "#f1f5f9",
+	"surface-300": "#ebeff5",
+	"surface-400": "#e2e8f0",
+	"surface-500": "#cbd1d8",
+	"surface-600": "#aaaeb4",
+	"surface-700": "#888b90",
+	"surface-800": "#323232",
+	"surface-900": "#0c0c0c"
 };
 
 export const SUCCESS_COLOR = {
-	"success-50": "#def2e3",
-	"success-100": "#bde4c8",
-	"success-200": "#9bd6ad",
-	"success-300": "#78c893",
-	"success-400": "#50ba79",
-	"success-500": "#0aab60",
-	"success-600": "#178c50",
-	"success-700": "#1b6f40",
-	"success-800": "#1a5331",
-	"success-900": "#173823"
+	"success-50": "#daf2e7",
+	"success-100": "#ceeedf",
+	"success-200": "#c2ead7",
+	"success-300": "#9dddbf",
+	"success-400": "#54c490",
+	"success-500": "#0baa60",
+	"success-600": "#0a9956",
+	"success-700": "#088048",
+	"success-800": "#07663a",
+	"success-900": "#05532f"
 };
 
 export const INFO_COLOR = {
-	"info-50": "#e1f3f8",
-	"info-100": "#c3e6f1",
-	"info-200": "#a3dae9",
-	"info-300": "#81cee2",
-	"info-400": "#58c1db",
-	"info-500": "#06b5d4",
-	"info-600": "#1994ad",
-	"info-700": "#1e7588",
-	"info-800": "#1e5764",
-	"info-900": "#1a3a43"
+	"info-50": "#e6effe",
+	"info-100": "#b5d1fe",
+	"info-200": "#84b3fe",
+	"info-300": "#5395fe",
+	"info-400": "#2277fe",
+	"info-500": "#0a68fe",
+	"info-600": "#095de4",
+	"info-700": "#0853cb",
+	"info-800": "#0748b1",
+	"info-900": "#063e98"
 };
 
 export const WARNING_COLOR = {
-	"warning-50": "#fff6e1",
-	"warning-100": "#ffedc3",
-	"warning-200": "#ffe4a5",
-	"warning-300": "#ffdb87",
-	"warning-400": "#ffd368",
-	"warning-500": "#ffca45",
-	"warning-600": "#d0a53b",
-	"warning-700": "#a38232",
-	"warning-800": "#786028",
-	"warning-900": "#4f401e"
+	"warning-50": "#fdf8ea",
+	"warning-100": "#faeac1",
+	"warning-200": "#f7dd99",
+	"warning-300": "#f6d684",
+	"warning-400": "#f3c85b",
+	"warning-500": "#f0bb33",
+	"warning-600": "#d8a82d",
+	"warning-700": "#c09528",
+	"warning-800": "#a88223",
+	"warning-900": "#90701e"
 };
 
 export const ERROR_COLOR = {
-	"error-50": "#feded8",
-	"error-100": "#fabdb2",
-	"error-200": "#f39d8d",
-	"error-300": "#e97b6a",
-	"error-400": "#dd5749",
-	"error-500": "#cf2929",
-	"error-600": "#aa2723",
-	"error-700": "#86231e",
-	"error-800": "#641e19",
-	"error-900": "#441813"
+	"error-50": "#f8dfdf",
+	"error-100": "#f5d4d4",
+	"error-200": "#f3caca",
+	"error-300": "#ecaaaa",
+	"error-400": "#dd6a6a",
+	"error-500": "#cf2a2a",
+	"error-600": "#ba2626",
+	"error-700": "#9b2020",
+	"error-800": "#7c1919",
+	"error-900": "#651515"
 };
 
 export const TERTIARY_COLOR = {
-	"tertiary-50": "#d3dbdd",
-	"tertiary-100": "#a9b7bd",
-	"tertiary-200": "#80959d",
-	"tertiary-300": "#58747e",
-	"tertiary-400": "#4d737d",
-	"tertiary-500": "#315561",
-	"tertiary-600": "#003745",
-	"tertiary-700": "#062f3a",
-	"tertiary-800": "#0c1f25",
-	"tertiary-900": "#0a171b"
+	"tertiary-50": "#d9e1e3",
+	"tertiary-100": "#ccd7da",
+	"tertiary-200": "#bfcdd1",
+	"tertiary-300": "#99afb5",
+	"tertiary-400": "#003745",
+	"tertiary-500": "#00323e",
+	"tertiary-600": "#002934",
+	"tertiary-700": "#002129",
+	"tertiary-800": "#001b22",
+	"tertiary-900": "#4d737d"
+};
+
+export const COMMON_COLOR = {
+	"disabled-color": "#c0c0c0",
+	"header-text-color": "#1f2937",
+	"paragraph-text-color": "#4b5563",
+	"primary-text-color": "#374151",
+	"secondary-text-color": "#6b7280",
+	"link-text-color": "#146d9a"
 };
 
 export const TABLE_COLOR = {

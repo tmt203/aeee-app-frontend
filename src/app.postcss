@@ -3,42 +3,6 @@
 @tailwind utilities;
 @tailwind variants;
 
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-html,
-body {
-	@apply h-full font-[system-ui,`Segoe_UI`,Roboto,`Arial`,sans-serif];
-}
-
-html.dark {
-	body {
-		div.sidebar-main-item {
-			button.sidebar-item-active {
-				@apply bg-side-bar-item-bg/70;
-			}
-		}
-		header {
-			div {
-				&::after {
-					@apply bg-surface-900/90;
-				}
-			}
-		}
-		aside {
-			@apply bg-footer-bg/85;
-		}
-		main {
-			footer {
-				@apply bg-footer-bg/30;
-			}
-		}
-	}
-}
-
 .modal button:focus {
 	outline: none !important;
 }
@@ -67,7 +31,7 @@ ul.un-ordered-list-circle > li.active:before {
 /* Article Content */
 .aeee-article {
 	width: 100%;
-	height: 100%;
+	height: fit-content;
 	color: rgb(var(--color-surface-900) / 0.8);
 
 	img {
@@ -173,6 +137,41 @@ ul.un-ordered-list-circle > li.active:before {
 		margin: 8px 0;
 		line-height: 1.6;
 	}
+
+	a {
+		color: rgb(var(--color-primary-500));
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+
+/* Scrollbar */
+.scrollbar-thin::-webkit-scrollbar-track {
+	@apply my-2 rounded-xl bg-transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+	@apply rounded-xl bg-gray-200 dark:bg-gray-700/40;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+	@apply bg-gray-300 dark:bg-gray-700/50;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:active {
+	@apply bg-gray-300 dark:bg-gray-700/60;
+}
+.scrollbar-thin::-webkit-scrollbar-corner {
+	@apply rounded-xl bg-gray-100 dark:bg-gray-700/20;
+}
+.scrollbar-thin::-webkit-scrollbar-corner:hover {
+	@apply bg-gray-200 dark:bg-gray-700/30;
+}
+.scrollbar-thin::-webkit-scrollbar-corner:active {
+	@apply bg-gray-300 dark:bg-gray-700/40;
+}
+.scrollbar-thin {
+	@apply [scrollbar-color:rgb(229,231,235)];
+}
+.scrollbar-thin::-webkit-scrollbar {
+	@apply block h-2 w-2;
 }
 
 /* TinyMCE */

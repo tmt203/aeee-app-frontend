@@ -18,15 +18,19 @@
 
 <div
 	class={clsx(
-		"mt-3 flex w-full flex-col overflow-y-auto max-[375px]:max-h-[440px] dark:bg-surface-900"
+		"mt-3 flex w-full flex-col overflow-y-auto bg-white max-[375px]:max-h-[440px] dark:bg-gray-800"
 	)}
 >
 	{#each sideBar as { group, items }}
 		{#if group.length}
 			{#if expanded || $sidebarExpanded}
-				<span class="my-1 text-xs font-semibold uppercase text-surface-700">{$t(group)}</span>
+				<span class="my-1 text-xs font-semibold uppercase text-gray-400 dark:text-gray-500">
+					{$t(group)}
+				</span>
 			{:else}
-				<hr class="my-3 h-[1px] w-full border !border-b-surface-700" />
+				<hr class="mx-auto my-3 h-[1px] w-12 !border-none bg-gray-300 dark:bg-gray-600" />
+
+				<!-- <hr class="mb-1 h-[1px] w-full !border-none bg-surface-400/30" /> -->
 			{/if}
 		{/if}
 
@@ -34,29 +38,44 @@
 			{#if !expanded && !$sidebarExpanded}
 				<div
 					class={clsx(
-						"my-[6px] flex size-full cursor-pointer items-center justify-center self-center rounded-lg px-1 py-1",
+						"my-1 flex h-9 w-12 cursor-pointer items-center justify-center self-center rounded-lg px-1 py-2",
 						{
-							"bg-surface-500 shadow-sm dark:bg-surface-50/10": sideBarItem.group === currentGroup,
-							"bg-surface-50-900-token transition-colors duration-300 hover:bg-surface-500 dark:hover:bg-surface-50/10":
+							"bg-[linear-gradient(135deg,var(--tw-gradient-stops))] from-primary-500/[0.12] to-primary-500/[0.04] dark:from-primary-500/[0.24]":
+								sideBarItem.group === currentGroup,
+							"bg-white transition-colors hover:bg-primary-500/10 dark:bg-tertiary-600":
 								sideBarItem.group !== currentGroup
 						}
 					)}
 				>
-					<svelte:component this={sideBarItem.icon} color="#aaaeb4" size={16} />
+					<svelte:component
+						this={sideBarItem.icon}
+						size={16}
+						strokeWidth={2.5}
+						class={clsx({
+							"stroke-secondary-text-color": sideBarItem.group !== currentGroup,
+							"stroke-primary-500": sideBarItem.group === currentGroup
+						})}
+					/>
 				</div>
 			{:else if sideBarItem.children && sideBarItem.children.length}
 				<!-- Sidebar Sub Children Menu -->
 				<Accordion
 					width="my-1"
+					padding="px-2"
 					transitionInParams={{ duration: 300 }}
 					transitionOutParams={{ duration: 300 }}
-					padding="px-2"
-					regionControl="text-xs !py-2 !space-x-2 transition-colors duration-300 hover:!bg-surface-500 dark:hover:!bg-surface-50/10"
 					regionPanel="space-y-2 py-1 !p-0 [&_.sidebarItem]:pl-4"
+					regionControl="text-sm font-medium !py-2 !space-x-2 transition-colors hover:!bg-primary-500/10"
 				>
 					<AccordionItem bind:open rounded="rounded-lg">
 						<svelte:fragment slot="lead">
-							<svelte:component this={sideBarItem.icon} color="#aaaeb4" size={16} />
+							<svelte:component
+								this={sideBarItem.icon}
+								color="#aaaeb4"
+								size={16}
+								strokeWidth={2.5}
+								class="stroke-secondary-text-color"
+							/>
 						</svelte:fragment>
 						<svelte:fragment slot="summary">
 							{#if expanded || $sidebarExpanded}

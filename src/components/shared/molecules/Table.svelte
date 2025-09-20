@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { ColumnType, type TableColumn } from "@type/components/table.type";
-	import { isCheckboxValueValid } from "@utils/table";
-	import { parseToFormat } from "@utils/time";
 	import clsx from "clsx";
 	import { Menu, SlidersHorizontal } from "lucide-svelte";
 	import { onMount, tick } from "svelte";
 	import { t } from "svelte-i18n";
 	import { ColumnAction, Pagination, RowCount, TableAction } from "../atoms";
+	import { isCheckboxValueValid } from "@utils/table";
+	import { parseToFormat } from "@utils/time";
 
 	export let tableClass: string = "max-h-[calc(100vh-320px)]";
 	export let tableHeaderClass: string = "";
@@ -15,7 +15,7 @@
 	export let showFooter: boolean = true;
 	export let showHeader: boolean = true;
 	export let isRowClick: boolean = false;
-	export let rounded: boolean = true;
+	export let rounded: boolean = false;
 	export let bordered: boolean = true;
 	export let showColumnAction: boolean = true;
 	export let resizeColumn: boolean = true;
@@ -232,7 +232,7 @@
 <!-- Area: Table -->
 <div
 	class={clsx(
-		"text-surface-900-50-token table-container bg-primary-100 text-sm scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 dark:!bg-tertiary-500",
+		"scrollbar-thumb-surface table-container text-sm scrollbar-thin scrollbar-track-transparent ",
 		{
 			"!rounded-xl": rounded,
 			"!rounded-none": !rounded,
@@ -259,7 +259,7 @@
 				<!-- Area: Input check box -->
 				{#if isCheckbox}
 					<th
-						class={clsx("relative w-16 bg-surface-500 text-center dark:bg-surface-900", {
+						class={clsx("relative w-16 text-center ", {
 							"border border-r-0 border-t-0 border-gray-300 [&:first-child]:border-l-0": bordered
 						})}
 					>
@@ -276,11 +276,15 @@
 				{#each orderedColumns as column, index}
 					{#if !column.isHidden}
 						<th
-							class={clsx("bg-surface-500 dark:bg-surface-900 [&:first-child]:border-l-0", {
-								"border border-t-0 border-gray-300": bordered,
-								"w-16": index === columns.length - 1,
-								"is-pinned !border-x-0 !bg-primary-100 dark:!bg-tertiary-500": column.pinned
-							})}
+							class={clsx(
+								"group bg-white transition-all dark:bg-gray-700 [&:first-child]:border-l-0",
+								{
+									"border border-t-0 border-gray-300": bordered,
+									"w-16": index === columns.length - 1,
+									"hover:bg-surface-300 dark:hover:bg-gray-600": column.label !== "action",
+									"is-pinned !border-x-0": column.pinned
+								}
+							)}
 							style="
 							min-width: {column.width ? column.width + 'px' : 'auto'};
 							{column.pinned === 'left'
@@ -293,7 +297,7 @@
 						>
 							<div
 								class={clsx(
-									"relative flex h-full w-full items-center gap-1 px-3",
+									"relative flex h-full w-full items-center gap-1 px-3 [&>i]:hidden group-hover:[&>i]:!block",
 									{
 										"text-start": !column.placement || column.placement === "left",
 										"text-center": column.placement === "center",
@@ -344,14 +348,14 @@
 
 		<!-- Area: Table body -->
 		<tbody
-			class="[&>tr:last-child>td]:border-b-0 [&>tr>td]:!text-nowrap [&>tr>td]:!py-1 [&>tr>td]:!align-middle [&>tr]:!h-9"
+			class="text-xs font-medium [&>tr:last-child>td]:border-b-0 [&>tr>td]:!text-nowrap [&>tr>td]:!py-1 [&>tr>td]:!align-middle [&>tr]:!h-9"
 		>
 			{#if data.length > 0}
 				{#each data as row}
 					<tr
 						on:click={handleRowClick(row)}
 						class={clsx(
-							"odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-surface-900 dark:even:bg-[rgb(70,70,75)]",
+							"group bg-surface-100 transition-opacity even:bg-gray-50 hover:opacity-50 dark:bg-transparent dark:even:bg-surface-50/5",
 							{
 								"cursor-pointer": isRowClick
 							}
@@ -391,7 +395,8 @@
 										"!px-3",
 										{
 											"border border-t-0 border-gray-300 [&:first-child]:border-l-0": bordered,
-											"!border-x-0 !bg-primary-100 dark:!bg-tertiary-500": column.pinned,
+											"!border-x-0 group-odd:!bg-surface-100 dark:group-odd:dark:!bg-tertiary-600 dark:group-even:!bg-tertiary-500":
+												column.pinned,
 											"overflow-hidden": column.label !== "action",
 											"action-cell": column.label === "action"
 										},

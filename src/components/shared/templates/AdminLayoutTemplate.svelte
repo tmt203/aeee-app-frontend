@@ -73,19 +73,16 @@
 		subGroupId = $page.url.pathname.split("/").filter(Boolean)[1];
 		previousPath = $page.url.pathname;
 	}
-
-	$: console.log("currentGroup", currentGroup);
-	$: console.log("subGroupId", subGroupId);
 </script>
 
 <section class="admin-layout-template">
 	<aside
 		bind:this={asideElement}
 		class={clsx(
-			"fixed left-0 z-[99] hidden h-screen transition-all duration-300 ease-in-out md:block",
+			"fixed left-0 z-[99] hidden h-screen text-surface-800 transition-all duration-300 ease-in-out md:block dark:text-surface-600",
 			{
-				"w-12 hover:w-72": !$sidebarExpanded,
-				"w-72": $sidebarExpanded
+				"w-64": $sidebarExpanded,
+				"w-20 hover:w-64 hover:shadow-2xl": !$sidebarExpanded
 			}
 		)}
 		on:mouseenter={handleMouseEnter}
@@ -103,23 +100,15 @@
 
 	<main
 		class={clsx(
-			"bg-surface-50-900-token flex min-h-screen w-full flex-col justify-between pl-0 text-surface-800 dark:text-surface-600",
+			"flex min-h-screen w-full flex-col justify-between bg-gray-100 pl-0 text-surface-800 dark:bg-gray-900 dark:text-surface-600",
 			{
-				"md:pl-72": $sidebarExpanded,
-				"md:pl-12": !$sidebarExpanded
+				"md:pl-64": $sidebarExpanded,
+				"md:pl-20": !$sidebarExpanded
 			}
 		)}
 	>
-		<div class="h-[calc(100vh-24px)]">
+		<div class="h-screen md:pl-2">
 			<slot />
 		</div>
-
-		<!-- Area: Footer -->
-		<footer class="mx-3 flex items-center justify-end !bg-transparent">
-			<small>
-				©{new Date().getFullYear()}
-				<a target="_blank" href="https://trantri.site/" class="text-primary-500">Tran Minh Tri</a>
-			</small>
-		</footer>
 	</main>
 </section>
