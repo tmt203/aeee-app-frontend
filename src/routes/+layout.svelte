@@ -51,7 +51,7 @@
 		try {
 			// Init current light mode
 			const currentMode = localStorage.getItem("modeCurrent");
-			setModeCurrent(true);
+			setModeCurrent(currentMode ? JSON.parse(currentMode) : $modeOsPrefers);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -82,20 +82,3 @@
 
 <Toast position="t" zIndex="z-[9999] !top-24" />
 <Modal zIndex="z-[999]" components={modalRegistry} />
-
-<style>
-	.layout-container {
-		position: relative;
-		max-height: 100%;
-		min-height: 100vh;
-	}
-	.loading-overlay {
-		position: absolute;
-		inset: 0;
-		z-index: 9999;
-		background: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-</style>

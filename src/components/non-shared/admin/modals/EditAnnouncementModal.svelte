@@ -1,24 +1,38 @@
 <script lang="ts">
-	import { PUBLIC_TINYMCE_API_KEY } from "$env/static/public";
-	import { apiGetAnnouncementById } from "@api/announcement.api";
-	import { Spinner } from "@components/shared/atoms";
+	import { Spinner, TinyEditor } from "@components/shared/atoms";
 	import { Button, InputForm } from "@components/shared/molecules";
-	import { EDITOR_CONFIG } from "@constants/tiny_mce.constants";
-	import { generateToast } from "@constants/toast.constants";
-	import { getModalStore, getToastStore } from "@skeletonlabs/skeleton";
-	import Editor from "@tinymce/tinymce-svelte";
+	import { getModalStore } from "@skeletonlabs/skeleton";
 	import type { Announcement, AnnouncementBody } from "@type/api/announcement.type";
-	import { onMount } from "svelte";
+	import { createForm } from "svelte-forms-lib";
 	import { t } from "svelte-i18n";
+	import { object, string } from "yup";
 
-	export let id: string;
-	export let onSave: (id: string, body: AnnouncementBody) => void;
+	export let announcement: Announcement;
+	export let onSave: (body: AnnouncementBody, id?: string) => void;
 
 	const modalStore = getModalStore();
-	const toastStore = getToastStore();
 
-	let announcement: Announcement | null = null;
 	let isLoading: boolean = false;
+
+	// Form
+	const initialValues = {
+		author: announcement?.author || "",
+		title: announcement?.title || "",
+		content: announcement?.content || ""
+	};
+	const validationSchema = object().shape({
+		author: string(),
+		title: string().required("error.input_required"),
+		content: string()
+	});
+	const { form, errors, handleSubmit } = createForm({
+		initialValues,
+		validationSchema,
+		onSubmit: (values) => {
+			onSave?.(values, announcement?.id);
+			modalStore.close();
+		}
+	});
 
 	/**
 	 * Handle close
@@ -32,53 +46,30 @@
 	 */
 	const handleSave = () => {
 		onSave &&
-			onSave(id, {
-				author: announcement?.author || "",
-				title: announcement?.title || "",
-				content: announcement?.content || ""
-			});
+			onSave(
+				{
+					author: announcement?.author || "",
+					title: announcement?.title || "",
+					content: announcement?.content || ""
+				},
+				announcement?.id
+			);
 		modalStore.close();
 	};
-
-	/**
-	 * Handle get announcement by id
-	 * @param id string
-	 */
-	const handleGetAnnouncementById = async (id: string) => {
-		if (!id) return;
-
-		try {
-			isLoading = true;
-			const response = await apiGetAnnouncementById(id);
-			if (response.code !== "OK") {
-				toastStore.trigger(
-					generateToast("error", {
-						message: "Failed to fetch announcement"
-					})
-				);
-				return;
-			}
-			announcement = response.data;
-		} catch (error) {
-			console.log(error);
-		} finally {
-			isLoading = false;
-		}
-	};
-
-	/**
-	 * Run as soon as the component has been mounted to the DOM.
-	 */
-	onMount(() => {
-		handleGetAnnouncementById(id);
-	});
 </script>
 
-<div class="edit-announcement-modal bg-surface-50-900-token h-full w-9/12 rounded-xl">
+<form
+	class="edit-announcement-modal h-full w-9/12 rounded-xl bg-white dark:bg-gray-800"
+	on:submit|preventDefault={handleSubmit}
+>
 	<div class="flex flex-col justify-between">
 		<!-- Area: Modal Header -->
-		<div class="flex items-center justify-start gap-6 border-b px-4 py-2 text-2xl font-bold">
-			{$t("about_us_page.modal.title")}
+		<div
+			class="flex items-center justify-start gap-6 border-b px-4 py-2 text-2xl font-bold dark:border-tertiary-800"
+		>
+			{$t(
+				`manage_announcement_page.modal.${announcement.id ? "edit_announcement" : "create_announcement"}`
+			)}
 		</div>
 
 		<!-- Area: Modal Body -->
@@ -89,29 +80,26 @@
 				<!-- Area: Title -->
 				<InputForm
 					id="title"
+					name="title"
 					direction="column"
 					label={$t("admin_page.announcement.title")}
-					bind:value={announcement.title}
+					bind:value={$form.title}
 					class="[&_.input-form-wrapper]:w-full"
 					labelClass="font-medium"
 					placeholder="Announcement title"
+					errorMessage={$errors.title}
 				/>
 
 				<!-- Area: Content -->
 				<label class="block font-medium" for="content">
 					{$t("admin_page.announcement.content")}
 				</label>
-				<Editor
-					id="content"
-					apiKey={PUBLIC_TINYMCE_API_KEY}
-					conf={EDITOR_CONFIG}
-					bind:value={announcement.content}
-				/>
+				<TinyEditor bind:value={$form.content} />
 			{/if}
 		</div>
 
 		<!-- Area: Modal Footer -->
-		<div class="flex items-center justify-end gap-4 border-t p-4">
+		<div class="flex items-center justify-end gap-4 border-t p-4 dark:border-tertiary-800">
 			<!-- Area: Cancel Button -->
 			<Button
 				type="button"
@@ -126,17 +114,16 @@
 
 			<!-- Area: Save Button -->
 			<Button
-				type="button"
+				type="submit"
 				label={$t("form.save")}
 				variant="secondary"
 				size="sm"
 				iconSize="xs"
 				icon="uil uil-save"
-				on:click={handleSave}
 			/>
 		</div>
 	</div>
-</div>
+</form>
 
 <style lang="scss">
 	@use "@scss/non-shared/admin/modals/editAnnouncementModal.scss" as *;

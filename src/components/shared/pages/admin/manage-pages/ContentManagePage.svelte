@@ -92,7 +92,7 @@
 		// Show modal
 		const modal: ModalSettings = {
 			type: "component",
-			backdropClasses: "!bg-surface-900/50",
+			backdropClasses: "!bg-tertiary-800/80",
 			component: {
 				ref: EditPageModal,
 				props: {

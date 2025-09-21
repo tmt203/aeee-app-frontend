@@ -75,11 +75,11 @@
 	}
 </script>
 
-<section class="admin-layout-template">
+<section class="admin-layout-template text-surface-900/80 dark:text-surface-600">
 	<aside
 		bind:this={asideElement}
 		class={clsx(
-			"fixed left-0 z-[99] hidden h-screen text-surface-800 transition-all duration-300 ease-in-out md:block dark:text-surface-600",
+			"fixed left-0 z-[99] hidden h-screen transition-all duration-300 ease-in-out md:block",
 			{
 				"w-64": $sidebarExpanded,
 				"w-20 hover:w-64 hover:shadow-2xl": !$sidebarExpanded
@@ -100,7 +100,7 @@
 
 	<main
 		class={clsx(
-			"flex min-h-screen w-full flex-col justify-between bg-gray-100 pl-0 text-surface-800 dark:bg-gray-900 dark:text-surface-600",
+			"flex min-h-screen w-full flex-col justify-between bg-gray-100 pl-0 text-surface-900/80 dark:bg-gray-900 dark:text-surface-600",
 			{
 				"md:pl-64": $sidebarExpanded,
 				"md:pl-20": !$sidebarExpanded

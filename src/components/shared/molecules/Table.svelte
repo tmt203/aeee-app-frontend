@@ -232,7 +232,7 @@
 <!-- Area: Table -->
 <div
 	class={clsx(
-		"scrollbar-thumb-surface table-container text-sm scrollbar-thin scrollbar-track-transparent ",
+		"scrollbar-thumb-surface scrollbar-thin scrollbar-track-transparent table-container text-sm ",
 		{
 			"!rounded-xl": rounded,
 			"!rounded-none": !rounded,
@@ -355,7 +355,7 @@
 					<tr
 						on:click={handleRowClick(row)}
 						class={clsx(
-							"group bg-surface-100 transition-opacity even:bg-gray-50 hover:opacity-50 dark:bg-transparent dark:even:bg-surface-50/5",
+							"group bg-gray-100 transition-opacity even:bg-gray-50 hover:opacity-50 dark:bg-transparent dark:even:bg-surface-50/5",
 							{
 								"cursor-pointer": isRowClick
 							}
@@ -395,7 +395,7 @@
 										"!px-3",
 										{
 											"border border-t-0 border-gray-300 [&:first-child]:border-l-0": bordered,
-											"!border-x-0 group-odd:!bg-surface-100 dark:group-odd:dark:!bg-tertiary-600 dark:group-even:!bg-tertiary-500":
+											"!border-x-0 group-odd:!bg-gray-100 dark:group-odd:dark:!bg-tertiary-600 dark:group-even:!bg-tertiary-500":
 												column.pinned,
 											"overflow-hidden": column.label !== "action",
 											"action-cell": column.label === "action"

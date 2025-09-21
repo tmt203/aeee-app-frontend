@@ -8,6 +8,7 @@ import RowCount from "./RowCount.svelte";
 import SidebarItem from "./SidebarItem.svelte";
 import Spinner from "./Spinner.svelte";
 import TableAction from "./TableAction.svelte";
+import TinyEditor from "./TinyEditor.svelte";
 
 export {
 	Breadcrumb,
@@ -19,5 +20,6 @@ export {
 	RowCount,
 	SidebarItem,
 	Spinner,
-	TableAction
+	TableAction,
+	TinyEditor
 };

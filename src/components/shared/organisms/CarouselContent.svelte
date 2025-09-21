@@ -16,7 +16,7 @@
 		<div class="flex items-center gap-4">
 			<button on:click={carouselElement?.goToPrev()}>
 				<span
-					class="flex size-6 items-center justify-center rounded-full border text-surface-800 transition-colors duration-300 hover:bg-primary-500 hover:text-surface-50"
+					class="flex size-6 items-center justify-center rounded-full border transition-colors duration-300 hover:bg-primary-500 hover:text-surface-50"
 				>
 					<i class="uil uil-angle-left"></i>
 				</span>
@@ -24,7 +24,7 @@
 			<a href={link} class="text-blue-500 hover:underline">{rightLabel}</a>
 			<button on:click={carouselElement?.goToNext()}>
 				<span
-					class="flex size-6 items-center justify-center rounded-full border text-surface-800 transition-colors duration-300 hover:bg-primary-500 hover:text-surface-50"
+					class="flex size-6 items-center justify-center rounded-full border transition-colors duration-300 hover:bg-primary-500 hover:text-surface-50"
 				>
 					<i class="uil uil-angle-right"></i>
 				</span>
@@ -33,7 +33,7 @@
 	</div>
 
 	<!-- Area: Carousel Body -->
-	<div class="mt-5 flex items-start gap-4 flex-col xl:flex-row">
+	<div class="mt-5 flex flex-col items-start gap-4 xl:flex-row">
 		<!-- Area: Carousel Sidebar -->
 		<slot name="carousel-sidebar" />
 

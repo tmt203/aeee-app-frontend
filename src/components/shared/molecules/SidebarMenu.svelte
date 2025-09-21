@@ -5,6 +5,7 @@
 	import clsx from "clsx";
 	import { t } from "svelte-i18n";
 	import { SidebarItem } from "../atoms";
+	import { page } from "$app/stores";
 
 	export let currentGroup: string;
 	export let subGroupId: string = "";
@@ -29,8 +30,6 @@
 				</span>
 			{:else}
 				<hr class="mx-auto my-3 h-[1px] w-12 !border-none bg-gray-300 dark:bg-gray-600" />
-
-				<!-- <hr class="mb-1 h-[1px] w-full !border-none bg-surface-400/30" /> -->
 			{/if}
 		{/if}
 
@@ -41,9 +40,9 @@
 						"my-1 flex h-9 w-12 cursor-pointer items-center justify-center self-center rounded-lg px-1 py-2",
 						{
 							"bg-[linear-gradient(135deg,var(--tw-gradient-stops))] from-primary-500/[0.12] to-primary-500/[0.04] dark:from-primary-500/[0.24]":
-								sideBarItem.group === currentGroup,
+								sideBarItem.path === $page.url.pathname,
 							"bg-white transition-colors hover:bg-primary-500/10 dark:bg-tertiary-600":
-								sideBarItem.group !== currentGroup
+								sideBarItem.path !== $page.url.pathname
 						}
 					)}
 				>
@@ -86,7 +85,6 @@
 							{#each sideBarItem.children as child}
 								<SidebarItem
 									sideBarItem={child}
-									active={child.subGroup === subGroupId}
 									bind:subGroupId
 									bind:currentGroup
 								/>
@@ -98,7 +96,6 @@
 				<!-- Sidebar Sub Menu Item -->
 				<SidebarItem
 					{sideBarItem}
-					active={!sideBarItem.children && sideBarItem.group === currentGroup}
 					bind:subGroupId
 					bind:currentGroup
 				/>

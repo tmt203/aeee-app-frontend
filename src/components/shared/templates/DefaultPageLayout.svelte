@@ -17,7 +17,7 @@
 
 <!-- Area: Breadcrumb -->
 <div
-	class="container flex w-full flex-col items-center justify-between bg-surface-800 px-4 py-3 text-white xl:flex-row xl:px-20"
+	class="container flex w-full flex-col items-center justify-between bg-surface-700 px-4 py-3 text-white xl:flex-row xl:px-20"
 >
 	<span class="mr-auto">{breadcrumbs.join("/")}</span>
 </div>
@@ -29,7 +29,7 @@
 
 	<!-- Area: Sidebar Banner -->
 	<div
-		class="card sticky right-4 top-8 flex h-fit w-3/12 flex-col bg-slate-100 p-4 text-surface-800 xl:right-20"
+		class="card sticky right-4 top-8 flex h-fit w-3/12 flex-col !bg-slate-100 p-4 text-surface-700 xl:right-20"
 	>
 		<span class="font-bold">VSB-TUO</span>
 		<ul class="un-ordered-list-circle float-left w-full gap-4">

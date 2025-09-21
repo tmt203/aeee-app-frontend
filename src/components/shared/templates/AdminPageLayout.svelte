@@ -7,7 +7,7 @@
 </script>
 
 <div class={clsx("flex h-screen flex-col gap-1 bg-gray-50 dark:bg-gray-800", $$props.class)}>
-	<div class="flex w-full flex-col gap-2 border-b px-4 py-3 dark:border-surface-700">
+	<div class="flex w-full flex-col gap-2 border-b px-4 py-3 dark:border-tertiary-800">
 		<Breadcrumb {breadcrumbs} />
 		<slot name="content-header" />
 	</div>

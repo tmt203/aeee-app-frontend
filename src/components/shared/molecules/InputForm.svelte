@@ -128,9 +128,9 @@
 			{#if type === "select"}
 				<select
 					class={clsx(
-						"select rounded-xl border py-1 text-sm placeholder:text-sm dark:!bg-surface-900 dark:[&>option]:!bg-surface-900",
+						"select rounded-xl border py-1 text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800 dark:[&>option]:!bg-gray-700",
 						{
-							"!border-surface-600-300-token": !errorMessage?.length,
+							"!border-tertiary-900": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -154,9 +154,9 @@
 					{required}
 					disabled={$$props.disabled}
 					class={clsx(
-						"textarea rounded-xl border text-sm scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 placeholder:text-sm dark:!bg-surface-900",
+						"scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 textarea rounded-xl border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{
-							"!border-surface-600-300-token": !errorMessage?.length,
+							"!border-tertiary-900": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -170,9 +170,9 @@
 				<input
 					id={$$props.id}
 					class={clsx(
-						"input !h-fit border-dashed text-sm file:rounded file:border-none file:!bg-primary-500 file:px-3 file:py-1 file:!text-white placeholder:text-sm dark:!bg-surface-900",
+						"input !h-fit border-dashed text-sm file:rounded file:border-none file:!bg-primary-500 file:px-3 file:py-1 file:!text-white placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{
-							"!border-surface-600-300-token": !errorMessage?.length,
+							"!border-tertiary-900": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -187,7 +187,7 @@
 				<input
 					placeholder={$t(placeholder)}
 					type="search"
-					class="autocomplete input !border-surface-600-300-token border text-sm placeholder:text-sm dark:!bg-surface-900"
+					class="autocomplete input border !border-tertiary-900 text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800"
 					bind:value
 					use:popup={popupSearch}
 				/>
@@ -195,8 +195,8 @@
 				<div
 					tabindex="-1"
 					data-popup="popupSearch"
-					class="card max-h-48 overflow-y-auto rounded-xl p-4
-						scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 dark:!bg-surface-900"
+					class="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 card max-h-48
+						overflow-y-auto rounded-xl p-4 dark:!bg-gray-700"
 				>
 					<Autocomplete
 						options={searchOption}
@@ -207,7 +207,7 @@
 			{:else if type === "password"}
 				<!-- Input password -->
 				<div
-					class="input-group input-group-divider !border-surface-600-300-token grid-cols-[1fr_auto] border text-sm placeholder:text-sm dark:!bg-surface-900"
+					class="input-group input-group-divider grid-cols-[1fr_auto] border !border-tertiary-900 text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800"
 				>
 					<input type="password" placeholder={$t(placeholder)} bind:value />
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -227,10 +227,13 @@
 					{...$$props}
 					{required}
 					type="number"
-					class={clsx("input border text-sm placeholder:text-sm dark:!bg-surface-900", {
-						"!border-surface-600-300-token": !errorMessage?.length,
-						"!border-error-500": errorMessage?.length
-					})}
+					class={clsx(
+						"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
+						{
+							"!border-tertiary-900": !errorMessage?.length,
+							"!border-error-500": errorMessage?.length
+						}
+					)}
 					placeholder={$t(placeholder)}
 					on:change={handleChange}
 					on:input={handleInput}
@@ -244,10 +247,13 @@
 					{required}
 					type="number"
 					step="0.000001"
-					class={clsx("input border text-sm placeholder:text-sm dark:!bg-surface-900", {
-						"!border-surface-600-300-token": !errorMessage?.length,
-						"!border-error-500": errorMessage?.length
-					})}
+					class={clsx(
+						"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
+						{
+							"!border-tertiary-900": !errorMessage?.length,
+							"!border-error-500": errorMessage?.length
+						}
+					)}
 					placeholder={$t(placeholder)}
 					on:change={handleFloatNumberInput}
 					on:input={handleInput}
@@ -262,10 +268,9 @@
 					placeholder={$$props.placeholder}
 					minlength={1}
 					allowDuplicates
-					regionInput="input dark:!bg-surface-900"
+					regionInput="input placeholder:text-surface-700 dark:placeholder:text-surface-800 dark:!bg-gray-700"
 					rounded={clsx("rounded-xl h-full px-3 ", {
-						"border-surface-600 dark:!border-surface-200 dark:!bg-surface-900":
-							!errorMessage?.length,
+						"border-surface-600 dark:!border-surface-200 dark:!bg-gray-700": !errorMessage?.length,
 						"!border-error-500": errorMessage?.length
 					})}
 					{value}
@@ -280,10 +285,13 @@
 					{required}
 					{pattern}
 					type="text"
-					class={clsx("input border text-sm placeholder:text-sm dark:!bg-surface-900", {
-						"!border-surface-600-300-token": !errorMessage?.length,
-						"!border-error-500": errorMessage?.length
-					})}
+					class={clsx(
+						"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
+						{
+							"!border-tertiary-900": !errorMessage?.length,
+							"!border-error-500": errorMessage?.length
+						}
+					)}
 					placeholder={$t(placeholder)}
 					on:change={handleChange}
 					on:input={handleInput}

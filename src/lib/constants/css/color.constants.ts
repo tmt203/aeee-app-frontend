@@ -25,16 +25,16 @@ export const SECONDARY_COLOR = {
 };
 
 export const SURFACE_COLOR = {
-	"surface-50": "#f8f9fb",
-	"surface-100": "#f3f6f9",
-	"surface-200": "#f1f5f9",
-	"surface-300": "#ebeff5",
-	"surface-400": "#e2e8f0",
-	"surface-500": "#cbd1d8",
-	"surface-600": "#aaaeb4",
-	"surface-700": "#888b90",
-	"surface-800": "#323232",
-	"surface-900": "#0c0c0c"
+	"surface-50": "#FFFFFF",
+	"surface-100": "#f9fafc",
+	"surface-200": "#f8f9fb",
+	"surface-300": "#f3f6f9",
+	"surface-400": "#ebeff5",
+	"surface-500": "#E2E8F0",
+	"surface-600": "#cbd1d8",
+	"surface-700": "#aaaeb4",
+	"surface-800": "#888b90",
+	"surface-900": "#323232"
 };
 
 export const SUCCESS_COLOR = {

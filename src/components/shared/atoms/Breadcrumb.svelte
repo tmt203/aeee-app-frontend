@@ -13,7 +13,7 @@
 					{$t(item.label)}
 				</a>
 			{:else}
-				<span class="text-lg font-bold text-surface-800 md:text-xl dark:text-surface-600">
+				<span class="text-lg font-bold md:text-xl">
 					{$t(item.label)}
 				</span>
 			{/if}

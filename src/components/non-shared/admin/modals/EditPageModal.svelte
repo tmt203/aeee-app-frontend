@@ -1,12 +1,9 @@
 <script lang="ts">
-	import { PUBLIC_TINYMCE_API_KEY } from "$env/static/public";
 	import { apiGetPageById } from "@api/page.api";
-	import { Spinner } from "@components/shared/atoms";
+	import { Spinner, TinyEditor } from "@components/shared/atoms";
 	import { Button } from "@components/shared/molecules";
-	import { EDITOR_CONFIG } from "@constants/tiny_mce.constants";
 	import { generateToast } from "@constants/toast.constants";
 	import { getModalStore, getToastStore } from "@skeletonlabs/skeleton";
-	import Editor from "@tinymce/tinymce-svelte";
 	import type { Page, PageBody } from "@type/api/page.type";
 	import { onMount } from "svelte";
 	import { t } from "svelte-i18n";
@@ -72,7 +69,7 @@
 	});
 </script>
 
-<div class="edit-page-modal bg-surface-50-900-token h-full w-9/12 rounded-xl">
+<div class="edit-page-modal h-full w-9/12 rounded-xl bg-white dark:bg-gray-800">
 	<div class="flex flex-col justify-between">
 		<!-- Area: Modal Header -->
 		<div class="flex items-center justify-start gap-6 border-b px-4 py-2 text-2xl font-bold">
@@ -84,7 +81,7 @@
 			{#if isLoading}
 				<Spinner />
 			{:else if page}
-				<Editor apiKey={PUBLIC_TINYMCE_API_KEY} conf={EDITOR_CONFIG} bind:value={page.content} />
+				<TinyEditor bind:value={page.content} />
 			{/if}
 		</div>
 

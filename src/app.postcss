@@ -28,6 +28,24 @@ ul.un-ordered-list-circle > li.active:before {
 	background: rgb(var(--color-primary-500)) !important;
 }
 
+.layout-container {
+	position: relative;
+	max-height: 100%;
+	min-height: 100vh;
+}
+.loading-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 9999;
+	background: rgb(var(--color-surface-50));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.dark .loading-overlay {
+	@apply bg-gray-900;
+}
+
 /* Article Content */
 .aeee-article {
 	width: 100%;
@@ -140,7 +158,6 @@ ul.un-ordered-list-circle > li.active:before {
 
 	a {
 		color: rgb(var(--color-primary-500));
-		text-decoration: underline;
 		cursor: pointer;
 	}
 }
