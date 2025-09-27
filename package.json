@@ -50,6 +50,7 @@
 		"@easepick/bundle": "^1.2.1",
 		"@floating-ui/dom": "1.6.10",
 		"@svelte-plugins/tooltips": "^3.0.1",
+		"@tinymce/tinymce-svelte": "^3.2.0",
 		"@vincjo/datatables": "^1.14.10",
 		"chart.js": "^4.4.6",
 		"clsx": "^2.1.1",

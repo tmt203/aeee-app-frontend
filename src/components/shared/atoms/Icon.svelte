@@ -340,7 +340,7 @@
 				"text-3xl": size === "xl",
 				"text-4xl": size === "2xl",
 				"cursor-pointer": !disabled,
-				"!cursor-not-allowed !text-surface-800": disabled
+				"!cursor-not-allowed !text-surface-700": disabled
 			})}
 			on:click={handleIconClick}
 			bind:this={iconElement}

@@ -7,7 +7,7 @@
 	export let showButton: boolean = false;
 </script>
 
-<div class="article-item flex flex-col text-surface-800">
+<div class="article-item flex flex-col">
 	<!-- Area: Authors -->
 	<div class="flex items-center gap-2 text-sm">
 		<i class="uil uil-user"></i>
@@ -15,14 +15,14 @@
 	</div>
 
 	<!-- Area: Article Title -->
-	<h5 class="h5">
+	<span class="h6">
 		<a
 			href={link}
 			class="font-medium transition-colors duration-300 hover:text-blue-500"
 			target="_blank"
 			rel="noopener noreferrer">{title}</a
 		>
-	</h5>
+	</span>
 
 	<!-- Area: Views -->
 	<span class="text-xs font-normal">Views: {views}</span>

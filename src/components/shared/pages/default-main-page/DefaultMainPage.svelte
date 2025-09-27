@@ -9,7 +9,7 @@
 	const images: string[] = ["svg/vsb_cs.svg", "svg/vsb_en.svg", "images/uniza_sk.jpg"];
 </script>
 
-<section class="default-main-page flex size-full flex-col text-surface-800">
+<section class="default-main-page flex size-full flex-col text-surface-900/80">
 	<!-- Area: Home Banner -->
 	<div
 		class="home-banner container flex flex-col items-center justify-between gap-10 border-b px-4 py-8 xl:flex-row xl:gap-20 xl:px-20"
@@ -17,11 +17,11 @@
 		<img src="images/home-banner.png" alt="Banner" class="h-auto w-[440px] object-cover" />
 		<div class="flex flex-col gap-4">
 			<h1
-				class="h1 relative pb-6 text-center max-xl:text-[28px] leading-[32px] xl:text-left xl:leading-[62px]"
+				class="h1 relative pb-6 text-center leading-[32px] max-xl:text-[28px] xl:text-left xl:leading-[62px]"
 			>
 				We Welcome Latest Research Articles in Electrical and Electronic Engineering
 			</h1>
-			<p class="text-center xl:text-left text-xl font-normal leading-[32px]">
+			<p class="text-center text-xl font-normal leading-[32px] xl:text-left">
 				The Advances in Electrical and Electronic Engineering is a peer-reviewed periodical
 				scientific journal aimed at publishing research results of the Journal focus areas. The role
 				of the Journal is to facilitate contacts between research centers and the industry...
@@ -104,7 +104,7 @@
 		<CarouselContent leftLabel="Previous Issues" rightLabel="View All" link="/#">
 			<svelte:fragment slot="carousel-sidebar">
 				<ul
-					class="un-ordered-list-circle float-left grid w-full grid-cols-2 grid-rows-2 md:grid-cols-4 gap-4 xl:w-40 xl:grid-cols-1 xl:grid-rows-none"
+					class="un-ordered-list-circle float-left grid w-full grid-cols-2 grid-rows-2 gap-4 md:grid-cols-4 xl:w-40 xl:grid-cols-1 xl:grid-rows-none"
 				>
 					{#each Array.from({ length: 10 }) as _, i}
 						<li
@@ -127,11 +127,6 @@
 					<ArticleItem />
 					<ArticleItem />
 					<ArticleItem />
-				</div>
-				<div class="flex flex-col gap-4">
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
 					<ArticleItem />
 				</div>
 				<div class="flex flex-col gap-4">
@@ -139,8 +134,17 @@
 					<ArticleItem />
 					<ArticleItem />
 					<ArticleItem />
+					<ArticleItem />
 				</div>
 				<div class="flex flex-col gap-4">
+					<ArticleItem />
+					<ArticleItem />
+					<ArticleItem />
+					<ArticleItem />
+					<ArticleItem />
+				</div>
+				<div class="flex flex-col gap-4">
+					<ArticleItem />
 					<ArticleItem />
 					<ArticleItem />
 					<ArticleItem />

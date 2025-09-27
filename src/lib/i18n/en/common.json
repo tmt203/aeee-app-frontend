@@ -19,7 +19,8 @@
 		"unpin_col": "Remove pin column",
 		"hide_col": "Hide column",
 		"hide_or_show_col": "Hide/show column",
-		"resize_col": "Resize column"
+		"resize_col": "Resize column",
+		"updated_at": "Updated at"
 	},
 	"time": {
 		"seconds": "Seconds",
@@ -154,5 +155,13 @@
 		"my_profile": "My profile",
 		"change_password": "Change password",
 		"sign_out": "Sign out"
+	},
+	"sidebar": {
+		"expand": "Expand",
+		"collapse": "Collapse",
+		"search": "Search",
+		"support": "Support",
+		"language": "Language",
+		"appearance": "Appearance"
 	}
 }

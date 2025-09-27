@@ -41,7 +41,7 @@
 
 		<div class="flex flex-col gap-1">
 			<p class="text-lg font-bold">{$t("form.confirm_delete")}</p>
-			<div class="text-sm text-surface-800">
+			<div class="text-sm text-surface-700">
 				{#if $modalStore[0]}
 					{@html $modalStore[0].meta.body}
 				{/if}

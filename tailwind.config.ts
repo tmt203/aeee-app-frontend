@@ -5,6 +5,8 @@ import { join } from "path";
 import type { Config } from "tailwindcss";
 import { animation, color, theme, boxShadow } from "./src/lib/constants/css/index";
 
+const plugin = require("tailwindcss/plugin");
+
 export default {
 	darkMode: "selector",
 	content: [
@@ -31,6 +33,7 @@ export default {
 				...color.SUCCESS_COLOR,
 				...color.WARNING_COLOR,
 				...color.ERROR_COLOR,
+				...color.COMMON_COLOR,
 				...color.TABLE_COLOR,
 				...color.LAYOUT_COLOR
 			},
@@ -40,8 +43,6 @@ export default {
 		}
 	},
 	plugins: [
-		// eslint-disable-next-line @typescript-eslint/no-require-imports
-		require("tailwind-scrollbar")({ nocompatible: true }),
 		forms,
 		typography,
 		skeleton({
@@ -49,6 +50,19 @@ export default {
 				custom: [theme.aeeeTheme]
 			},
 			base: true
+		}),
+
+		// add custom scrollbar styles
+		plugin(function ({ addUtilities }: { addUtilities: (utilities: Record<string, any>) => void }) {
+			addUtilities({
+				".scrollbar-hide": {
+					"-ms-overflow-style": "none", // IE & Edge
+					"scrollbar-width": "none" // Firefox
+				},
+				".scrollbar-hide::-webkit-scrollbar": {
+					display: "none" // Chrome & Safari
+				}
+			});
 		})
 	],
 	corePlugins: {

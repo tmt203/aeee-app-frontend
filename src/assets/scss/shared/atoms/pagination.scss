@@ -1,0 +1,23 @@
+:global(.paginator .paginator-controls) {
+	@apply h-9 rounded-lg border border-surface-500 bg-surface-200 text-sm text-surface-900 dark:!border-surface-400/30 dark:!bg-tertiary-400 dark:!text-surface-600;
+}
+
+:global(.paginator .paginator-controls button) {
+	@apply border-surface-500 text-sm dark:!border-surface-400/30;
+}
+
+:global(.paginator .paginator-controls .active) {
+	@apply bg-primary-500 !text-surface-50 dark:bg-tertiary-500 dark:!text-primary-500;
+}
+
+:global(.paginator .paginator-label select) {
+	@apply h-9 rounded-lg bg-surface-200 text-sm dark:!border-surface-400/30 dark:!bg-tertiary-400;
+}
+
+:global(.paginator .paginator-label select > option) {
+	@apply dark:!bg-tertiary-400;
+}
+
+:global(.paginator-select) {
+	@apply py-1;
+}

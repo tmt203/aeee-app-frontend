@@ -1,0 +1,14 @@
+{
+	"manage_announcement_page": {
+		"table": {
+			"author": "Author",
+			"content": "Content",
+			"title": "Title"
+		},
+		"modal": {
+			"edit_announcement": "Edit announcement",
+			"create_announcement": "Create announcement"
+		},
+		"add_announcement": "Add announcement"
+	}
+}

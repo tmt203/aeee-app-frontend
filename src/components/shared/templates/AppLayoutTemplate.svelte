@@ -4,7 +4,7 @@
 	import { Navbar } from "../molecules";
 </script>
 
-<section class="app-layout-template min-h-screen text-surface-900">
+<section class="app-layout-template min-h-screen text-surface-600">
 	<div
 		class="app-layout-template__wrapper relative mx-auto flex max-w-7xl flex-col justify-start pt-1 shadow-2xl"
 	>
@@ -20,7 +20,7 @@
 		>
 			<div class="float-left w-full sm:w-1/2 lg:w-1/4">
 				<div class="flex flex-col gap-2 xl:gap-6">
-					<img src="images/logo.png" alt="AEEE Logo" class="h-auto w-auto" />
+					<img src="/images/logo.png" alt="AEEE Logo" class="h-auto w-auto" />
 					<p>
 						VSB - Technical University of Ostrava and University of Zilina Faculty of Electrical
 						Engineering and Computer Science.

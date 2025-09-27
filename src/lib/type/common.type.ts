@@ -19,19 +19,15 @@ export type TypeVariant = "filled" | "soft" | "ghost" | "ringed";
 export type Placement = "start" | "end" | "center" | string;
 export type Direction = "row" | "column" | "stacked" | string;
 export type Shape = "line" | "circle" | "square" | string;
-export interface TableIndex {
+
+export type TableIndex = {
 	index: number;
-}
+};
 
-export interface SelectOption {
-	label: string;
-	value: string | number | string[] | number[] | boolean | boolean[];
-}
-
-export interface FilterParams {
+export type FilterParams = {
 	label: string;
 	value: string;
-}
+};
 
 export type InputElementType =
 	| "email"
@@ -46,3 +42,24 @@ export type InputElementType =
 	| "textarea"
 	| "float-number"
 	| "input-chip";
+
+export type AuditInfo = {
+	id: string;
+	created_at: Date | string;
+	created_by: string;
+	updated_at: Date | string;
+	updated_by: string;
+};
+
+export type SelectOption = {
+	label: string;
+	value: string;
+	disabled?: boolean;
+	notAllowed?: boolean;
+	noTranslate?: boolean;
+};
+
+export type Param = {
+	limit?: number;
+	offset?: number;
+};
