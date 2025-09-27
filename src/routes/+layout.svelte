@@ -69,7 +69,9 @@
 		<slot />
 		{#if showLoadingOverlay}
 			<div class="loading-overlay">
-				<LoadingPage />
+				<div class="flex h-screen items-center justify-center">
+					<LoadingPage />
+				</div>
 			</div>
 		{/if}
 	</div>
