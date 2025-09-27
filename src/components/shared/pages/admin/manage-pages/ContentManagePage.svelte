@@ -111,6 +111,8 @@
 	 */
 	const handleGetPages = async (params?: PageQueryParams) => {
 		try {
+			isLoading = true;
+
 			const queryParams: PageQueryParams = { ...params, ...filterParams };
 			const response = await apiGetPages(removeEmptyFields(queryParams));
 
@@ -135,6 +137,8 @@
 			}));
 		} catch (error) {
 			console.log(error);
+		} finally {
+			isLoading = false;
 		}
 	};
 
