@@ -3,10 +3,21 @@
 	import { Button } from "@components/shared/molecules";
 	import ArticleItem from "@components/shared/molecules/ArticleItem.svelte";
 	import { CarouselContent } from "@components/shared/organisms";
+	import type { DefaultMainPageProps } from "@type/components/defaultMainPage.type";
+	import { chunkArray } from "@utils/array";
 	import clsx from "clsx";
 	import Carousel from "svelte-carousel";
 
+	export let { mostViewsArticles, previousArticles, incomingArticles }: DefaultMainPageProps = {
+		mostViewsArticles: [],
+		previousArticles: [],
+		incomingArticles: []
+	};
+
 	const images: string[] = ["svg/vsb_cs.svg", "svg/vsb_en.svg", "images/uniza_sk.jpg"];
+
+	const chunkMostViewArticles = chunkArray(mostViewsArticles, 4);
+	const chunkPreviousArticles = chunkArray(previousArticles, 5);
 </script>
 
 <section class="default-main-page flex size-full flex-col text-surface-900/80">
@@ -68,30 +79,13 @@
 	>
 		<CarouselContent leftLabel="Most Views" rightLabel="View All" link="/#">
 			<svelte:fragment slot="carousel-items">
-				<div class="flex flex-col gap-4">
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-				</div>
-				<div class="flex flex-col gap-4">
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-				</div>
-				<div class="flex flex-col gap-4">
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-				</div>
-				<div class="flex flex-col gap-4">
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-					<ArticleItem showButton />
-				</div>
+				{#each chunkMostViewArticles as group}
+					<div class="flex flex-col gap-4">
+						{#each group as item (item.id)}
+							<ArticleItem {...item} />
+						{/each}
+					</div>
+				{/each}
 			</svelte:fragment>
 		</CarouselContent>
 	</div>
@@ -122,34 +116,13 @@
 			</svelte:fragment>
 
 			<svelte:fragment slot="carousel-items">
-				<div class="flex flex-col gap-4">
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-				</div>
-				<div class="flex flex-col gap-4">
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-				</div>
-				<div class="flex flex-col gap-4">
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-				</div>
-				<div class="flex flex-col gap-4">
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-					<ArticleItem />
-				</div>
+				{#each chunkPreviousArticles as group}
+					<div class="flex flex-col gap-4">
+						{#each group as item (item.id)}
+							<ArticleItem {...item} />
+						{/each}
+					</div>
+				{/each}
 			</svelte:fragment>
 		</CarouselContent>
 	</div>
@@ -162,7 +135,9 @@
 			link="/#"
 		>
 			<svelte:fragment slot="carousel-items">
-				<ArticleItem />
+				{#each incomingArticles as item}
+					<ArticleItem {...item} />
+				{/each}
 			</svelte:fragment>
 		</CarouselContent>
 	</div>

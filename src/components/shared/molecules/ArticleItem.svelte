@@ -1,9 +1,8 @@
 <script lang="ts">
-	export let authors: string[] = ["Junlong Zheng", "Chaiyan Jettanasen"];
-	export let title: string =
-		"Analysis of mutual inductance between transmitter and receiver coils in wireless power transfer system of electric vehicle Analysis of mutual inductance between transmitter and receiver coils in wireless power transfer system of electric vehicle";
-	export let link: string = "/#";
-	export let views: number = 200;
+	export let authors: string[] = [];
+	export let title: string = "";
+	export let link: string = "";
+	export let views: number = 0;
 	export let showButton: boolean = false;
 </script>
 

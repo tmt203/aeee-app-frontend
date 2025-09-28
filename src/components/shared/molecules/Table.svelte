@@ -15,8 +15,8 @@
 	export let showFooter: boolean = true;
 	export let showHeader: boolean = true;
 	export let isRowClick: boolean = false;
-	export let rounded: boolean = false;
-	export let bordered: boolean = true;
+	export let rounded: boolean = true;
+	export let bordered: boolean = false;
 	export let showColumnAction: boolean = true;
 	export let resizeColumn: boolean = true;
 
@@ -232,11 +232,11 @@
 <!-- Area: Table -->
 <div
 	class={clsx(
-		"scrollbar-thumb-surface scrollbar-thin scrollbar-track-transparent table-container text-sm ",
+		"scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 table-container text-sm",
 		{
 			"!rounded-xl": rounded,
 			"!rounded-none": !rounded,
-			"border-collapse border border-gray-300": bordered
+			"border-collapse border dark:border-surface-700": bordered
 		},
 		tableClass
 	)}
@@ -260,7 +260,8 @@
 				{#if isCheckbox}
 					<th
 						class={clsx("relative w-16 text-center ", {
-							"border border-r-0 border-t-0 border-gray-300 [&:first-child]:border-l-0": bordered
+							"border border-r-0 border-t-0 dark:border-surface-700 [&:first-child]:border-l-0":
+								bordered
 						})}
 					>
 						<input
@@ -279,7 +280,7 @@
 							class={clsx(
 								"group bg-white transition-all dark:bg-gray-700 [&:first-child]:border-l-0",
 								{
-									"border border-t-0 border-gray-300": bordered,
+									"border border-t-0 dark:border-surface-700": bordered,
 									"w-16": index === columns.length - 1,
 									"hover:bg-surface-300 dark:hover:bg-gray-600": column.label !== "action",
 									"is-pinned !border-x-0": column.pinned
@@ -367,7 +368,7 @@
 								class={clsx(
 									"w-fit px-3 text-center [&:first-child]:border-l-0 [&:nth-child(even)]:bg-gray-50 dark:[&:nth-child(even)]:bg-surface-800/20",
 									{
-										"border border-r-0 border-t-0 border-gray-300": bordered
+										"border border-r-0 border-t-0 dark:border-surface-700": bordered
 									}
 								)}
 							>
@@ -394,7 +395,8 @@
 									class={clsx(
 										"!px-3",
 										{
-											"border border-t-0 border-gray-300 [&:first-child]:border-l-0": bordered,
+											"border border-t-0 dark:border-surface-700 [&:first-child]:border-l-0":
+												bordered,
 											"!border-x-0 group-odd:!bg-gray-100 dark:group-odd:dark:!bg-tertiary-600 dark:group-even:!bg-tertiary-500":
 												column.pinned,
 											"overflow-hidden": column.label !== "action",
@@ -473,14 +475,14 @@
 				<tr>
 					{#if isLoading}
 						{#each columns as _}
-							<td class="border border-gray-300">
+							<td class={clsx({ "border dark:border-surface-700": bordered })}>
 								<div class="placeholder animate-pulse !bg-surface-600" />
 							</td>
 						{/each}
 					{:else}
 						<td
 							colspan={columns ? columns?.filter((col) => !col.isHidden).length + 1 : 0}
-							class="border border-l-0 border-gray-300 text-center"
+							class={clsx("text-center", { "border border-l-0 dark:border-surface-700": bordered })}
 						>
 							{$t("no_data")}
 						</td>
