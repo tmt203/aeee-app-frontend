@@ -25,9 +25,9 @@
 	};
 
 	let showLoadingOverlay = false;
-	let isInitializing: boolean = true;
+	let isMounted: boolean = true;
 
-	$: if (!isInitializing) {
+	$: if (!isMounted) {
 		showLoadingOverlay = true;
 		setTimeout(() => {
 			showLoadingOverlay = false;
@@ -35,7 +35,7 @@
 	}
 
 	$: {
-		if (!isInitializing) {
+		if (!isMounted) {
 			if (showLoadingOverlay) {
 				document.body.classList.add("overflow-hidden");
 			} else {
@@ -48,19 +48,11 @@
 	 * Run as soon as the component has been mounted to the DOM.
 	 */
 	onMount(async () => {
-		try {
-			// Init current light mode
-			const currentMode = localStorage.getItem("modeCurrent");
-			setModeCurrent(currentMode ? JSON.parse(currentMode) : $modeOsPrefers);
-		} catch (error) {
-			console.log(error);
-		} finally {
-			isInitializing = false;
-		}
+		isMounted = false;
 	});
 </script>
 
-{#if isInitializing || $isLoading}
+{#if isMounted || $isLoading}
 	<div class="flex h-screen items-center justify-center">
 		<LoadingPage />
 	</div>

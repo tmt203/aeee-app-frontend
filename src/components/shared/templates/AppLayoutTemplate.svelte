@@ -1,7 +1,17 @@
 <script lang="ts">
 	import { LINK_GROUPS } from "@constants/appLayoutFooter.constants";
 	import { NAV_BAR_GROUPS } from "@constants/navbar.constants";
+	import { setModeCurrent } from "@skeletonlabs/skeleton";
+	import { onMount } from "svelte";
 	import { Navbar } from "../molecules";
+
+	/**
+	 * Run as soon as the component has been mounted to the DOM.
+	 */
+	onMount(() => {
+		// Set light mode as default for (default) layout
+		setModeCurrent(true);
+	});
 </script>
 
 <section class="app-layout-template min-h-screen text-surface-600">

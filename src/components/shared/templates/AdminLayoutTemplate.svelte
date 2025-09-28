@@ -1,11 +1,17 @@
 <script lang="ts">
+	import { page } from "$app/stores";
 	import { SIDEBAR } from "@constants/sidebar.constants";
-	import { getDrawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
+	import {
+		getDrawerStore,
+		modeOsPrefers,
+		setModeCurrent,
+		type DrawerSettings
+	} from "@skeletonlabs/skeleton";
 	import { sidebarExpanded } from "@store/sidebar";
 	import type { SideBarGroupProps } from "@type/components/sidebar.type";
 	import clsx from "clsx";
+	import { onMount } from "svelte";
 	import { Sidebar } from "../molecules";
-	import { page } from "$app/stores";
 
 	const drawerStore = getDrawerStore();
 
@@ -73,6 +79,14 @@
 		subGroupId = $page.url.pathname.split("/").filter(Boolean)[1];
 		previousPath = $page.url.pathname;
 	}
+
+	/**
+	 * Run as soon as the component has been mounted to the DOM.
+	 */
+	onMount(() => {
+		// Set os mode as default for (default) layout
+		setModeCurrent($modeOsPrefers);
+	});
 </script>
 
 <section class="admin-layout-template text-surface-900/80 dark:text-surface-600">
