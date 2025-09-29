@@ -1,10 +1,12 @@
 <script lang="ts">
 	import Carousel from "svelte-carousel";
+	import { Spinner } from "../atoms";
 
 	export let leftLabel: string = "";
 	export let rightLabel: string = "";
 	export let link: string = "";
 	export let className: string = "";
+	export let isLoading: boolean = false;
 
 	let carouselElement: any;
 </script>
@@ -37,18 +39,22 @@
 		<!-- Area: Carousel Sidebar -->
 		<slot name="carousel-sidebar" />
 
-		<!-- Area: Carousel Items -->
-		<div class="carousel-items w-full">
-			<Carousel
-				autoplay
-				pauseOnFocus
-				dots={false}
-				arrows={false}
-				autoplayDuration={2000}
-				bind:this={carouselElement}
-			>
-				<slot name="carousel-items" />
-			</Carousel>
-		</div>
+		{#if isLoading}
+			<Spinner />
+		{:else}
+			<!-- Area: Carousel Items -->
+			<div class="carousel-items w-full">
+				<Carousel
+					autoplay
+					pauseOnFocus
+					dots={false}
+					arrows={false}
+					autoplayDuration={2000}
+					bind:this={carouselElement}
+				>
+					<slot name="carousel-items" />
+				</Carousel>
+			</div>
+		{/if}
 	</div>
 </div>
