@@ -1,23 +1,80 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { apiGetArticles } from "@api/article.api";
+	import Spinner from "@components/shared/atoms/Spinner.svelte";
 	import { Button } from "@components/shared/molecules";
 	import ArticleItem from "@components/shared/molecules/ArticleItem.svelte";
 	import { CarouselContent } from "@components/shared/organisms";
+	import { generateToast } from "@constants/toast.constants";
+	import { getToastStore } from "@skeletonlabs/skeleton";
+	import type { Article, ArticleQueryParams } from "@type/api/article.type";
+	import type { ArticleItemProps } from "@type/components/articleItem.type";
 	import type { DefaultMainPageProps } from "@type/components/defaultMainPage.type";
 	import { chunkArray } from "@utils/array";
 	import clsx from "clsx";
 	import Carousel from "svelte-carousel";
 
-	export let { mostViewsArticles, previousArticles, incomingArticles }: DefaultMainPageProps = {
+	export let {
+		latestManagerForeword,
+		mostViewsArticles,
+		previousArticles,
+		incomingArticles
+	}: DefaultMainPageProps = {
+		latestManagerForeword: "",
 		mostViewsArticles: [],
 		previousArticles: [],
 		incomingArticles: []
 	};
+	export let mappingToArticleItem: (article: Article, showButton: boolean) => ArticleItemProps;
 
+	const toastStore = getToastStore();
 	const images: string[] = ["svg/vsb_cs.svg", "svg/vsb_en.svg", "images/uniza_sk.jpg"];
 
-	const chunkMostViewArticles = chunkArray(mostViewsArticles, 4);
-	const chunkPreviousArticles = chunkArray(previousArticles, 5);
+	let chunkMostViewArticles = chunkArray(mostViewsArticles, 4);
+	let chunkPreviousArticles = chunkArray(previousArticles, 5);
+	let selectedYear: number = new Date().getFullYear() - 1;
+	let isLoading: boolean = false;
+
+	/**
+	 * Fetch articles
+	 * @param params ArticleQueryParams
+	 * @returns Promise<Article[]>
+	 */
+	const handleFetchArticles = async (params: ArticleQueryParams): Promise<Article[]> => {
+		isLoading = true;
+
+		try {
+			const response = await apiGetArticles(params);
+
+			if (response.code !== "OK") {
+				toastStore.trigger(generateToast("error", { message: response.message }));
+				return [];
+			}
+
+			return response.data;
+		} catch (error) {
+			console.log(error);
+		} finally {
+			isLoading = false;
+		}
+
+		return [];
+	};
+
+	/**
+	 * On previous year click
+	 * @param year number
+	 */
+	const onPreviousYearClick = (year: number) => async () => {
+		selectedYear = year;
+
+		const previousArticles = await handleFetchArticles({ year, limit: 9999 });
+		const mappedPreviousArticles = previousArticles.map((article) =>
+			mappingToArticleItem(article, false)
+		);
+
+		chunkPreviousArticles = chunkArray(mappedPreviousArticles, 5);
+	};
 </script>
 
 <section class="default-main-page flex size-full flex-col text-surface-900/80">
@@ -59,16 +116,11 @@
 			<span class="text-xl">Greetings & Welcome</span>
 			<h2 class="h2 mb-6">Explore Latest Researches</h2>
 			<p class="mb-6 text-center text-base xl:text-left">
-				Foreword from Axel Sikora, Professor of Offenburg University, Germany and Deputy Member of
-				the Board at Hahn-Schickard, Villingen-Schwenningen, Germany...
+				{latestManagerForeword}...
 			</p>
-			<Button
-				label="Read more"
-				variant="primary"
-				size="md"
-				class="w-fit"
-				on:click={() => goto("/issues/current-issues")}
-			/>
+			<a href="/issues/current-issues">
+				<Button variant="primary" size="md" class="w-fit">Read more</Button>
+			</a>
 		</div>
 	</div>
 
@@ -77,7 +129,7 @@
 		id="most-views"
 		class="most-views container flex flex-col gap-10 px-4 py-8 xl:flex-row xl:gap-20 xl:px-20"
 	>
-		<CarouselContent leftLabel="Most Views" rightLabel="View All" link="/#">
+		<CarouselContent leftLabel="Most Views" rightLabel="View All" link="/issues/archives">
 			<svelte:fragment slot="carousel-items">
 				{#each chunkMostViewArticles as group}
 					<div class="flex flex-col gap-4">
@@ -95,21 +147,29 @@
 		id="previous-issues"
 		class="previous-issues container flex flex-col gap-20 px-4 py-8 xl:flex-row xl:px-20"
 	>
-		<CarouselContent leftLabel="Previous Issues" rightLabel="View All" link="/#">
+		<CarouselContent
+			{isLoading}
+			leftLabel="Previous Issues"
+			rightLabel="View All"
+			link="/issues/archives"
+		>
 			<svelte:fragment slot="carousel-sidebar">
 				<ul
 					class="un-ordered-list-circle float-left grid w-full grid-cols-2 grid-rows-2 gap-4 md:grid-cols-4 xl:w-40 xl:grid-cols-1 xl:grid-rows-none"
 				>
+					<!-- Show past 10 years -->
 					{#each Array.from({ length: 10 }) as _, i}
 						<li
 							class={clsx(
 								"relative float-left w-full cursor-pointer py-1 pl-4 transition-all hover:pl-8",
 								{
-									"active text-primary-500": i === 0
+									"active text-primary-500": selectedYear === new Date().getFullYear() - i - 1
 								}
 							)}
 						>
-							Issues From: {i + 1}
+							<button on:click={onPreviousYearClick(new Date().getFullYear() - i - 1)}>
+								Issues From: {new Date().getFullYear() - i - 1}
+							</button>
 						</li>
 					{/each}
 				</ul>
@@ -132,7 +192,7 @@
 		<CarouselContent
 			leftLabel={`Coming In ${new Date().getFullYear()}`}
 			rightLabel="View All"
-			link="/#"
+			link="/issues/archives"
 		>
 			<svelte:fragment slot="carousel-items">
 				{#each incomingArticles as item}
