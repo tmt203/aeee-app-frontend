@@ -88,7 +88,8 @@
 		<div class="mx-3 flex items-center justify-center dark:!bg-surface-900">
 			<small>
 				©{new Date().getFullYear()}
-				<a target="_blank" href="https://pitel.vn/" class="text-link-text-color">PITEL.VN</a>
+				<a target="_blank" href="https://trantri.site" class="text-link-text-color">Tran Minh Tri</a
+				>
 			</small>
 		</div>
 	</div>

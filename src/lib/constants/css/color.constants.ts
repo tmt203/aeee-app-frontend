@@ -106,7 +106,7 @@ export const COMMON_COLOR = {
 	"disabled-color": "#c0c0c0",
 	"header-text-color": "#1f2937",
 	"paragraph-text-color": "#4b5563",
-	"primary-text-color": "#374151",
+	"primary-text-color": "rgb(var(--color-surface-900) / 0.8)",
 	"secondary-text-color": "#6b7280",
 	"link-text-color": "#146d9a"
 };

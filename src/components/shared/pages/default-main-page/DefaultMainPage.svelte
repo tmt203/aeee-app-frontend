@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { apiGetArticles } from "@api/article.api";
+	import { CiteModal } from "@components/shared/atoms";
 	import Spinner from "@components/shared/atoms/Spinner.svelte";
 	import { Button } from "@components/shared/molecules";
 	import ArticleItem from "@components/shared/molecules/ArticleItem.svelte";
 	import { CarouselContent } from "@components/shared/organisms";
 	import { generateToast } from "@constants/toast.constants";
-	import { getToastStore } from "@skeletonlabs/skeleton";
-	import type { Article, ArticleQueryParams } from "@type/api/article.type";
+	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+	import type { Article, ArticleQueryParams, Citation } from "@type/api/article.type";
 	import type { ArticleItemProps } from "@type/components/articleItem.type";
 	import type { DefaultMainPageProps } from "@type/components/defaultMainPage.type";
 	import { chunkArray } from "@utils/array";
@@ -27,6 +28,7 @@
 	};
 	export let mappingToArticleItem: (article: Article, showButton: boolean) => ArticleItemProps;
 
+	const modalStore = getModalStore();
 	const toastStore = getToastStore();
 	const images: string[] = ["svg/vsb_cs.svg", "svg/vsb_en.svg", "images/uniza_sk.jpg"];
 
@@ -55,6 +57,8 @@
 		} catch (error) {
 			console.log(error);
 		} finally {
+			// Delay for 1s
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 			isLoading = false;
 		}
 
@@ -74,6 +78,26 @@
 		);
 
 		chunkPreviousArticles = chunkArray(mappedPreviousArticles, 5);
+	};
+
+	/**
+	 * Handle cite article
+	 * @param citations Citation
+	 */
+	const handleCiteArticle = (citations: Citation) => () => {
+		const modal: ModalSettings = {
+			type: "component",
+			backdropClasses: "!bg-tertiary-800/50",
+			component: {
+				ref: CiteModal,
+				props: {
+					apa: citations?.apa ?? "",
+					bibTex: citations?.bib_tex ?? ""
+				}
+			}
+		};
+
+		modalStore.trigger(modal);
 	};
 </script>
 
@@ -134,7 +158,11 @@
 				{#each chunkMostViewArticles as group}
 					<div class="flex flex-col gap-4">
 						{#each group as item (item.id)}
-							<ArticleItem {...item} />
+							<ArticleItem
+								{...item}
+								link={`/index.php/AEEE/article/view/${item.id}`}
+								onCiteArticle={handleCiteArticle(item.citations)}
+							/>
 						{/each}
 					</div>
 				{/each}
@@ -155,13 +183,13 @@
 		>
 			<svelte:fragment slot="carousel-sidebar">
 				<ul
-					class="un-ordered-list-circle float-left grid w-full grid-cols-2 grid-rows-2 gap-4 md:grid-cols-4 xl:w-40 xl:grid-cols-1 xl:grid-rows-none"
+					class="un-ordered-list-circle float-left grid w-full auto-rows-min grid-cols-2 gap-4 md:grid-cols-4 xl:w-40 xl:grid-cols-1 xl:grid-rows-none"
 				>
 					<!-- Show past 10 years -->
 					{#each Array.from({ length: 10 }) as _, i}
 						<li
 							class={clsx(
-								"relative float-left w-full cursor-pointer py-1 pl-4 transition-all hover:pl-8",
+								"relative float-left h-fit w-full cursor-pointer py-1 pl-4 transition-all hover:pl-8",
 								{
 									"active text-primary-500": selectedYear === new Date().getFullYear() - i - 1
 								}
@@ -179,7 +207,11 @@
 				{#each chunkPreviousArticles as group}
 					<div class="flex flex-col gap-4">
 						{#each group as item (item.id)}
-							<ArticleItem {...item} />
+							<ArticleItem
+								{...item}
+								link={`/index.php/AEEE/article/view/${item.id}`}
+								onCiteArticle={handleCiteArticle(item.citations)}
+							/>
 						{/each}
 					</div>
 				{/each}
@@ -195,9 +227,15 @@
 			link="/issues/archives"
 		>
 			<svelte:fragment slot="carousel-items">
-				{#each incomingArticles as item}
-					<ArticleItem {...item} />
-				{/each}
+				<div class="flex flex-col gap-4">
+					{#each incomingArticles as item}
+						<ArticleItem
+							{...item}
+							link={`/index.php/AEEE/article/view/${item.id}`}
+							onCiteArticle={handleCiteArticle(item.citations)}
+						/>
+					{/each}
+				</div>
 			</svelte:fragment>
 		</CarouselContent>
 	</div>

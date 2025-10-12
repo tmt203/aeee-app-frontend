@@ -24,6 +24,7 @@
 			title: normalizeTitle(article.title),
 			link: article.pdf_path,
 			views: article.views,
+			citations: article.citations,
 			showButton
 		};
 	};
@@ -32,7 +33,7 @@
 		? latestManager.foreword
 		: "Welcome to the Advances in Electrical and Electronic Engineering journal. We are dedicated to publishing high-quality research articles that contribute to the advancement of knowledge in the field of electrical and electronic engineering. Our journal provides a platform for researchers, academics, and industry professionals to share their findings and insights with a global audience. We invite you to explore our latest articles and join us in our mission to promote innovation and excellence in this dynamic field.";
 	const mappedMostViewsArticles: ArticleItemProps[] = mostViewsArticles.map((article) =>
-		mappingToArticleItem(article, true)
+		mappingToArticleItem(article, false)
 	);
 	const mappedPreviousArticles: ArticleItemProps[] = previousArticles.map((article) =>
 		mappingToArticleItem(article, false)

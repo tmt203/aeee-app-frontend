@@ -16,7 +16,7 @@
 
 <DefaultPageLayout breadcrumbs={["About Us", "Announcements"]}>
 	{#if announcements && announcements.length > 0}
-		<div class="flex w-full flex-col gap-10">
+		<div class="flex w-full flex-col gap-4 xl:w-9/12">
 			{#each announcements as announcement}
 				<article class="aeee-article">
 					<section class="flex items-center gap-2">

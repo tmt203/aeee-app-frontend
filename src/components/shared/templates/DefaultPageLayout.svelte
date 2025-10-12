@@ -17,7 +17,7 @@
 
 <!-- Area: Breadcrumb -->
 <div
-	class="container flex w-full flex-col items-center justify-between bg-surface-700 px-4 py-3 text-white xl:flex-row xl:px-20"
+	class="container flex w-full flex-col items-center justify-between bg-primary-500 px-4 py-3 text-white xl:flex-row xl:px-20"
 >
 	<span class="mr-auto">{breadcrumbs.join("/")}</span>
 </div>

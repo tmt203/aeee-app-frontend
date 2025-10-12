@@ -5,5 +5,19 @@
 		"search": "Search",
 		"support": "Support",
 		"language": "Language"
+	},
+	"cite_modal": {
+		"title": "Cite this article",
+		"close": "Close",
+		"copy": "Copy to clipboard",
+		"copied": "Copied!",
+		"apa": {
+			"title": "APA",
+			"description": "American Psychological Association (APA) style is commonly used in the social sciences."
+		},
+		"bib_tex": {
+			"title": "BibTeX",
+			"description": "BibTeX is a reference management software for formatting lists of references."
+		}
 	}
 }
