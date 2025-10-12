@@ -89,6 +89,8 @@
 		"confirm": "Confirm",
 		"confirm_delete": "Confirm delete",
 		"reviewed": "Reviewed",
+		"copy": "Copy",
+		"copied": "Copied",
 		"import_file": "Import file",
 		"export_file": "Export file"
 	},

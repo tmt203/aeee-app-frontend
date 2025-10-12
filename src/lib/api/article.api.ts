@@ -16,3 +16,15 @@ export const apiGetArticles = async (params: ArticleQueryParams) => {
 		params
 	});
 };
+
+/**
+ * Api get article by id
+ * @param id number
+ * @returns ApiResponse<Article>
+ */
+export const apiGetArticleById = async (id: number) => {
+	return await apiGet<ApiResponse<Article>>({
+		path: `${PATH}/${id}`,
+		token: "AUTH_TOKEN"
+	});
+};

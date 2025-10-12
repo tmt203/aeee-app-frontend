@@ -13,9 +13,9 @@ export type History = {
 } & PubDate;
 
 export type Author = {
-    first_name: string;
-    last_name: string;
-}
+	first_name: string;
+	last_name: string;
+};
 
 export type ArticleQueryParams = {
 	title?: string;
@@ -27,6 +27,11 @@ export type ArticleQueryParams = {
 	year?: number;
 	sort?: string;
 } & Param;
+
+export type Citation = {
+	apa: string;
+	bib_tex: string;
+};
 
 export type Article = {
 	title: string;
@@ -45,4 +50,5 @@ export type Article = {
 	category: string;
 	views: number;
 	year: number;
+	citations: Citation;
 } & AuditInfo;
