@@ -66,3 +66,21 @@ export const normalizeTitle = (input: string): string => {
 		})
 		.join(" ");
 };
+
+/**
+ * Normalize math text (subscript/superscript)
+ * Example: (VD: R_{ON} → R<sub>ON</sub>, V^2 → V<sup>2</sup>)
+ */
+export function normalizeMathText(abstract: string): string {
+	if (!abstract) return "";
+
+	let formatted = abstract;
+
+	formatted = formatted.replace(/([A-Za-z0-9])_\{([^}]+)\}/g, "$1<sub>$2</sub>");
+	formatted = formatted.replace(/([A-Za-z0-9])_([A-Za-z0-9]+)/g, "$1<sub>$2</sub>");
+	formatted = formatted.replace(/([A-Za-z0-9])\^\{([^}]+)\}/g, "$1<sup>$2</sup>");
+	formatted = formatted.replace(/([A-Za-z0-9])\^([A-Za-z0-9]+)/g, "$1<sup>$2</sup>");
+	formatted = formatted.replace(/\*/g, "×").replace(/%/g, "％").replace(/\^-/g, "⁻");
+
+	return formatted;
+}
