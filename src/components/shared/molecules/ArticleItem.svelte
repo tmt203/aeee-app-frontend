@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { getModalStore } from "@skeletonlabs/skeleton";
-	import type { Citation } from "@type/api/article.type";
 	import { Eye } from "lucide-svelte";
 
 	export let authors: string[] = [];
@@ -8,7 +6,8 @@
 	export let link: string = "";
 	export let views: number = 0;
 	export let showButton: boolean = false;
-	export let onCiteArticle: () => void;
+	export let showViews: boolean = false;
+	export let onCiteArticle: () => void = () => {};
 </script>
 
 <div
@@ -21,7 +20,7 @@
 	</div>
 
 	<!-- Title -->
-	<h3 class="mb-2 line-clamp-2 text-base font-semibold leading-snug">
+	<h3 class="line-clamp-2 text-base font-semibold leading-snug text-gray-600 dark:text-gray-400">
 		<a
 			href={link}
 			class="transition-colors duration-200 hover:text-blue-500"
@@ -31,10 +30,12 @@
 	</h3>
 
 	<!-- Views -->
-	<span class="text-xs text-gray-500">
-		<Eye class="mr-1 inline-block" size={16} />
-		{views} views
-	</span>
+	{#if showViews}
+		<span class="mt-2 text-xs text-gray-500">
+			<Eye class="mr-1 inline-block" size={16} />
+			{views} views
+		</span>
+	{/if}
 
 	<!-- Buttons -->
 	{#if showButton}

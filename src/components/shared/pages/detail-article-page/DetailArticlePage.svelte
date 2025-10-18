@@ -3,7 +3,7 @@
 	import DefaultPageLayout from "@components/shared/templates/DefaultPageLayout.svelte";
 	import { getModalStore, type ModalSettings } from "@skeletonlabs/skeleton";
 	import type { Article } from "@type/api/article.type";
-	import { toCapitalCase } from "@utils/string";
+	import { normalizeMathText, toCapitalCase } from "@utils/string";
 	import { BookOpen, FileText } from "lucide-svelte";
 
 	export let article: Article;
@@ -66,7 +66,7 @@
 			<div
 				class="rounded-lg border-l-4 border-primary-500 bg-primary-50/60 p-4 dark:border-primary-400 dark:bg-primary-900/40"
 			>
-				{@html article?.abstract ?? "<p>No abstract available.</p>"}
+				{@html normalizeMathText(article?.abstract) ?? "<p>No abstract available.</p>"}
 			</div>
 		</div>
 

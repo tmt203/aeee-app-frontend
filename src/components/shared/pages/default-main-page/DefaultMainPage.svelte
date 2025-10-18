@@ -1,17 +1,14 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
 	import { apiGetArticles } from "@api/article.api";
 	import { CiteModal } from "@components/shared/atoms";
-	import Spinner from "@components/shared/atoms/Spinner.svelte";
-	import { Button } from "@components/shared/molecules";
-	import ArticleItem from "@components/shared/molecules/ArticleItem.svelte";
+	import { ArticleItem, Button } from "@components/shared/molecules";
 	import { CarouselContent } from "@components/shared/organisms";
 	import { generateToast } from "@constants/toast.constants";
 	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
 	import type { Article, ArticleQueryParams, Citation } from "@type/api/article.type";
-	import type { ArticleItemProps } from "@type/components/articleItem.type";
 	import type { DefaultMainPageProps } from "@type/components/defaultMainPage.type";
 	import { chunkArray } from "@utils/array";
+	import { mappingToArticleItem } from "@utils/components/article_item";
 	import clsx from "clsx";
 	import Carousel from "svelte-carousel";
 
@@ -26,7 +23,6 @@
 		previousArticles: [],
 		incomingArticles: []
 	};
-	export let mappingToArticleItem: (article: Article, showButton: boolean) => ArticleItemProps;
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
@@ -74,7 +70,7 @@
 
 		const previousArticles = await handleFetchArticles({ year, limit: 9999 });
 		const mappedPreviousArticles = previousArticles.map((article) =>
-			mappingToArticleItem(article, false)
+			mappingToArticleItem(article, false, true)
 		);
 
 		chunkPreviousArticles = chunkArray(mappedPreviousArticles, 5);

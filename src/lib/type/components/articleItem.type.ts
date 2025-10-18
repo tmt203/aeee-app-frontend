@@ -8,4 +8,5 @@ export interface ArticleItemProps {
 	views: number;
 	citations: Citation;
 	showButton: boolean;
+	showViews: boolean;
 }

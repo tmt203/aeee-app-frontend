@@ -40,7 +40,7 @@
 	};
 </script>
 
-<div class="bg-surface-50-900-token h-full w-8/12 rounded-xl">
+<div class="bg-surface-50-900-token h-full w-8/12 rounded-xl 2xl:w-6/12">
 	<form class="flex flex-col justify-between">
 		<!-- Area: Modal Header -->
 		<div class="flex items-center justify-between gap-6 p-2 text-lg font-bold">
