@@ -39,10 +39,6 @@ export type Article = {
 	volume: number;
 	issue: number;
 	authors: Author[];
-	pages: {
-		first: number;
-		last: number;
-	};
 	history: History[];
 	abstract: string;
 	language: string;
@@ -51,4 +47,9 @@ export type Article = {
 	views: number;
 	year: number;
 	citations: Citation;
+	pub_date: PubDate;
+	pages: {
+		first: number;
+		last: number;
+	};
 } & AuditInfo;

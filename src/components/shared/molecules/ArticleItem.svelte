@@ -14,9 +14,9 @@
 	class="article-item flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition dark:border-gray-700 dark:bg-gray-900"
 >
 	<!-- Authors -->
-	<div class="mb-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+	<div class="mb-2 flex items-start gap-2 text-xs text-gray-600 dark:text-gray-400">
 		<i class="uil uil-user text-gray-500 dark:text-gray-400"></i>
-		<span class="truncate">{authors.join(", ")}</span>
+		<span>{authors.join(", ")}</span>
 	</div>
 
 	<!-- Title -->

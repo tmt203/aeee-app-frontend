@@ -7,6 +7,7 @@ export type ManagerQueryParams = {
 
 export type Manager = {
 	foreword: string;
+	foreword_content: string;
 	avatar_url: string;
 	info_file_url: string;
 	volume: number;

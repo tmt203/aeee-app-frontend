@@ -49,6 +49,11 @@
 	 */
 	onMount(async () => {
 		isMounted = false;
+
+		// Set scroll smoothing behavior
+		if (document) {
+			document.documentElement.style.scrollBehavior = "smooth";
+		}
 	});
 </script>
 
