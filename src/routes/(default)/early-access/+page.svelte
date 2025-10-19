@@ -20,7 +20,7 @@
 </svelte:head>
 
 <DefaultPageLayout breadcrumbs={["Early Access"]}>
-	<div class="flex flex-col gap-4">
+	<div class="flex w-full flex-col gap-4 xl:w-9/12">
 		{#each earlyAccessArticles as item}
 			<ArticleItem {...item} link={`${PUBLIC_API_HOST}${item.link}`} />
 		{/each}
