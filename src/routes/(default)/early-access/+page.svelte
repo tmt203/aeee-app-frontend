@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_API_HOST } from "$lib/env/client";
+	import { API_HOST } from "$lib/env/client";
 	import ArticleItem from "@components/shared/molecules/ArticleItem.svelte";
 	import { DefaultPageLayout } from "@components/shared/templates";
 	import { mappingToArticleItem } from "@utils/components/article_item";
@@ -22,7 +22,14 @@
 <DefaultPageLayout breadcrumbs={["Early Access"]}>
 	<div class="flex w-full flex-col gap-4 xl:w-9/12">
 		{#each earlyAccessArticles as item}
-			<ArticleItem {...item} link={`${PUBLIC_API_HOST}${item.link}`} />
+			<ArticleItem
+				title={item.title}
+				views={item.views}
+				authors={item.authors}
+				showViews={item.showViews}
+				showButton={item.showButton}
+				link={`${API_HOST}${item.link}`}
+			/>
 		{/each}
 	</div>
 </DefaultPageLayout>

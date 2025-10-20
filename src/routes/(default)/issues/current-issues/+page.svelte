@@ -1,12 +1,12 @@
 <script lang="ts">
 	import DefaultPageLayout from "@components/shared/templates/DefaultPageLayout.svelte";
 	import type { PageData } from "./$types";
-	import { PUBLIC_API_HOST } from "$lib/env/client";
 	import { parseToFormat } from "@utils/time";
 	import { ArticleItem } from "@components/shared/molecules";
 	import type { ArticleItemProps } from "@type/components/articleItem.type";
 	import { mappingToArticleItem } from "@utils/components/article_item";
 	import { WrapperContent } from "@components/shared/organisms";
+	import { API_HOST } from "$lib/env/client";
 
 	export let data: PageData;
 	const { issue } = data;
@@ -44,7 +44,7 @@
 			<!-- Area: Manager Section -->
 			<div id="foreword" class="card mb-6 flex flex-col items-start gap-6 p-4 md:flex-row">
 				<img
-					src={`${PUBLIC_API_HOST}${issue.manager.avatar_url}`}
+					src={`${API_HOST}${issue.manager.avatar_url}`}
 					alt="Manager Avatar"
 					class="h-40 w-40 rounded-full border border-gray-200 object-cover shadow-sm"
 				/>
@@ -56,7 +56,7 @@
 					</p>
 					<a
 						target="_blank"
-						href={`${PUBLIC_API_HOST}${issue.manager.info_file_url}`}
+						href={`${API_HOST}${issue.manager.info_file_url}`}
 						class="mt-2 inline-block font-medium text-primary-500 underline-offset-4 hover:text-primary-800 hover:underline"
 					>
 						Read more
@@ -69,7 +69,11 @@
 				<div class="flex flex-col gap-4">
 					{#each articles as article}
 						<ArticleItem
-							{...article}
+							title={article.title}
+							views={article.views}
+							authors={article.authors}
+							showViews={article.showViews}
+							showButton={article.showButton}
 							link={`/index.php/AEEE/article/view/${article.id}`}
 							onCiteArticle={() => {}}
 						/>
