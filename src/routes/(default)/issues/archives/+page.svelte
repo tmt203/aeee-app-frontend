@@ -12,11 +12,11 @@
 </svelte:head>
 
 <DefaultPageLayout breadcrumbs={["Archives"]}>
-	<div class="flex flex-col">
+	<section class="flex w-full flex-col gap-4 text-surface-900/80 xl:w-9/12">
 		<div class="flex flex-wrap items-center gap-x-2 gap-y-0">
 			{#each years as year}
 				<button class="btn text-primary-500">{year}</button>
 			{/each}
 		</div>
-	</div>
+	</section>
 </DefaultPageLayout>

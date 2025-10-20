@@ -155,7 +155,11 @@
 					<div class="flex flex-col gap-4">
 						{#each group as item (item.id)}
 							<ArticleItem
-								{...item}
+								title={item.title}
+								views={item.views}
+								authors={item.authors}
+								showViews={item.showViews}
+								showButton={item.showButton}
 								link={`/index.php/AEEE/article/view/${item.id}`}
 								onCiteArticle={handleCiteArticle(item.citations)}
 							/>
@@ -204,7 +208,11 @@
 					<div class="flex flex-col gap-4">
 						{#each group as item (item.id)}
 							<ArticleItem
-								{...item}
+								title={item.title}
+								views={item.views}
+								authors={item.authors}
+								showViews={item.showViews}
+								showButton={item.showButton}
 								link={`/index.php/AEEE/article/view/${item.id}`}
 								onCiteArticle={handleCiteArticle(item.citations)}
 							/>
@@ -226,7 +234,11 @@
 				<div class="flex flex-col gap-4">
 					{#each incomingArticles as item}
 						<ArticleItem
-							{...item}
+							title={item.title}
+							views={item.views}
+							authors={item.authors}
+							showViews={item.showViews}
+							showButton={item.showButton}
 							link={`/index.php/AEEE/article/view/${item.id}`}
 							onCiteArticle={handleCiteArticle(item.citations)}
 						/>

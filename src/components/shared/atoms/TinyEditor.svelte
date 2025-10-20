@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_TINYMCE_API_KEY } from "$lib/env/client";
+	import { TINYMCE_API_KEY } from "$lib/env/client";
 	import { EDITOR_CONFIG } from "@constants/tiny_mce.constants";
 	import { modeCurrent } from "@skeletonlabs/skeleton";
 	import Editor from "@tinymce/tinymce-svelte";
@@ -16,4 +16,4 @@
 	}
 </script>
 
-<Editor apiKey={PUBLIC_TINYMCE_API_KEY} conf={editorConfig} bind:value />
+<Editor apiKey={TINYMCE_API_KEY} conf={editorConfig} bind:value />

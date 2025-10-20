@@ -1,8 +1,6 @@
-import { PUBLIC_API_HOST } from "$env/static/public";
+import { API_HOST } from "$lib/env/client";
 import type { ApiMethod, Request } from "@type/api/api.type";
 import queryString from "query-string";
-
-const API_HOST = PUBLIC_API_HOST ?? "";
 
 /**
  * Handle get request's headers
@@ -38,7 +36,7 @@ const apiRequest = async <T>(method: ApiMethod, request: Request) => {
 	const queryParam =
 		params && Object.keys(params).length > 0 ? "?" + queryString.stringify(params) : "";
 
-	const baseUrl = host ?? PUBLIC_API_HOST ?? "";
+	const baseUrl = host ?? API_HOST ?? "";
 	const finalUrl = `${baseUrl}${path}${queryParam}`;
 
 	const options: RequestInit = {
