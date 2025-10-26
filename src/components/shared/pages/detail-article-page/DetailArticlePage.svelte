@@ -52,10 +52,12 @@
 					)
 					.join(", ")}
 			</p>
-			<p>
-				<span class="font-medium text-gray-800 dark:text-gray-200">DOI:</span>
-				{article?.doi}
-			</p>
+			{#if article?.doi !== "Undefined"}
+				<p>
+					<span class="font-medium text-gray-800 dark:text-gray-200">DOI:</span>
+					{article?.doi}
+				</p>
+			{/if}
 		</div>
 
 		<!-- Abstract -->

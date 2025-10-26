@@ -70,7 +70,7 @@
 
 		const previousArticles = await handleFetchArticles({ year, limit: 9999 });
 		const mappedPreviousArticles = previousArticles.map((article) =>
-			mappingToArticleItem(article, false, true)
+			mappingToArticleItem({ article, showViews: true })
 		);
 
 		chunkPreviousArticles = chunkArray(mappedPreviousArticles, 5);
@@ -154,15 +154,7 @@
 				{#each chunkMostViewArticles as group}
 					<div class="flex flex-col gap-4">
 						{#each group as item (item.id)}
-							<ArticleItem
-								title={item.title}
-								views={item.views}
-								authors={item.authors}
-								showViews={item.showViews}
-								showButton={item.showButton}
-								link={`/index.php/AEEE/article/view/${item.id}`}
-								onCiteArticle={handleCiteArticle(item.citations)}
-							/>
+							<ArticleItem {...item} onCiteArticle={handleCiteArticle} />
 						{/each}
 					</div>
 				{/each}
@@ -207,15 +199,7 @@
 				{#each chunkPreviousArticles as group}
 					<div class="flex flex-col gap-4">
 						{#each group as item (item.id)}
-							<ArticleItem
-								title={item.title}
-								views={item.views}
-								authors={item.authors}
-								showViews={item.showViews}
-								showButton={item.showButton}
-								link={`/index.php/AEEE/article/view/${item.id}`}
-								onCiteArticle={handleCiteArticle(item.citations)}
-							/>
+							<ArticleItem {...item} onCiteArticle={handleCiteArticle} />
 						{/each}
 					</div>
 				{/each}
@@ -233,15 +217,7 @@
 			<svelte:fragment slot="carousel-items">
 				<div class="flex flex-col gap-4">
 					{#each incomingArticles as item}
-						<ArticleItem
-							title={item.title}
-							views={item.views}
-							authors={item.authors}
-							showViews={item.showViews}
-							showButton={item.showButton}
-							link={`/index.php/AEEE/article/view/${item.id}`}
-							onCiteArticle={handleCiteArticle(item.citations)}
-						/>
+						<ArticleItem {...item} onCiteArticle={handleCiteArticle} />
 					{/each}
 				</div>
 			</svelte:fragment>

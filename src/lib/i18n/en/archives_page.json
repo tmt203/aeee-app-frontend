@@ -1,0 +1,14 @@
+{
+	"archives_page": {
+		"publication_date": "Publication date",
+		"volume": "Volume",
+		"issue": "Issue",
+		"article_title": "Article's title",
+		"author_name": "Author's name",
+		"doi": "DOI",
+		"tabs": {
+			"archives": "Archives",
+			"search": "Search"
+		}
+	}
+}

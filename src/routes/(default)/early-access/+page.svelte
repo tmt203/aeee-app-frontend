@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { API_HOST } from "$lib/env/client";
 	import ArticleItem from "@components/shared/molecules/ArticleItem.svelte";
 	import { DefaultPageLayout } from "@components/shared/templates";
 	import { mappingToArticleItem } from "@utils/components/article_item";
@@ -10,26 +9,19 @@
 	const { articles } = data;
 
 	const earlyAccessArticles = articles.map((article) =>
-		mappingToArticleItem(article, false, false)
+		mappingToArticleItem({ article, isEarlyAccess: true })
 	);
 </script>
 
 <svelte:head>
-	<title>AEEE - Early Access</title>
+	<title>Early Access - AEEE</title>
 	<meta name="description" content="Early access articles." />
 </svelte:head>
 
 <DefaultPageLayout breadcrumbs={["Early Access"]}>
 	<div class="flex w-full flex-col gap-4 xl:w-9/12">
 		{#each earlyAccessArticles as item}
-			<ArticleItem
-				title={item.title}
-				views={item.views}
-				authors={item.authors}
-				showViews={item.showViews}
-				showButton={item.showButton}
-				link={`${API_HOST}${item.link}`}
-			/>
+			<ArticleItem {...item} />
 		{/each}
 	</div>
 </DefaultPageLayout>

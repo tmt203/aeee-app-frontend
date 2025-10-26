@@ -48,7 +48,7 @@ export type Article = {
 	year: number;
 	citations: Citation;
 	pub_date: PubDate;
-	pages: {
+	pages?: {
 		first: number;
 		last: number;
 	};

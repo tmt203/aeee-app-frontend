@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Author Guidelines</title>
+	<title>Author Guidelines - AEEE</title>
 	<meta name="description" content="Author guidelines for the journal." />
 </svelte:head>
 

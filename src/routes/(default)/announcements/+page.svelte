@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Announcements</title>
+	<title>Announcements - AEEE</title>
 	<meta name="description" content="Announcements of the journal." />
 </svelte:head>
 

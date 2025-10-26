@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar.svelte";
 import SidebarMenu from "./SidebarMenu.svelte";
 import Table from "./Table.svelte";
 import ArticleItem from "./ArticleItem.svelte";
+import InputTime from "./InputTime.svelte";
 
 export {
 	Button,
@@ -17,5 +18,6 @@ export {
 	Sidebar,
 	SidebarMenu,
 	Table,
-	ArticleItem
+	ArticleItem,
+	InputTime
 };

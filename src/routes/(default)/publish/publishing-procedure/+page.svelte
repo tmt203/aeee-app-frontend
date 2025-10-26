@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Publishing Procedure</title>
+	<title>Publishing Procedure - AEEE</title>
 	<meta name="description" content="Publishing procedure for the journal." />
 </svelte:head>
 
