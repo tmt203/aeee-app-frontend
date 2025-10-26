@@ -32,7 +32,7 @@
 		value?: string | number | readonly string[]
 	) => {
 		return clsx(
-			"flex items-center justify-center border p-1 bg-light-500 group",
+			"flex items-center justify-center border py-1 px-2 bg-surface-200 dark:bg-surface-900 group border-surface-600-300-token",
 			"dark:!border-surface-400/30 dark:!bg-surface-300/5",
 			"hover:justify-between hover:!w-56 transition-all duration-200 ease-in-out",
 			{
@@ -110,7 +110,6 @@
 
 <div class={clsx(getInputSearchClassNames(size, rounded, borderColor, value), $$props.class)}>
 	<input
-		{...$$props}
 		type="text"
 		placeholder={$$props.placeholder}
 		class={getInputClassNames(size, value)}

@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Journal History</title>
+	<title>Journal History</title>
 	<meta name="description" content="Journal history of the publication." />
 </svelte:head>
 

@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Peer Review Process</title>
+	<title>Peer Review Process</title>
 	<meta name="description" content="Peer review process for the journal." />
 </svelte:head>
 

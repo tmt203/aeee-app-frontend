@@ -7,8 +7,6 @@
 		Drawer,
 		initializeStores,
 		Modal,
-		modeOsPrefers,
-		setModeCurrent,
 		storePopup,
 		Toast,
 		type ModalComponent

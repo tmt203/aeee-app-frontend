@@ -12,12 +12,24 @@
 	const { issue } = data;
 
 	const articles: ArticleItemProps[] =
-		issue?.articles.map((article) => mappingToArticleItem(article, false, true)) || [];
+		issue?.articles.map((article) =>
+			mappingToArticleItem({ article, showDoi: true, showPages: true, showViews: true })
+		) || [];
 </script>
 
 <svelte:head>
-	<title>AEEE - Current Issues</title>
-	<meta name="description" content="Current issues of the journal." />
+	{#if issue}
+		<title>
+			Volume {issue.volume}, Issue {issue.issue} ({issue.articles[0]?.pub_date.year}) - AEEE
+		</title>
+		<meta
+			name="description"
+			content="Explore the articles in Volume {issue.volume}, Issue {issue.issue}."
+		/>
+	{:else}
+		<title>Current Issues - AEEE</title>
+		<meta name="description" content="Explore the current issues of the journal." />
+	{/if}
 </svelte:head>
 
 <DefaultPageLayout
@@ -42,41 +54,35 @@
 			</div>
 
 			<!-- Area: Manager Section -->
-			<div id="foreword" class="card mb-6 flex flex-col items-start gap-6 p-4 md:flex-row">
-				<img
-					src={`${API_HOST}${issue.manager.avatar_url}`}
-					alt="Manager Avatar"
-					class="h-40 w-40 rounded-full border border-gray-200 object-cover shadow-sm"
-				/>
+			{#if issue.manager}
+				<div id="foreword" class="card mb-6 flex flex-col items-start gap-6 p-4">
+					<img
+						src={`${API_HOST}${issue.manager.avatar_url}`}
+						alt="Manager Avatar"
+						class="h-40 w-auto border border-gray-200 object-cover shadow-sm"
+					/>
 
-				<div class="flex-1">
-					<h2 class="mb-2 text-2xl font-semibold">{issue.manager.foreword}</h2>
-					<p class="mb-3 whitespace-pre-line text-justify leading-relaxed">
-						{issue.manager.foreword_content}
-					</p>
-					<a
-						target="_blank"
-						href={`${API_HOST}${issue.manager.info_file_url}`}
-						class="mt-2 inline-block font-medium text-primary-500 underline-offset-4 hover:text-primary-800 hover:underline"
-					>
-						Read more
-					</a>
+					<div class="flex-1">
+						<h5 class="mb-2 text-base font-semibold">{issue.manager.foreword}</h5>
+						<p class="mb-3 whitespace-pre-line text-justify text-sm leading-relaxed">
+							{issue.manager.foreword_content || ""}
+						</p>
+						<a
+							target="_blank"
+							href={`${API_HOST}${issue.manager.info_file_url}`}
+							class="mt-2 inline-block text-sm font-medium text-primary-500 underline-offset-4 hover:text-primary-800 hover:underline"
+						>
+							Read more
+						</a>
+					</div>
 				</div>
-			</div>
+			{/if}
 
 			<!-- Area: Articles Section -->
 			<WrapperContent id="articles" leftLabel="Articles">
 				<div class="flex flex-col gap-4">
 					{#each articles as article}
-						<ArticleItem
-							title={article.title}
-							views={article.views}
-							authors={article.authors}
-							showViews={article.showViews}
-							showButton={article.showButton}
-							link={`/index.php/AEEE/article/view/${article.id}`}
-							onCiteArticle={() => {}}
-						/>
+						<ArticleItem {...article} />
 					{/each}
 				</div>
 			</WrapperContent>

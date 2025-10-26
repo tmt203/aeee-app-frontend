@@ -6,11 +6,13 @@ export type IssueQueryParams = {
 	volume?: number;
 	issue?: number;
 	manager?: string;
+	year?: number;
 } & Param;
 
 export type Issue = {
 	volume: number;
 	issue: number;
-	manager: Manager;
+	year: number;
+	manager?: Manager;
 	articles: Article[];
 } & AuditInfo;
