@@ -91,43 +91,49 @@
 	<slot />
 
 	<!-- Area: Sidebar -->
-	<div
-		class="sticky right-4 top-8 flex h-fit w-full flex-col gap-4 bg-transparent text-surface-700 xl:right-20 xl:w-3/12"
-	>
-		{#if tableOfContents.length > 0}
-			<div class="card !bg-slate-100 p-4 shadow-md">
-				<h4 class="mb-3 text-lg font-bold">Table of Contents</h4>
-				<ul class="list-none space-y-1">
-					{#each tableOfContents as item, index}
-						<li>
-							<button
-								on:click={() => scrollToSection(item.id)}
-								class={clsx(
-									"w-full rounded-md px-2 py-1 text-left text-sm transition-colors duration-150 hover:bg-primary-50 hover:text-primary-600",
-									selectedId === item.id ? "bg-primary-100 font-medium text-primary-600" : ""
-								)}
-							>
-								{index + 1}. {item.title}
-							</button>
-						</li>
-					{/each}
-				</ul>
-			</div>
-		{/if}
+	{#if showBanner || tableOfContents.length > 0}
+		<div
+			class="sticky right-4 top-8 flex h-fit w-full flex-col gap-4 bg-transparent text-surface-700 xl:right-20 xl:w-3/12"
+		>
+			{#if tableOfContents.length > 0}
+				<div class="card !bg-slate-100 p-4 shadow-md">
+					<h4 class="mb-3 text-lg font-bold">Table of Contents</h4>
+					<ul class="list-none space-y-1">
+						{#each tableOfContents as item, index}
+							<li>
+								<button
+									on:click={() => scrollToSection(item.id)}
+									class={clsx(
+										"w-full rounded-md px-2 py-1 text-left text-sm transition-colors duration-150 hover:bg-primary-50 hover:text-primary-600",
+										selectedId === item.id ? "bg-primary-100 font-medium text-primary-600" : ""
+									)}
+								>
+									{index + 1}. {item.title}
+								</button>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/if}
 
-		<!-- Area: Banner -->
-		{#if showBanner}
-			<div class="card !bg-slate-100 p-4 shadow-md">
-				<h4 class="mb-2 text-lg font-bold">VSB-TUO</h4>
-				<ul class="list-disc space-y-1 pl-4 text-sm">
-					{#each SIDEBAR_LINKS as { label, href }}
-						<li>
-							<a {href} class="transition-colors duration-150 hover:text-primary-600">{label}</a>
-						</li>
-					{/each}
-				</ul>
-				<img src="/images/vsb-tuo-logo.png" alt="VSB TUO Logo" class="mt-4 w-full object-contain" />
-			</div>
-		{/if}
-	</div>
+			<!-- Area: Banner -->
+			{#if showBanner}
+				<div class="card !bg-slate-100 p-4 shadow-md">
+					<h4 class="mb-2 text-lg font-bold">VSB-TUO</h4>
+					<ul class="list-disc space-y-1 pl-4 text-sm">
+						{#each SIDEBAR_LINKS as { label, href }}
+							<li>
+								<a {href} class="transition-colors duration-150 hover:text-primary-600">{label}</a>
+							</li>
+						{/each}
+					</ul>
+					<img
+						src="/images/vsb-tuo-logo.png"
+						alt="VSB TUO Logo"
+						class="mt-4 w-full object-contain"
+					/>
+				</div>
+			{/if}
+		</div>
+	{/if}
 </div>

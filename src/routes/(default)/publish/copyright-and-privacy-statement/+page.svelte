@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Copyright and Privacy Statement</title>
+	<title>Copyright and Privacy Statement</title>
 	<meta name="description" content="Copyright and privacy statement for the journal." />
 </svelte:head>
 

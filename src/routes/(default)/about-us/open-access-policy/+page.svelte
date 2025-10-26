@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Open Access Policy</title>
+	<title>Open Access Policy - AEEE</title>
 	<meta name="description" content="Open access policy of the journal." />
 </svelte:head>
 

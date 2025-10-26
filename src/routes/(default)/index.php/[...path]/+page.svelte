@@ -8,8 +8,8 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - {article?.title}</title>
-	<meta name="description" content="Abstracting and indexing of the journal." />
+	<title>{article?.title}</title>
+	<meta name="description" content={article.abstract} />
 </svelte:head>
 
 <DetailArticlePage {article} />

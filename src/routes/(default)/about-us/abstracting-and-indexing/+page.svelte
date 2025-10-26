@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Abstracting & Indexing</title>
+	<title>Abstracting & Indexing - AEEE</title>
 	<meta name="description" content="Abstracting and indexing of the journal." />
 </svelte:head>
 

@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Publication Frequency</title>
+	<title>Publication Frequency - AEEE</title>
 	<meta name="description" content="Publication frequency of the journal." />
 </svelte:head>
 
