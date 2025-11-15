@@ -41,7 +41,7 @@
 
 			const drawerSettings: DrawerSettings = {
 				id: "mobile-sidebar",
-				bgBackdrop: "bg-surface-900/50 dark:bg-surface-100/50",
+				bgBackdrop: "bg-gray-800/50 dark:bg-surface-100/50",
 				width: "w-2/3"
 			};
 
@@ -84,8 +84,13 @@
 	 * Run as soon as the component has been mounted to the DOM.
 	 */
 	onMount(() => {
-		// Set os mode as default for (default) layout
-		setModeCurrent($modeOsPrefers);
+		try {
+			// Init current light mode
+			const currentMode = localStorage.getItem("modeCurrent");
+			setModeCurrent(currentMode ? JSON.parse(currentMode) : $modeOsPrefers);
+		} catch (error) {
+			console.log(error);
+		}
 	});
 </script>
 

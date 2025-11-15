@@ -1,6 +1,5 @@
 <script lang="ts">
 	import "$lib/i18n";
-	import { ConfirmDeleteModal } from "@components/shared/molecules";
 	import LoadingPage from "@components/shared/pages/loading-page/LoadingPage.svelte";
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from "@floating-ui/dom";
 	import {
@@ -18,9 +17,7 @@
 	initializeStores();
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-	const modalRegistry: Record<string, ModalComponent> = {
-		confirmDeleteModal: { ref: ConfirmDeleteModal }
-	};
+	const modalRegistry: Record<string, ModalComponent> = {};
 
 	let showLoadingOverlay = false;
 	let isMounted: boolean = true;

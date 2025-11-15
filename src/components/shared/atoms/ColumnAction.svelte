@@ -2,7 +2,6 @@
 	import { popup, type PopupSettings } from "@skeletonlabs/skeleton";
 	import type { FilterItem } from "@type/components/columnAction.type";
 	import type { TableColumn } from "@type/components/table.type";
-	import clsx from "clsx";
 	import { EyeOff, Pin, PinOff, type Icon } from "lucide-svelte";
 	import { onMount, type ComponentType } from "svelte";
 	import { t } from "svelte-i18n";
@@ -145,12 +144,12 @@
 <div
 	use:portal={portalTarget}
 	bind:this={popupElement}
-	class="column-action card absolute w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-tertiary-600"
+	class="column-action card absolute w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-gray-800"
 	data-popup={`${columnId}-columnActionPopup`}
 >
 	{#each filterItems as item}
 		<button
-			class="listbox-item flex w-full cursor-pointer items-center justify-between rounded-lg bg-surface-300 p-2 hover:bg-surface-500 dark:bg-tertiary-600 dark:hover:bg-surface-50/10"
+			class="listbox-item flex w-full cursor-pointer items-center justify-between rounded-lg bg-surface-300 p-2 hover:bg-surface-500 dark:bg-gray-800 dark:hover:bg-surface-50/10"
 			on:click={handleClick(item.label)}
 		>
 			<svelte:component this={item.icon} size={16} class="stroke-secondary-text-color" />

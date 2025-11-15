@@ -3,6 +3,7 @@ import type { Article } from "@type/api/article.type";
 import type { PageServerLoad } from "./$types";
 import { error, redirect } from "@sveltejs/kit";
 import { API_HOST } from "$lib/env/server";
+import path from "path";
 
 export const load: PageServerLoad = async ({ params }) => {
 	const { path } = params;
@@ -34,7 +35,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	// If /pdf → redirect to backend static PDF
 	if (isPdf) {
 		// URL: http://localhost:4000{pdf_path}
-		const pdfUrl = `${API_HOST}${article.pdf_path}`;
+		const pdfUrl = `${API_HOST}/${article.pdf_path}`;
 		console.log("pdf url", pdfUrl);
 		throw redirect(302, pdfUrl);
 	}

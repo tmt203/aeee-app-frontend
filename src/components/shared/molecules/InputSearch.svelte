@@ -2,20 +2,21 @@
 	import type { Color, Size } from "@type/common.type";
 	import clsx from "clsx";
 	import { Search } from "lucide-svelte";
+	import { Icon } from "../atoms";
 
 	export let value: string = "";
-	export let rounded: Size = "md";
-	export let size: Size = "md";
+	export let rounded: Size = "lg";
+	export let size: Size = "lg";
 	export let borderColor: Color = "light";
 	export let onSearch: () => void = () => {};
 	export let onChange: (_event: Event) => void = (_event: Event) => {};
 
 	const sizeMap: Record<Size, number> = {
-		sm: 18,
-		md: 20,
-		lg: 22,
-		xl: 24,
-		"2xl": 26
+		sm: 16,
+		md: 16,
+		lg: 16,
+		xl: 18,
+		"2xl": 24
 	};
 
 	/**
@@ -32,8 +33,8 @@
 		value?: string | number | readonly string[]
 	) => {
 		return clsx(
-			"flex items-center justify-center border py-1 px-2 bg-surface-200 dark:bg-surface-900 group border-surface-600-300-token",
-			"dark:!border-surface-400/30 dark:!bg-surface-300/5",
+			"flex items-center justify-center border p-2 bg-light-500 group",
+			"bg-white dark:!border-surface-400/30 dark:!bg-surface-300/5",
 			"hover:justify-between hover:!w-56 transition-all duration-200 ease-in-out",
 			{
 				"!w-56": typeof value === "string" || Array.isArray(value) ? value.length > 0 : false,
@@ -56,10 +57,10 @@
 
 				// Size
 				"h-7 w-7 text-xs": size === "sm",
-				"h-8 w-8 text-sm": size === "md",
-				"h-9 w-9 text-base": size === "lg",
-				"h-10 w-10 text-lg": size === "xl",
-				"h-11 w-11 text-2xl": size === "2xl"
+				"h-8 w-8 text-xs": size === "md",
+				"h-9 w-9 text-xs": size === "lg",
+				"h-10 w-10 text-sm": size === "xl",
+				"h-11 w-11 text-base": size === "2xl"
 			}
 		);
 	};
@@ -72,18 +73,16 @@
 	 */
 	const getInputClassNames = (size: Size, value?: string | number | readonly string[]) => {
 		return clsx(
-			"w-0 border-none outline-none focus:ring-0 focus:border-transparent p-0 pr-0 bg-transparent",
+			"w-0 border-none outline-none focus:ring-0 focus:border-transparent p-0 pr-0 bg-transparent font-semibold text-primary-500",
 			"transition-all duration-500 ease-in-out transform scale-0 opacity-0",
 			"group-hover:scale-100 group-hover:w-full group-hover:opacity-100 group-hover:pr-2 group-hover:flex",
-			"placeholder:text-sm placeholder:text-secondary-text-color",
+			"placeholder:font-normal placeholder:text-sm placeholder:text-secondary-text-color",
 			{
 				"pr-2 w-full opacity-100 scale-100 flex":
 					typeof value === "string" || Array.isArray(value) ? value.length > 0 : false,
 				// Size
-				"text-xs": size === "sm",
-				"text-sm": size === "md",
-				"text-base": size === "lg" || size === "xl",
-				"text-xl": size === "2xl"
+				"text-xs": ["sm", "md", "lg", "xl"].includes(size),
+				"text-base": size === "2xl"
 			}
 		);
 	};
@@ -110,6 +109,7 @@
 
 <div class={clsx(getInputSearchClassNames(size, rounded, borderColor, value), $$props.class)}>
 	<input
+		{...$$props}
 		type="text"
 		placeholder={$$props.placeholder}
 		class={getInputClassNames(size, value)}
@@ -117,5 +117,10 @@
 		on:keydown={handleSearch}
 		on:change={handleInputSearchChange}
 	/>
-	<Search size={sizeMap[size]} className="cursor-pointer" on:click={onSearch} />
+	{#if value?.length}
+		<Icon icon="uil uil-times-circle" onClick={() => (value = "")} color="primary" class="mr-1" />
+	{/if}
+	<button type="button" on:click={onSearch}>
+		<Search size={sizeMap[size]} />
+	</button>
 </div>

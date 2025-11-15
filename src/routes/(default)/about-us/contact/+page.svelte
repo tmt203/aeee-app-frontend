@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Contact</title>
+	<title>Contact - AEEE</title>
 	<meta name="description" content="Contact information for the journal." />
 </svelte:head>
 

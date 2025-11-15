@@ -15,7 +15,7 @@ export type Color =
 	| string;
 
 export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "fit" | string;
-export type TypeVariant = "filled" | "soft" | "ghost" | "ringed";
+export type TypeVariant = "filled" | "soft" | "ghost" | "ringed" | "none";
 export type Placement = "start" | "end" | "center" | string;
 export type Direction = "row" | "column" | "stacked" | string;
 export type Shape = "line" | "circle" | "square" | string;

@@ -33,7 +33,7 @@ export type Citation = {
 	bib_tex: string;
 };
 
-export type Article = {
+export type ArticleBody = {
 	title: string;
 	doi: string;
 	volume: number;
@@ -52,4 +52,6 @@ export type Article = {
 		first: number;
 		last: number;
 	};
-} & AuditInfo;
+};
+
+export type Article = ArticleBody & AuditInfo;

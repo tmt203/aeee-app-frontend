@@ -111,6 +111,23 @@
 			"variant-filled-tertiary": variant === "tertiary" && !outline,
 			"variant-filled-surface": variant === "surface" && !outline,
 
+			"border border-primary-500 !bg-transparent !text-primary-500":
+				variant === "primary" && outline && variantType === "none",
+			"border border-secondary-500 !bg-transparent !text-secondary-500":
+				variant === "secondary" && outline && variantType === "none",
+			"border border-success-500 !bg-transparent !text-success-500":
+				variant === "success" && outline && variantType === "none",
+			"border border-warning-500 !bg-transparent !text-warning-500":
+				variant === "warning" && outline && variantType === "none",
+			"border border-info-500 !bg-transparent !text-info-500":
+				variant === "info" && outline && variantType === "none",
+			"border border-error-500 !bg-transparent !text-error-500":
+				variant === "error" && outline && variantType === "none",
+			"border border-tertiary-500 !bg-transparent !text-tertiary-500":
+				variant === "tertiary" && outline && variantType === "none",
+			"border border-surface-700 !bg-transparent !text-surface-700":
+				variant === "surface" && outline && variantType === "none",
+
 			"border border-primary-500 !bg-primary-500/30 text-primary-500":
 				variant === "primary" && outline && variantType === "soft",
 			"border border-secondary-500 !bg-secondary-500/30 text-secondary-500":

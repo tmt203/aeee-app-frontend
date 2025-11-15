@@ -23,13 +23,15 @@
 	export let showPreset: boolean = false;
 	export let minYear: number = 1950;
 	export let maxYear: number = new Date().getFullYear();
+	export let errorMessage: string = "";
+	export let showErrorMessage: boolean = false;
 	export let onChange: () => void = () => {};
 	export let onAfterRemove: () => void = () => {};
 
 	const { AmpPlugin, PresetPlugin, RangePlugin } = pkg;
 	const datePicker: PopupSettings = {
 		event: "click",
-		target: "datePicker",
+		target: `datePicker-${id}`,
 		placement: "bottom-start",
 		closeQuery: "#close-input-time"
 	};
@@ -178,35 +180,48 @@
 	});
 </script>
 
-<div
-	class={clsx(
-		"border-surface-600-300-token flex min-w-fit cursor-pointer items-center gap-1 rounded-xl border bg-surface-200 px-2 dark:bg-surface-900",
-		{ "cursor-not-allowed opacity-50": disabled },
-		{
-			// Size
-			"h-7": size === "sm",
-			"h-9": size === "md",
-			"h-10": size === "lg",
-			"h-12": size === "xl",
-			"h-14": size === "2xl"
-		},
-		$$props.class
-	)}
->
-	<div class="flex items-center gap-1" use:popup={datePicker}>
-		<!-- Area: Icon -->
-		<Icon {icon} size={iconSize} />
+<div class="flex w-full min-w-fit flex-col gap-2">
+	<div
+		class={clsx(
+			"j border-surface-600-300-token flex min-w-fit cursor-pointer items-center gap-1 rounded-xl border bg-surface-200 px-2 dark:bg-gray-700",
+			{ "cursor-not-allowed opacity-50": disabled },
+			{
+				// Size
+				"h-7": size === "sm",
+				"h-9": size === "md",
+				"h-10": size === "lg",
+				"h-12": size === "xl",
+				"h-14": size === "2xl"
+			},
+			$$props.class
+		)}
+		use:popup={datePicker}
+	>
+		<div class="flex items-center gap-1">
+			<!-- Area: Icon -->
+			<Icon {icon} size={iconSize} />
 
-		<!-- Area: Date Time -->
-		<span class="min-w-fit text-sm">{`${$t(label)}${value.length ? ": " : ""}`}{value}</span>
+			<!-- Area: Date Time -->
+			<span class="min-w-fit text-sm">{`${$t(label)}${value.length ? ": " : ""}`}{value}</span>
+		</div>
+
+		{#if value.length}
+			<Icon
+				icon="uil uil-times-circle"
+				onClick={handleRemoveValue}
+				class="ml-auto p-[0.5px] pl-2"
+			/>
+		{/if}
 	</div>
 
-	{#if value.length}
-		<Icon icon="uil uil-times-circle" onClick={handleRemoveValue} class="ml-2 p-[0.5px]" />
+	{#if showErrorMessage && errorMessage?.length}
+		<span class="text-xs text-error-500">
+			{$t(errorMessage)}
+		</span>
 	{/if}
 </div>
 
 <!-- Area: Date Picker Popup -->
-<div class="z-[999]" data-popup="datePicker">
+<div class="z-[999]" data-popup="datePicker-{id}">
 	<input type="hidden" {id} />
 </div>

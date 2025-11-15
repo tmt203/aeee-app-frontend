@@ -71,7 +71,7 @@ export const normalizeTitle = (input: string): string => {
  * Normalize math text (subscript/superscript)
  * Example: (VD: R_{ON} → R<sub>ON</sub>, V^2 → V<sup>2</sup>)
  */
-export function normalizeMathText(abstract: string): string {
+export const normalizeMathText = (abstract: string): string => {
 	if (!abstract) return "";
 
 	let formatted = abstract;
@@ -83,4 +83,13 @@ export function normalizeMathText(abstract: string): string {
 	formatted = formatted.replace(/\*/g, "×").replace(/%/g, "％").replace(/\^-/g, "⁻");
 
 	return formatted;
-}
+};
+
+/**
+ * Sanitize file name by removing invalid characters
+ * @param name string
+ * @returns string
+ */
+export const sanitizeFileName = (name: string): string => {
+	return name.replace(/[<>:"/\\|?*]/g, "");
+};

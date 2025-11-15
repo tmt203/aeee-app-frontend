@@ -1,5 +1,7 @@
+import { browser } from "$app/environment";
 import { API_HOST } from "$lib/env/client";
-import type { ApiMethod, Request } from "@type/api/api.type";
+import { redirect } from "@sveltejs/kit";
+import type { ApiMethod, ApiResponse, Request } from "@type/api/api.type";
 import queryString from "query-string";
 
 /**
@@ -8,12 +10,14 @@ import queryString from "query-string";
  * @param apiKey string
  * @param locale string
  */
-const getAuthHeaders = (token?: string, apiKey?: string) => {
+const getAuthHeaders = (token?: string, apiKey?: string, body?: BodyInit) => {
 	if (!token && !apiKey) throw new Error("No authentication provided");
 
-	const headers: Record<string, string> = {
-		"Content-Type": "application/json"
-	};
+	const headers: Record<string, string> = {};
+
+	if (!(body instanceof FormData)) {
+		headers["Content-Type"] = "application/json";
+	}
 
 	if (apiKey) {
 		headers["x-api-key"] = apiKey;
@@ -25,13 +29,33 @@ const getAuthHeaders = (token?: string, apiKey?: string) => {
 };
 
 /**
+ * Handle interceptor
+ * @param data any
+ * @returns any
+ */
+const handleInterceptor = (data: any) => {
+	if (!data) return data;
+
+	if (data.code === "ERR_JWT_INVALID" || data.code === "ERR_JWT_EXPIRED") {
+		const url = "/logout?error=session_expired";
+		if (browser) {
+			window.location.href = url;
+		} else {
+			throw redirect(303, url);
+		}
+	}
+
+	return data;
+};
+
+/**
  * Api request
  * @param method ApiMethod
  * @param request Request
  */
 const apiRequest = async <T>(method: ApiMethod, request: Request) => {
 	const { path, body, params, token, apiKey, host } = request;
-	const headers = getAuthHeaders(token, apiKey);
+	const headers = getAuthHeaders(token, apiKey, body);
 
 	const queryParam =
 		params && Object.keys(params).length > 0 ? "?" + queryString.stringify(params) : "";
@@ -46,7 +70,9 @@ const apiRequest = async <T>(method: ApiMethod, request: Request) => {
 	};
 
 	const response = await fetch(finalUrl, options);
-	return response.json() as T;
+	const data = await response.json().catch(() => null);
+
+	return handleInterceptor(data) as T;
 };
 
 /**
