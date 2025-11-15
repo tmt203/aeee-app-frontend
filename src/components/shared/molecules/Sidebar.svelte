@@ -8,7 +8,7 @@
 	import { Icon, NavProfile, Profile } from "../atoms";
 	import { SidebarMenu } from ".";
 
-	export let logo: string = "/logo/logo-pitel.png";
+	export let logo: string = "";
 	export let currentGroup: string = "";
 	export let subGroupId: string = "";
 	export let expanded: boolean;
@@ -72,7 +72,7 @@
 		</button>
 	</div>
 {:else}
-	<div class="flex h-screen flex-col justify-between py-4 dark:bg-surface-900">
+	<div class="flex h-screen flex-col justify-between py-4 dark:bg-gray-800">
 		<div class="flex flex-col gap-4">
 			<div class="flex w-full justify-end px-4">
 				<Icon icon="uil uil-multiply" onClick={handleCloseMobileSidebar} />
@@ -85,7 +85,7 @@
 			<SidebarMenu {sideBar} {expanded} bind:currentGroup bind:subGroupId />
 		</div>
 
-		<div class="mx-3 flex items-center justify-center dark:!bg-surface-900">
+		<div class="mx-3 flex items-center justify-center dark:!bg-gray-800">
 			<small>
 				©{new Date().getFullYear()}
 				<a target="_blank" href="https://trantri.site" class="text-link-text-color">Tran Minh Tri</a

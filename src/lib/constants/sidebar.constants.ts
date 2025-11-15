@@ -1,6 +1,6 @@
 import { modeCurrent, setModeCurrent } from "@skeletonlabs/skeleton";
 import type { SideBarGroupProps } from "@type/components/sidebar.type";
-import { BookOpenText, Moon, Newspaper } from "lucide-svelte";
+import { Blocks, BookCheck, BookOpenText, LibraryBig, Moon, Newspaper } from "lucide-svelte";
 import { get } from "svelte/store";
 
 export const SIDEBAR: SideBarGroupProps[] = [
@@ -18,6 +18,35 @@ export const SIDEBAR: SideBarGroupProps[] = [
 				group: "announcements",
 				label: "Manage Announcements",
 				path: "/admin/manage-announcements"
+			}
+		]
+	},
+	{
+		group: "articles management",
+		items: [
+			{
+				icon: Blocks,
+				group: "manage-volumes-and-issues",
+				label: "Manage Volumes & Issues",
+				path: "/admin/manage-volumes-and-issues"
+			},
+			{
+				icon: BookCheck,
+				group: "manage-articles",
+				label: "Manage Articles",
+				path: "/admin/manage-articles"
+			},
+			{
+				icon: LibraryBig,
+				group: "manage-early-access-articles",
+				label: "Manage Early Access Articles",
+				path: "/admin/manage-early-access-articles"
+			},
+			{
+				icon: Newspaper,
+				group: "manage-article-files",
+				label: "Manage Article Files",
+				path: "/admin/manage-article-files"
 			}
 		]
 	},

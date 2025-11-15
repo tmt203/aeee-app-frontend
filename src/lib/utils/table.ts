@@ -16,3 +16,22 @@ export const isCheckboxValueValid = (e: Event): [ok: boolean, val: string, isChe
 	}
 	return ok ? [ok, val, isChecked] : [ok, "", isChecked];
 };
+
+/**
+ * Calculate page after delete an item
+ * @param currentPage number
+ * @param pageSize number
+ * @param totalItems number
+ * @returns number
+ */
+export const calculatePageAfterDeletion = (
+	currentPage: number,
+	pageSize: number,
+	totalItems: number
+): number => {
+	const newTotalItems = totalItems - 1;
+	const maxPage = Math.ceil(newTotalItems / pageSize);
+	const targetPage = currentPage > maxPage ? Math.max(1, maxPage) : currentPage;
+
+	return targetPage;
+};

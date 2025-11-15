@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { apiGetIssues } from "@api/issue.api";
-	import { Spinner } from "@components/shared/atoms";
 	import { generateToast } from "@constants/toast.constants";
 	import { getToastStore } from "@skeletonlabs/skeleton";
 	import type { Issue } from "@type/api/issue.type";

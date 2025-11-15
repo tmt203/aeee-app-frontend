@@ -94,14 +94,14 @@
 <div
 	use:portal={portalTarget}
 	bind:this={popupElement}
-	class="column-action card absolute w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-tertiary-600"
+	class="column-action card absolute w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-gray-800"
 	data-popup={`${columnId}-columnActionPopup`}
 >
 	{#each filterItems as item}
 		{#if item.label === "table.hide_or_show_col"}
 			<button
 				class={clsx(
-					"mb-1 flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:!bg-tertiary-600 dark:hover:!bg-surface-50/10",
+					"mb-1 flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:!bg-gray-800 dark:hover:!bg-surface-50/10",
 					{
 						"bg-surface-500 dark:!bg-surface-50/10": hideOrShowColumnOpen,
 						"bg-surface-300": !hideOrShowColumnOpen
@@ -123,10 +123,10 @@
 			<!-- Area: Hide/Show Column Dropdown -->
 			<div
 				data-popup="hideOrShowColumnPopup"
-				class="card !-top-1 z-20 rounded-lg bg-surface-300 p-2 text-sm shadow-custom-glass dark:!bg-tertiary-600"
+				class="card !-top-1 z-20 rounded-lg bg-surface-300 p-2 text-sm shadow-custom-glass dark:!bg-gray-800"
 			>
 				<div
-					class="max-h-[300px] w-36 space-y-1 overflow-auto rounded-lg scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 md:w-48"
+					class="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 max-h-[300px] w-36 space-y-1 overflow-auto rounded-lg md:w-48"
 				>
 					{#each orderedColumns.slice(0, orderedColumns.length - 1) as column}
 						<label
@@ -142,7 +142,7 @@
 
 							<!-- Area: Visible label that changes based on checkbox state -->
 							<span
-								class="!ml-0 flex w-full cursor-pointer items-center gap-4 rounded-lg p-2 text-sm font-normal [transition:background-color_0.3s,color_0.3s] peer-checked:bg-surface-500 peer-checked:font-semibold hover:bg-surface-500 dark:peer-checked:bg-surface-50/10 dark:hover:bg-surface-50/10"
+								class="!ml-0 flex w-full cursor-pointer items-center gap-4 rounded-lg p-2 text-sm font-normal [transition:background-color_0.3s,color_0.3s] hover:bg-surface-500 peer-checked:bg-surface-500 peer-checked:font-semibold dark:hover:bg-surface-50/10 dark:peer-checked:bg-surface-50/10"
 							>
 								{#if column.isHidden}
 									<EyeOff size={16} />
@@ -157,7 +157,7 @@
 			</div>
 		{:else}
 			<button
-				class="listbox-item flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:bg-tertiary-600 dark:hover:bg-surface-50/10"
+				class="listbox-item flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-surface-500 dark:bg-gray-800 dark:hover:bg-surface-50/10"
 				on:click={handleResetColumnWidth}
 			>
 				<svelte:component

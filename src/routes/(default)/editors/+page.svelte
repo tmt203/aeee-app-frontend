@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AEEE - Editors</title>
+	<title>Editors - AEEE</title>
 	<meta name="description" content="Editors of the journal." />
 </svelte:head>
 

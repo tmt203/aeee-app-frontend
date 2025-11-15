@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import { env } from "$env/dynamic/public";
 	import { Avatar, ListBox, ListBoxItem, popup, type PopupSettings } from "@skeletonlabs/skeleton";
 	import { sidebarExpanded } from "@store/sidebar";
 	import clsx from "clsx";
@@ -8,8 +8,6 @@
 	import { t } from "svelte-i18n";
 
 	export let expanded: boolean;
-
-	const { token, fullname: fullName, level } = $page.data.session;
 
 	const popupProfile: PopupSettings = {
 		event: "click",
@@ -19,6 +17,13 @@
 	};
 
 	let comboboxValue: string = "profile-item";
+
+	/**
+	 * Handle logout
+	 */
+	const handleLogout = () => {
+		goto("/auth/logout");
+	};
 </script>
 
 <div class="mt-4 flex items-center justify-between">
@@ -73,7 +78,7 @@
 		</ListBoxItem>
 
 		<!-- Area: Sign out -->
-		<ListBoxItem bind:group={comboboxValue} name="profile" value="sign_out" on:click={() => {}}>
+		<ListBoxItem bind:group={comboboxValue} name="profile" value="sign_out" on:click={handleLogout}>
 			<div class="flex items-center gap-2 text-sm font-semibold">
 				<LogOut class="stroke-secondary-text-color" size={16} strokeWidth={2.5} />
 				{$t("nav_profile.sign_out")}

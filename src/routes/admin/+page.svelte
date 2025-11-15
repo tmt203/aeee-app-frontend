@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { page } from "$app/stores";
+
+	$: console.log("session:", $page.data.session);
 </script>
 
 <section class="flex min-h-screen flex-col items-center justify-center gap-2">

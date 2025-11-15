@@ -15,20 +15,30 @@
 	};
 
 	/**
-	 * Handle paging
-	 * @param page number
+	 * Handle page change
+	 * @param event CustomEvent
 	 */
-	const handlePaging = (page: number) => {
-		if (totalItems > 0 && currentPage !== page) {
-			onSetPaging(page);
-		}
+	const handlePageChange = (event: CustomEvent) => {
+		const newPage = event.detail + 1;
+		onSetPaging(newPage);
 	};
+
+	/**
+	 * Handle amount (page size) change
+	 * @param event CustomEvent
+	 */
+	const handleAmountChange = (event: CustomEvent) => {
+		const newLimit = event.detail;
+		// When page size is changed, reset to first page
+		paginationSettings.limit = newLimit;
+		onSetPaging(1);
+	};
+
+	// Reactivity to update pagination page when currentPage is changed
+	$: paginationSettings.page = currentPage > 1 ? currentPage - 1 : 0;
 
 	// Reactivity to update pageSize when paginationSettings.limit is changed
 	$: pageSize = paginationSettings.limit;
-
-	// Reactivity to trigger pagination when paginationSettings.page is changed
-	$: paginationSettings.page >= 0 && handlePaging(paginationSettings.page + 1);
 
 	// Reactivity to update pagination size when total items is updated
 	$: paginationSettings.size = totalItems;
@@ -44,6 +54,8 @@
 	active="active font-semibold"
 	amountText={$t("table.rows")}
 	bind:settings={paginationSettings}
+	on:page={handlePageChange}
+	on:amount={handleAmountChange}
 />
 
 <style lang="scss">
