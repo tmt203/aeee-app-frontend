@@ -32,12 +32,8 @@
 	const toastStore = getToastStore();
 	const modalStore = getModalStore();
 
-	let volumeOptions: SelectOption[] = [];
-	let issueOptions: SelectOption[] = [];
 	let filterParams: ArticleFilterParams = {
-		title_contains: "",
-		volume_eq: { label: "", value: "" },
-		issue_eq: { label: "", value: "" }
+		title_contains: ""
 	};
 
 	// Data Table
@@ -289,6 +285,7 @@
 		try {
 			isLoading = true;
 
+			params = { ...filterParams, ...params };
 			const response = await apiGetEarlyAccessArticles(params);
 
 			if (response.code !== "OK") {
@@ -375,35 +372,6 @@
 						bind:value={filterParams.title_contains}
 					/>
 				</form>
-
-				<!-- Area: Volume Select -->
-				<InputSelect
-					id="volume-select"
-					label="admin_page.manage_articles.table.volume"
-					icon="uil uil-filter"
-					clearable
-					options={volumeOptions}
-					selectClasses="min-w-40"
-					bind:selectedOptionLabel={filterParams.volume_eq.label}
-					bind:value={filterParams.volume_eq.value}
-					onChange={() => handlePaging(1)}
-					onAfterRemove={() => handlePaging(1)}
-				/>
-
-				<!-- Area: Issue Select -->
-				<InputSelect
-					id="issue-select"
-					label="admin_page.manage_articles.table.issue"
-					icon="uil uil-filter"
-					clearable
-					options={issueOptions}
-					selectClasses="min-w-40"
-					disabled={filterParams.volume_eq.value === ""}
-					bind:selectedOptionLabel={filterParams.issue_eq.label}
-					bind:value={filterParams.issue_eq.value}
-					onChange={() => handlePaging(1)}
-					onAfterRemove={() => handlePaging(1)}
-				/>
 			</div>
 
 			<!-- Area: Right Table Header -->

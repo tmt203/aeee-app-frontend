@@ -1,9 +1,9 @@
 import type { FilterParams } from "@type/common.type";
 
 export interface ArticleFilterParams {
-	title_contains: string;
-	volume_eq: FilterParams;
-	issue_eq: FilterParams;
+	title_contains?: string;
+	volume_eq?: FilterParams;
+	issue_eq?: FilterParams;
 }
 
 export interface ArticleDataTable {

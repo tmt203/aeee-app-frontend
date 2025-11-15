@@ -315,7 +315,7 @@
 						/>
 
 						{#if !pdfFiles && $form.pdf_path}
-							<div class="mt-2 flex items-start gap-4 text-sm">
+							<div class="flex items-start gap-4 text-sm">
 								<a
 									href={`${API_HOST}${$form.pdf_path}`}
 									target="_blank"

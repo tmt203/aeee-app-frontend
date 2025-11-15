@@ -120,5 +120,7 @@
 	{#if value?.length}
 		<Icon icon="uil uil-times-circle" onClick={() => (value = "")} color="primary" class="mr-1" />
 	{/if}
-	<Search size={sizeMap[size]} className="cursor-pointer" on:click={onSearch} />
+	<button type="button" on:click={onSearch}>
+		<Search size={sizeMap[size]} />
+	</button>
 </div>
