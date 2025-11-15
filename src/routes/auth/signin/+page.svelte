@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { deserialize } from "$app/forms";
 	import { goto } from "$app/navigation";
-	import { apiPostLogin } from "@api/auth.api";
+	import { page } from "$app/stores";
 	import { Checkbox } from "@components/shared/atoms";
 	import { Button, InputForm } from "@components/shared/molecules";
 	import { generateToast } from "@constants/toast.constants";
 	import { getToastStore } from "@skeletonlabs/skeleton";
 	import type { LoginBody } from "@type/api/auth.type";
 	import type { AppServerResponse } from "@type/app-server";
+	import { onMount } from "svelte";
 	import { createForm } from "svelte-forms-lib";
 	import { t } from "svelte-i18n";
 	import { object, string } from "yup";
-
-	let checked: boolean = false;
 
 	const toastStore = getToastStore();
 
@@ -38,6 +37,7 @@
 		}
 	});
 
+	let checked: boolean = false;
 	let serverError: string = "";
 
 	/**
@@ -77,6 +77,19 @@
 			console.log(error);
 		}
 	};
+
+	onMount(() => {
+		// Check for error query param
+		const urlParams = new URLSearchParams($page.url.search);
+		const errorParam = urlParams.get("error");
+		if (errorParam === "session_expired") {
+			toastStore.trigger(
+				generateToast("error", {
+					message: $t("auth.session_expired")
+				})
+			);
+		}
+	});
 </script>
 
 <form class="flex w-full flex-col gap-4" on:submit|preventDefault={handleSubmit}>

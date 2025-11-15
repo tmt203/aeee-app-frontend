@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import { apiGetArticleById, apiGetArticles, apiPutArticleById } from "@api/article.api";
 	import {
 		apiDeleteEarlyAccessArticleById,
 		apiGetEarlyAccessArticleById,
@@ -8,31 +7,26 @@
 		apiPostEarlyAccessArticle,
 		apiUpdateEarlyAccessArticleById
 	} from "@api/early_access_article.api";
-	import { apiPutPageBySlug } from "@api/page.api";
-	import EditArticleModal from "@components/non-shared/admin/modals/EditArticleModal.svelte";
+	import EditEarlyAccessArticleModal from "@components/non-shared/admin/modals/EditEarlyAccessArticleModal.svelte";
 	import { ConfirmModal, Icon } from "@components/shared/atoms";
 	import { Button, InputSearch, InputSelect, Table } from "@components/shared/molecules";
 	import { AdminPageLayout } from "@components/shared/templates";
 	import { generateToast } from "@constants/toast.constants";
 	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
-	import type { Article, ArticleBody, ArticleQueryParams } from "@type/api/article.type";
-	import type { PageBody, PageQueryParams } from "@type/api/page.type";
-	import type { SelectOption } from "@type/common.type";
-	import { ColumnType, type TableColumn } from "@type/components/table.type";
-	import { normalizeFilterParams, removeEmptyFields } from "@utils/obj";
-	import { toCapitalCase } from "@utils/string";
-	import { AlignJustify, SquarePen, Trash2 } from "lucide-svelte";
-	import { onMount } from "svelte";
-	import { t } from "svelte-i18n";
-	import type { ArticleFilterParams } from "../manage-articles/manageArticlesPage.interface";
 	import type {
 		EarlyAccessArticle,
 		EarlyAccessArticleBody,
 		EarlyAccessArticleQueryParams
 	} from "@type/api/early_access_article.type";
-	import EditEarlyAccessArticleModal from "@components/non-shared/admin/modals/EditEarlyAccessArticleModal.svelte";
+	import type { SelectOption } from "@type/common.type";
 	import type { RowActionIconData } from "@type/components/icon.type";
+	import { ColumnType, type TableColumn } from "@type/components/table.type";
+	import { toCapitalCase } from "@utils/string";
 	import { calculatePageAfterDeletion } from "@utils/table";
+	import { AlignJustify, SquarePen, Trash2 } from "lucide-svelte";
+	import { onMount } from "svelte";
+	import { t } from "svelte-i18n";
+	import type { ArticleFilterParams } from "../manage-articles/manageArticlesPage.interface";
 
 	const { token } = $page.data.session;
 	const toastStore = getToastStore();
