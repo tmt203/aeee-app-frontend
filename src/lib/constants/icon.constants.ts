@@ -1,10 +1,17 @@
-const DISPLAY_MORE_ICON = `<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <mask id="mask0_853_59678" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="20">
-                                        <rect x="0.667969" width="20" height="20" />
-                                    </mask>
-                                    <g mask="url(#mask0_853_59678)">
-                                        <path d="M9.0013 15V13.3333H12.3346V15H9.0013ZM5.66797 10.8333V9.16667H15.668V10.8333H5.66797ZM3.16797 6.66667V5H18.168V6.66667H3.16797Z" />
-                                    </g>
-                                </svg>`;
+const CUSTOM_SUCCESS_ICON = `<svg class="fill-current text-success-500" width="16" height="16" viewBox="0 0 16 16">
+                                                                <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zM7 11.4L3.6 8 5 6.6l2 2 4-4L12.4 6 7 11.4z"></path>
+                                                            </svg>`;
 
-export { DISPLAY_MORE_ICON };
+const CUSTOM_DANGER_ICON = `<svg class="fill-current text-error-500" width="16" height="16" viewBox="0 0 16 16">
+                                                                <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"></path>
+                                                            </svg>`;
+
+const CUSTOM_INFO_ICON = `<svg class="fill-current text-primary-500" width="16" height="16" viewBox="0 0 16 16">
+                                                                <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm1 12H7V7h2v5zM8 6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z"></path>
+                                                            </svg>`;
+
+const CUSTOM_WARNING_ICON = `<svg class="fill-current text-warning-500" width="16" height="16" viewBox="0 0 16 16">
+                                                                <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"></path>
+                                                            </svg>`;
+
+export { CUSTOM_DANGER_ICON, CUSTOM_INFO_ICON, CUSTOM_SUCCESS_ICON, CUSTOM_WARNING_ICON };

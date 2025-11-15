@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>Aims & Scopes</title>
+	<title>Aims & Scopes - AEEE</title>
 	<meta name="description" content="Aims and scopes of the journal." />
 </svelte:head>
 

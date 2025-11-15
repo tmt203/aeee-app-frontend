@@ -4,6 +4,7 @@ import { get } from "svelte/store";
 let currentLocale = get(locale) || "en";
 
 // English
+register("en", () => import(`./${currentLocale}/auth.json`));
 register("en", () => import(`./${currentLocale}/admin.json`));
 register("en", () => import(`./${currentLocale}/common.json`));
 register("en", () => import(`./${currentLocale}/components.json`));

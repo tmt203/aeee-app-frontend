@@ -4,6 +4,72 @@
 			"author": "Author",
 			"content": "Content",
 			"title": "Title"
+		},
+		"manage_articles": {
+			"add_article": "Add article",
+			"table": {
+				"doi": "DOI",
+				"title": "Title",
+				"volume": "Volume",
+				"issue": "Issue",
+				"published_at": "Published At",
+				"authors": "Authors"
+			},
+			"edit_article_modal": {
+				"basic_info": "Basic info",
+				"edit_article": "Edit article",
+				"add_article": "Add article",
+				"doi": "DOI",
+				"title": "Title",
+				"volume": "Volume",
+				"issue": "Issue",
+				"published_date": "Published date",
+				"authors": "Authors",
+				"abstract": "Abstract",
+				"pdf_url": "PDF URL",
+				"first_page": "First page",
+				"last_page": "Last page",
+				"received_date": "Received date",
+				"accepted_date": "Accepted date",
+				"revised_date": "Revised date",
+				"first_name": "First name",
+				"last_name": "Last name",
+				"add_author": "Add author",
+				"pdf_file": "PDF file",
+				"file_attention": "The file name will be automatically set to '{title}.pdf' and remove special characters for a valid filename when uploading."
+			}
+		},
+		"manage_article_files": {
+			"add_file": "Add file",
+			"table": {
+				"title": "Title",
+				"file_path": "File path"
+			}
+		},
+		"manage_volumes_issues": {
+			"table": {
+				"volume": "Volume",
+				"issue": "Issue",
+				"foreword": "Foreword",
+				"avatar_url": "Avatar URL",
+				"manager_name": "Manager name",
+				"info_file_url": "Info file URL",
+				"foreword_content": "Foreword content"
+			},
+			"edit_volume_issue_modal": {
+				"edit_volume_issue": "Edit volume issue",
+				"add_volume_issue": "Add volume issue",
+				"volume": "Volume",
+				"issue": "Issue",
+				"foreword": "Foreword",
+				"avatar_url": "Avatar URL",
+				"manager_name": "Manager name",
+				"info_file_url": "Info file URL",
+				"foreword_content": "Foreword content",
+				"avatar_manager": "Avatar's manager (.jpg, .png)",
+				"info_manager": "Info file's manager (.pdf)",
+				"info_file_attention": "For the Info file's manager (.pdf), the file name will be automatically set to 'VOL{X}_NO{Y}.pdf' after uploading, where X is volume number and Y is issue number."
+			}
 		}
 	}
 }

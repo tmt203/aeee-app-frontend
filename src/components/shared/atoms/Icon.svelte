@@ -150,7 +150,7 @@
 	 */
 	onMount(() => {
 		if (typeof document !== "undefined") {
-			iconName = `${iconName}`.replace("<svg", '<svg class="svg-custom-icon"') as unknown as Icons;
+			// iconName = `${iconName}`.replace("<svg", '<svg class="svg-custom-icon"') as unknown as Icons;
 			isHaveTooltip && initializeTooltip();
 
 			// Add event listeners
@@ -200,14 +200,14 @@
 
 		<div
 			{id}
-			class="row-action-popup absolute hidden w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-surface-900"
+			class="row-action-popup absolute hidden w-48 space-y-1 rounded-lg bg-surface-300 p-2 shadow-custom-glass dark:!bg-gray-800"
 			use:portal={portalTarget}
 		>
 			{#each rowActionData as item}
 				<button
 					disabled={item.disabled}
 					class={clsx(
-						"listbox-item text-{item.color}-500 flex w-full cursor-pointer items-center justify-between rounded-lg bg-surface-300 p-2 hover:bg-surface-500 dark:bg-surface-900 dark:hover:bg-surface-50/10",
+						"listbox-item text-{item.color}-500 flex w-full cursor-pointer items-center justify-between rounded-lg bg-surface-300 p-2 hover:bg-surface-500 dark:bg-gray-800 dark:hover:bg-surface-50/10",
 						{
 							"!cursor-not-allowed opacity-50": item.disabled
 						}

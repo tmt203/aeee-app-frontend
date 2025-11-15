@@ -158,7 +158,7 @@
 		// Show modal
 		const modal: ModalSettings = {
 			type: "component",
-			backdropClasses: "!bg-surface-900/50",
+			backdropClasses: "!bg-gray-800/50",
 			component: {
 				ref: EditAnnouncementModal,
 				props: {
@@ -282,7 +282,7 @@
 		// Show modal
 		const modal: ModalSettings = {
 			type: "component",
-			backdropClasses: "!bg-tertiary-800/80",
+			backdropClasses: "!bg-tertiary-800/50",
 			component: {
 				ref: EditAnnouncementModal,
 				props: {

@@ -1,10 +1,36 @@
+import type { AuditInfo } from "@type/common.type";
+
 export type SessionData = {
+	id: string;
 	token: string;
-	level: string;
-	user_id: string;
+	first_name: string;
+	last_name: string;
 	username: string;
-	fullname: string;
-	expired_at: Date;
-	expired_in: number;
-	refresh_token: string;
+	email: string;
+	avatar: string;
+	role: string;
+} & AuditInfo;
+
+export type RegisterBody = {
+	first_name: string;
+	last_name: string;
+	username: string;
+	email: string;
+	password: string;
+	confirm_password: string;
+};
+
+export type Register = {
+	first_name: string;
+	last_name: string;
+	username: string;
+	email: string;
+	avatar: string;
+	role: string;
+	active: boolean;
+} & AuditInfo;
+
+export type LoginBody = {
+	identifier: string;
+	password: string;
 };

@@ -130,7 +130,7 @@
 					class={clsx(
 						"select rounded-xl border py-1 text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800 dark:[&>option]:!bg-gray-700",
 						{
-							"!border-tertiary-900": !errorMessage?.length,
+							"!border-slate-300 focus:!border-primary-500 focus:shadow-md": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -156,7 +156,7 @@
 					class={clsx(
 						"scrollbar-thin scrollbar-track-transparent scrollbar-thumb-surface-700 textarea rounded-xl border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{
-							"!border-tertiary-900": !errorMessage?.length,
+							"!border-slate-300 focus:!border-primary-500 focus:shadow-md": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -172,7 +172,7 @@
 					class={clsx(
 						"input !h-fit border-dashed text-sm file:rounded file:border-none file:!bg-primary-500 file:px-3 file:py-1 file:!text-white placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{
-							"!border-tertiary-900": !errorMessage?.length,
+							"!border-slate-300 focus:!border-primary-500 focus:shadow-md": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -187,7 +187,7 @@
 				<input
 					placeholder={$t(placeholder)}
 					type="search"
-					class="autocomplete input border !border-tertiary-900 text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800"
+					class="autocomplete input border !border-slate-300 text-sm placeholder:text-sm placeholder:text-surface-700 focus:!border-primary-500 focus:shadow-md dark:!bg-gray-700 dark:placeholder:text-surface-800"
 					bind:value
 					use:popup={popupSearch}
 				/>
@@ -207,17 +207,34 @@
 			{:else if type === "password"}
 				<!-- Input password -->
 				<div
-					class="input-group input-group-divider grid-cols-[1fr_auto] border !border-tertiary-900 text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800"
+					class={clsx(
+						"input-group input-group-divider grid-cols-[1fr_auto] border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
+						{
+							"!border-slate-300 focus-within:!border-primary-500 focus-within:shadow-md":
+								!errorMessage?.length,
+							"!border-error-500": errorMessage?.length
+						}
+					)}
 				>
-					<input type="password" placeholder={$t(placeholder)} bind:value />
+					<input
+						type="password"
+						placeholder={$t(placeholder)}
+						bind:value
+						class={clsx(
+							"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800"
+						)}
+					/>
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<!-- svelte-ignore a11y-no-static-element-interactions -->
 					<div class="w-12 !p-0" on:click={handleShowPassword}>
 						<i
-							class={clsx("flex h-full w-full items-center !justify-center text-lg", {
-								"uil uil-eye-slash": showPassword,
-								"uil uil-eye": !showPassword
-							})}
+							class={clsx(
+								"flex h-full w-full items-center !justify-center text-lg text-slate-500",
+								{
+									"uil uil-eye-slash": showPassword,
+									"uil uil-eye": !showPassword
+								}
+							)}
 						/>
 					</div>
 				</div>
@@ -230,7 +247,7 @@
 					class={clsx(
 						"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{
-							"!border-tertiary-900": !errorMessage?.length,
+							"!border-slate-300 focus:!border-primary-500 focus:shadow-md": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -250,7 +267,7 @@
 					class={clsx(
 						"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{
-							"!border-tertiary-900": !errorMessage?.length,
+							"!border-slate-300 focus:!border-primary-500 focus:shadow-md": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -288,7 +305,7 @@
 					class={clsx(
 						"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{
-							"!border-tertiary-900": !errorMessage?.length,
+							"!border-slate-300 focus:!border-primary-500 focus:shadow-md": !errorMessage?.length,
 							"!border-error-500": errorMessage?.length
 						}
 					)}
@@ -315,7 +332,7 @@
 		{/if}
 
 		<!-- Error -->
-		{#if errorMessage?.length}
+		{#if !showErrorMessage && errorMessage?.length}
 			<div class="absolute right-2">
 				<Icon
 					color="error"

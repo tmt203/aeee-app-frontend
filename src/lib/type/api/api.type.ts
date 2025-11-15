@@ -13,5 +13,6 @@ export type ApiResponse<T> = {
 	code: string;
 	message: string;
 	total?: number;
+	token?: string;
 	data: T;
 };
