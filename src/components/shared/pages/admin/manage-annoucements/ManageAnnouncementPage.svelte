@@ -130,7 +130,6 @@
 		if (!id) return;
 
 		try {
-			isLoading = true;
 			const response = await apiGetAnnouncementById(id);
 			if (response.code !== "OK") {
 				toastStore.trigger(
@@ -143,8 +142,6 @@
 			announcement = response.data;
 		} catch (error) {
 			console.log(error);
-		} finally {
-			isLoading = false;
 		}
 	};
 
@@ -177,6 +174,7 @@
 	 */
 	const handleGetAnnouncements = async (params?: AnnouncementQueryParams) => {
 		try {
+			isLoading = true;
 			const queryParams: AnnouncementQueryParams = { ...params };
 			const response = await apiGetAnnouncements(queryParams);
 
@@ -201,6 +199,8 @@
 			}));
 		} catch (error) {
 			console.log(error);
+		} finally {
+			isLoading = false;
 		}
 	};
 
