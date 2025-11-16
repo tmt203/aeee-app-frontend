@@ -53,7 +53,7 @@
 		),
 		pdf_path: string()
 	});
-	const { form, errors, handleSubmit } = createForm({
+	const { form, errors, isSubmitting, isModified, handleSubmit } = createForm({
 		initialValues,
 		validationSchema,
 		onSubmit: async (values) => {
@@ -92,7 +92,7 @@
 				}
 			}
 
-			onSave(article.id, values);
+			await onSave(article.id, values);
 		}
 	});
 
@@ -305,7 +305,6 @@
 					</span>
 					<div class="flex flex-col gap-2">
 						<InputForm
-							label={$t("admin_page.manage_volumes_issues.edit_volume_issue_modal.avatar_manager")}
 							type="file"
 							direction="column"
 							class="[&_.input-form-wrapper]:w-full"
@@ -354,6 +353,8 @@
 				variant="secondary"
 				size="sm"
 				icon="uil uil-copy"
+				isLoading={$isSubmitting}
+				disabled={!$isModified}
 			/>
 		</div>
 	</div>
