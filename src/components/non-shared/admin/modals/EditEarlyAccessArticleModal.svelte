@@ -53,7 +53,7 @@
 		),
 		pdf_path: string()
 	});
-	const { form, errors, isSubmitting, isModified, handleSubmit } = createForm({
+	const { form, errors, isSubmitting, handleSubmit } = createForm({
 		initialValues,
 		validationSchema,
 		onSubmit: async (values) => {
@@ -354,7 +354,6 @@
 				size="sm"
 				icon="uil uil-copy"
 				isLoading={$isSubmitting}
-				disabled={!$isModified}
 			/>
 		</div>
 	</div>
