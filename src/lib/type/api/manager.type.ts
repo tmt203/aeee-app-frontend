@@ -12,6 +12,9 @@ export type ManagerBody = {
 	info_file_url: string;
 	volume: number;
 	issue: number;
+	year: number;
+	month: number;
+	active: boolean;
 };
 
 export type Manager = ManagerBody & AuditInfo;

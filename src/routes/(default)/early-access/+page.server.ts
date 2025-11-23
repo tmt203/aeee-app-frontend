@@ -1,13 +1,12 @@
 import { apiGetEarlyAccessArticles } from "@api/early_access_article.api";
-import type { EarlyAccessArticle } from "@type/api/early_access_article.type";
-import type { PageServerLoad } from "./$types";
 import type { Article } from "@type/api/article.type";
+import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async () => {
 	let articles: Article[] = [];
 
 	try {
-		const response = await apiGetEarlyAccessArticles({});
+		const response = await apiGetEarlyAccessArticles({ active_eq: true });
 		articles = response.data.map((item) => {
 			return {
 				authors: item.authors,
@@ -41,7 +40,9 @@ export const load: PageServerLoad = async () => {
 				citations: {
 					apa: "",
 					bib_tex: ""
-				}
+				},
+
+				active: item.active
 			};
 		});
 		// articles = response.data ?? [];

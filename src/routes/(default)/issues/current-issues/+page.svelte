@@ -11,6 +11,8 @@
 	export let data: PageData;
 	const { issue } = data;
 
+	console.log("issue", issue);
+
 	const articles: ArticleItemProps[] =
 		issue?.articles.map((article) =>
 			mappingToArticleItem({ article, showDoi: true, showPages: true, showViews: true })
@@ -20,7 +22,7 @@
 <svelte:head>
 	{#if issue}
 		<title>
-			Volume {issue.volume}, Issue {issue.issue} ({issue.articles[0]?.pub_date.year}) - AEEE
+			Volume {issue.volume}, Issue {issue.issue} ({issue.year}) - AEEE
 		</title>
 		<meta
 			name="description"
@@ -46,15 +48,15 @@
 			<!-- Area: Volume & Issue -->
 			<div id="volume" class="mb-6 border-b border-gray-200 pb-6">
 				<h1 class=" text-4xl font-semibold tracking-tight">
-					Volume {issue.volume}, Issue {issue.issue} ({issue.articles[0]?.pub_date.year})
+					Volume {issue.volume}, Issue {issue.issue} ({issue.year})
 				</h1>
 				<p class="mt-1 text-lg italic">
-					{parseToFormat(`${issue.articles[0]?.pub_date.month}`, "LLLL")}
+					{parseToFormat(`${issue.month}`, "LLLL")}
 				</p>
 			</div>
 
 			<!-- Area: Manager Section -->
-			{#if issue.manager}
+			{#if issue.manager && issue.manager.avatar_url}
 				<div id="foreword" class="card mb-6 flex flex-col items-start gap-6 p-4">
 					<img
 						src={`${API_HOST}${issue.manager.avatar_url}`}

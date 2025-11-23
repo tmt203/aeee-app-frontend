@@ -14,4 +14,14 @@ const CUSTOM_WARNING_ICON = `<svg class="fill-current text-warning-500" width="1
                                                                 <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"></path>
                                                             </svg>`;
 
-export { CUSTOM_DANGER_ICON, CUSTOM_INFO_ICON, CUSTOM_SUCCESS_ICON, CUSTOM_WARNING_ICON };
+const FILLED_CIRCLE_ICON = `<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="4.00001" cy="4" r="3"/>
+                                </svg>`;
+
+export {
+	CUSTOM_DANGER_ICON,
+	CUSTOM_INFO_ICON,
+	CUSTOM_SUCCESS_ICON,
+	CUSTOM_WARNING_ICON,
+	FILLED_CIRCLE_ICON
+};

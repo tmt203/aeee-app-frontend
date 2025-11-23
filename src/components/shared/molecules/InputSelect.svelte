@@ -10,7 +10,7 @@
 	export let label: string = "";
 	export let selectedOptionLabel: string = "";
 	export let size: Size = "md";
-	export let value: string = "";
+	export let value: string | number | boolean | null = "";
 	export let icon: string = "";
 	export let iconSize: Size = "md";
 	export let options: SelectOption[] = [];
@@ -44,7 +44,12 @@
 	const handleRemoveValue = () => {
 		if (disabled) return;
 
-		value = "";
+		if (value !== null && typeof value === "string") {
+			value = "";
+		} else {
+			value = null;
+		}
+
 		selectedOptionLabel = "";
 		searchOptions = options;
 
@@ -96,7 +101,7 @@
 
 	// Reactivity to update selectedOptionLabel
 	$: {
-		if (options.length && value?.length) {
+		if (options.length && value?.toString().length) {
 			selectedOptionLabel = options.find((item) => item.value === value)?.label || "";
 			if (errorMessage?.length) errorMessage = "";
 		}
@@ -204,7 +209,7 @@
 		</div>
 
 		<div class={clsx("pr-2", { "cursor-not-allowed opacity-50": disabled })}>
-			{#if clearable && value?.length}
+			{#if clearable && value?.toString().length}
 				<Icon
 					icon="uil uil-times-circle"
 					onClick={handleRemoveValue}

@@ -26,6 +26,7 @@ export type ArticleQueryParams = {
 	pub_date?: PubDate;
 	year?: number;
 	sort?: string;
+	active_eq?: boolean;
 } & Param;
 
 export type Citation = {
@@ -34,6 +35,8 @@ export type Citation = {
 };
 
 export type ArticleBody = {
+	_id: string; // MongoDB document ID (which extract from DOI, not use default generated ID)
+	id: string; // MongoDB document ID (which extract from DOI, not use default generated ID)
 	title: string;
 	doi: string;
 	volume: number;
@@ -52,6 +55,16 @@ export type ArticleBody = {
 		first: number;
 		last: number;
 	};
+	active: boolean;
 };
 
-export type Article = ArticleBody & AuditInfo;
+export type Article = Omit<ArticleBody, "_id"> & Omit<AuditInfo, "id">;
+
+export type UploadFileQueryParams = {
+	folder: string;
+	name?: string;
+};
+
+export type UploadFile = {
+	file_path: string;
+};

@@ -150,7 +150,12 @@
 	 */
 	onMount(() => {
 		if (typeof document !== "undefined") {
-			// iconName = `${iconName}`.replace("<svg", '<svg class="svg-custom-icon"') as unknown as Icons;
+			if (!iconName.includes("fill-current")) {
+				iconName = `${iconName}`.replace(
+					"<svg",
+					'<svg class="svg-custom-icon"'
+				) as unknown as Icons;
+			}
 			isHaveTooltip && initializeTooltip();
 
 			// Add event listeners

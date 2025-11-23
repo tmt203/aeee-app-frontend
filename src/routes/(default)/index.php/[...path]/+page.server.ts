@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	// Fetch article data
 	let article: Article | null = null;
 	try {
-		const response = await apiGetArticleById(+id);
+		const response = await apiGetArticleById(id);
 		if (response.code !== "OK") {
 			throw error(404, "Article not found");
 		}

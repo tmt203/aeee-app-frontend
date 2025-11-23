@@ -146,7 +146,7 @@
 			selectedIssue?.articles?.map((article, index) => {
 				return {
 					index: index + 1,
-					id: article.id,
+					id: `${article.id}`,
 					title: article.title,
 					filePath: article.pdf_path
 				};

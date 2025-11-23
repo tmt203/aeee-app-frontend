@@ -1,9 +1,10 @@
 import type { FilterParams } from "@type/common.type";
 
 export interface ArticleFilterParams {
-	title_contains?: string;
-	volume_eq?: FilterParams;
-	issue_eq?: FilterParams;
+	title_contains: string;
+	volume_eq: FilterParams;
+	issue_eq: FilterParams;
+	active_eq: FilterParams;
 }
 
 export interface ArticleDataTable {
@@ -14,20 +15,5 @@ export interface ArticleDataTable {
 	doi: string;
 	authors: string;
 	pub_date: string;
-}
-
-export interface ArticleValidationSchema {
-	title: string;
-	doi: string;
-	volume: number;
-	issue: number;
-	first_page: number;
-	last_page: number;
-	abstract: string;
-	received_date: string;
-	revised_date: string;
-	accepted_date: string;
-	published_date: string;
-	pdf_path: string;
-	authors: { first_name: string; last_name: string }[];
+	active: boolean;
 }

@@ -1,6 +1,6 @@
 import type { ApiResponse } from "@type/api/api.type";
-import type { Issue, IssueQueryParams } from "@type/api/issue.type";
-import { apiGet } from "@utils/api";
+import type { Issue, IssueQueryParams, PublishIssueBody } from "@type/api/issue.type";
+import { apiGet, apiPost } from "@utils/api";
 
 const PATH = "/api/v1/issues";
 
@@ -18,12 +18,15 @@ export const apiGetIssues = async (params: IssueQueryParams) => {
 };
 
 /**
- * Api get latest issue
+ * Api post publish issue
+ * @param body PublishIssueBody
+ * @param token string
  * @returns ApiResponse<Issue>
  */
-export const apiGetLatestIssue = async () => {
-	return await apiGet<ApiResponse<Issue>>({
-		path: `${PATH}/latest`,
-		token: "AUTH_TOKEN"
+export const apiPostPublishIssue = async (body: PublishIssueBody, token: string) => {
+	return await apiPost<ApiResponse<Issue>>({
+		token,
+		body: JSON.stringify(body),
+		path: `${PATH}/publish-issue`
 	});
 };

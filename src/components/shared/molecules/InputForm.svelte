@@ -301,7 +301,6 @@
 					{...$$props}
 					{required}
 					{pattern}
-					type="text"
 					class={clsx(
 						"input border text-sm placeholder:text-sm placeholder:text-surface-700 dark:!bg-gray-700 dark:placeholder:text-surface-800",
 						{

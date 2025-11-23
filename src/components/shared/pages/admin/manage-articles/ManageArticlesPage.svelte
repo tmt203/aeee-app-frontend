@@ -1,23 +1,31 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import { apiGetArticleById, apiGetArticles, apiPutArticleById } from "@api/article.api";
-	import { apiPutPageBySlug } from "@api/page.api";
+	import {
+		apiDeleteArticleById,
+		apiGetArticleById,
+		apiGetArticles,
+		apiPostArticle,
+		apiPutArticleById
+	} from "@api/article.api";
 	import EditArticleModal from "@components/non-shared/admin/modals/EditArticleModal.svelte";
-	import { Icon } from "@components/shared/atoms";
+	import { Chip, ConfirmModal, Icon } from "@components/shared/atoms";
 	import { Button, InputSearch, InputSelect, Table } from "@components/shared/molecules";
 	import { AdminPageLayout } from "@components/shared/templates";
 	import { generateToast } from "@constants/toast.constants";
 	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
 	import type { Article, ArticleBody, ArticleQueryParams } from "@type/api/article.type";
-	import type { PageBody, PageQueryParams } from "@type/api/page.type";
+	import type { PageQueryParams } from "@type/api/page.type";
 	import type { SelectOption } from "@type/common.type";
+	import type { RowActionIconData } from "@type/components/icon.type";
 	import { ColumnType, type TableColumn } from "@type/components/table.type";
 	import { normalizeFilterParams, removeEmptyFields } from "@utils/obj";
 	import { toCapitalCase } from "@utils/string";
-	import { SquarePen } from "lucide-svelte";
+	import { calculatePageAfterDeletion } from "@utils/table";
+	import { AlignJustify, SquarePen, Trash2 } from "lucide-svelte";
 	import { onMount } from "svelte";
 	import { t } from "svelte-i18n";
 	import type { ArticleDataTable, ArticleFilterParams } from "./manageArticlesPage.interface";
+	import { STATUS_OPTIONS } from "./manageArticlesPage.constant";
 
 	const { token } = $page.data.session;
 	const toastStore = getToastStore();
@@ -28,7 +36,8 @@
 	let filterParams: ArticleFilterParams = {
 		title_contains: "",
 		volume_eq: { label: "", value: "" },
-		issue_eq: { label: "", value: "" }
+		issue_eq: { label: "", value: "" },
+		active_eq: { label: "", value: null }
 	};
 
 	// Data Table
@@ -56,6 +65,29 @@
 			pinned: "left"
 		},
 		{
+			pinned: "left",
+			label: "admin_page.manage_articles.table.status",
+			width: 120,
+			dataType: ColumnType.Action,
+			data: [
+				{
+					component: () => Chip,
+					props: (row) => {
+						const variant = row.active ? "success" : "error";
+						const children = row.active ? "active" : "inactive";
+						return {
+							variant,
+							outline: true,
+							size: "sm",
+							rounded: "2xl",
+							icon: "custom-filled-circle-icon",
+							children
+						};
+					}
+				}
+			]
+		},
+		{
 			key: "title",
 			width: 640,
 			label: "admin_page.manage_articles.table.title",
@@ -67,6 +99,7 @@
 			label: "admin_page.manage_articles.table.doi",
 			dataType: ColumnType.Text
 		},
+
 		{
 			key: "authors",
 			width: 480,
@@ -79,6 +112,7 @@
 			label: "admin_page.manage_articles.table.published_at",
 			dataType: ColumnType.Text
 		},
+
 		{
 			label: "action",
 			placement: "center",
@@ -90,11 +124,28 @@
 					component: () => Icon,
 					props: (row) => {
 						const id = `${row.id}`;
+						const name = `${row.title}`;
+						const rowActionData: RowActionIconData[] = [
+							{
+								label: "tooltip.edit",
+								icon: SquarePen,
+								color: "primary",
+								onClick: () => openEditArticleModal(id)
+							},
+							{
+								label: "tooltip.delete",
+								icon: Trash2,
+								color: "error",
+								onClick: () => openConfirmDeleteModal(id, name)
+							}
+						];
 						return {
-							icon: SquarePen,
-							size: "md",
+							id,
+							icon: AlignJustify,
+							rowAction: true,
+							rowActionData,
 							color: "primary",
-							onClick: () => openEditArticleModal(id)
+							size: "md"
 						};
 					}
 				}
@@ -107,14 +158,20 @@
 	 * @param id string
 	 * @param body ArticleBody
 	 */
-	const handleUpdateArticle = async (id: string, body: ArticleBody) => {
+	const handleSaveArticle = async (id: string, body: ArticleBody) => {
+		let response;
 		try {
-			const response = await apiPutArticleById(id, body, token);
+			if (!id) {
+				response = await apiPostArticle(body, token);
+				currentPage = 1;
+			} else {
+				response = await apiPutArticleById(`${id}`, body, token);
+			}
 
 			if (response.code !== "OK") {
 				toastStore.trigger(
 					generateToast("error", {
-						message: response.message || "Failed to update article"
+						message: response.message || "Failed to save article."
 					})
 				);
 				return;
@@ -122,11 +179,12 @@
 
 			toastStore.trigger(
 				generateToast("success", {
-					message: "Article updated successfully"
+					message: "Article saved successfully."
 				})
 			);
 
-			// Refresh data table
+			modalStore.close();
+
 			handlePaging(currentPage);
 		} catch (error) {
 			console.log(error);
@@ -143,7 +201,7 @@
 
 		try {
 			isLoading = true;
-			const response = await apiGetArticleById(Number(id));
+			const response = await apiGetArticleById(id);
 			if (response.code !== "OK") {
 				toastStore.trigger(
 					generateToast("error", {
@@ -164,6 +222,63 @@
 	};
 
 	/**
+	 * Open confirm delete modal
+	 * @param articleId string
+	 * @param articleTitle string
+	 */
+	const openConfirmDeleteModal = (articleId: string, articleTitle: string) => {
+		// Show modal
+		const modal: ModalSettings = {
+			type: "component",
+			backdropClasses: "!bg-tertiary-800/50",
+			component: {
+				ref: ConfirmModal,
+				props: {
+					variant: "danger",
+					title: $t("confirm_modal.delete.title"),
+					message: $t("confirm_modal.delete.message", {
+						values: { field: `<strong>${articleTitle}</strong>` }
+					}),
+					body: $t("confirm_modal.delete.body"),
+					onCancel: () => {
+						modalStore.close();
+					},
+					onConfirm: async () => {
+						try {
+							const response = await apiDeleteArticleById(articleId, token);
+
+							if (response.code !== "OK") {
+								toastStore.trigger(
+									generateToast("error", {
+										message: response.message || "Failed to delete early access article."
+									})
+								);
+								return;
+							}
+
+							modalStore.close();
+
+							toastStore.trigger(
+								generateToast("success", {
+									message: "Article deleted successfully."
+								})
+							);
+
+							// Calculate new page after deletion
+							const newCurrentPage = calculatePageAfterDeletion(currentPage, pageSize, totalItems);
+							handlePaging(newCurrentPage);
+						} catch (error) {
+							console.log(error);
+						}
+					}
+				}
+			}
+		};
+
+		modalStore.trigger(modal);
+	};
+
+	/**
 	 * Open edit article modal
 	 * @param articleId string
 	 */
@@ -180,7 +295,7 @@
 				ref: EditArticleModal,
 				props: {
 					article,
-					onSave: handleUpdateArticle
+					onSave: handleSaveArticle
 				}
 			}
 		};
@@ -197,10 +312,11 @@
 			isLoading = true;
 
 			const queryParams: ArticleQueryParams = {
-				fields: "id,title,volume,issue,doi,authors,pub_date",
+				fields: "id,title,volume,issue,doi,authors,pub_date,active",
 				sort: "-volume,-issue",
 				...params,
-				...removeEmptyFields(normalizeFilterParams(filterParams))
+				...removeEmptyFields(normalizeFilterParams(filterParams)),
+				...(filterParams.active_eq.value !== null && { active_eq: !!filterParams.active_eq.value })
 			};
 			const response = await apiGetArticles(queryParams);
 
@@ -221,7 +337,7 @@
 
 			// Map to data table
 			dataTable = data.map((item, index) => ({
-				id: item.id,
+				id: `${item.id}`,
 				volume: item.volume,
 				issue: item.issue,
 				title: item.title,
@@ -230,6 +346,7 @@
 					.map((author) => `${author.first_name} ${toCapitalCase(author.last_name)}`)
 					.join(", "),
 				pub_date: `${item.pub_date.day}/${item.pub_date.month}/${item.pub_date.year}`,
+				active: item.active,
 				index: index + 1 + (currentPage - 1) * pageSize
 			}));
 
@@ -268,6 +385,7 @@
 	/**
 	 * Handle get issues by volume
 	 * @param volume string
+	 * @param dataTable ArticleDataTable[]
 	 */
 	const handleGetIssuesByVolume = (volume: string, dataTable: ArticleDataTable[]) => {
 		if (volume === "") return;
@@ -320,7 +438,8 @@
 			citations: {
 				apa: "",
 				bib_tex: ""
-			}
+			},
+			active: false
 		};
 
 		// Show modal
@@ -331,7 +450,7 @@
 				ref: EditArticleModal,
 				props: {
 					article,
-					onSave: handleUpdateArticle
+					onSave: handleSaveArticle
 				}
 			}
 		};
@@ -340,7 +459,7 @@
 	};
 
 	// Run when filterParams.volume_eq.value or dataTable changes
-	$: handleGetIssuesByVolume(filterParams.volume_eq.value, dataTable);
+	$: handleGetIssuesByVolume(`${filterParams.volume_eq.value}`, dataTable);
 
 	/**
 	 * Run as soon as the component has been mounted to the DOM.
@@ -407,6 +526,20 @@
 					disabled={filterParams.volume_eq.value === ""}
 					bind:selectedOptionLabel={filterParams.issue_eq.label}
 					bind:value={filterParams.issue_eq.value}
+					onChange={() => handlePaging(1)}
+					onAfterRemove={() => handlePaging(1)}
+				/>
+
+				<!-- Area: Status Select -->
+				<InputSelect
+					id="status-select"
+					label="admin_page.manage_articles.table.status"
+					icon="uil uil-filter"
+					clearable
+					options={STATUS_OPTIONS}
+					selectClasses="min-w-40"
+					bind:selectedOptionLabel={filterParams.active_eq.label}
+					bind:value={filterParams.active_eq.value}
 					onChange={() => handlePaging(1)}
 					onAfterRemove={() => handlePaging(1)}
 				/>
