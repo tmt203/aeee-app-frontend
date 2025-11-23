@@ -1,4 +1,4 @@
-import { apiGetIssues, apiGetLatestIssue } from "@api/issue.api";
+import { apiGetIssues } from "@api/issue.api";
 import type { Issue } from "@type/api/issue.type";
 import type { PageServerLoad } from "./$types";
 
@@ -15,11 +15,20 @@ export const load: PageServerLoad = async ({ url }) => {
 
 	try {
 		if (volumeNum && issueNumberNum) {
-			const response = await apiGetIssues({ volume: volumeNum, issue: issueNumberNum });
+			const response = await apiGetIssues({
+				volume: volumeNum,
+				issue: issueNumberNum,
+				manager__active_eq: true,
+				limit: 1
+			});
 			issue = response.data[0] ?? null;
 		} else {
-			const response = await apiGetLatestIssue();
-			issue = response.data ?? null;
+			const response = await apiGetIssues({
+				manager__active_eq: true,
+				sort: "-volume,-issue",
+				limit: 1
+			});
+			issue = response.data[0] ?? null;
 			return { issue };
 		}
 	} catch (error) {

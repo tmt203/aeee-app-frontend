@@ -41,7 +41,8 @@
 	const initialValues = {
 		title: article.title || "",
 		authors,
-		pdf_path: article.pdf_path || ""
+		pdf_path: article.pdf_path || "",
+		active: article.active || false
 	};
 	const validationSchema = object().shape({
 		title: string().required("error.input_required"),
@@ -51,7 +52,7 @@
 				last_name: string().required("error.input_required")
 			})
 		),
-		pdf_path: string()
+		pdf_path: string().required("error.select_required")
 	});
 	const { form, errors, isSubmitting, handleSubmit } = createForm({
 		initialValues,
@@ -80,7 +81,7 @@
 					if (response.code !== "OK") {
 						toastStore.trigger(
 							generateToast("error", {
-								message: response.message || "Error uploading avatar file."
+								message: response.message || "Error uploading file."
 							})
 						);
 						return;
@@ -201,7 +202,7 @@
 </script>
 
 <form
-	class="edit-page-modal h-full w-11/12 rounded-xl bg-white dark:bg-gray-800"
+	class="edit-page-modal h-full w-7/12 rounded-xl bg-white dark:bg-gray-800"
 	on:submit|preventDefault={handleSubmit}
 >
 	<div class="flex flex-col justify-between">
@@ -223,17 +224,42 @@
 					<span class="mb-2 text-2xl font-bold capitalize">
 						{$t("admin_page.manage_articles.edit_article_modal.basic_info")}
 					</span>
-					<div class="flex flex-col gap-4">
-						<InputForm
-							type="text"
-							label={$t("admin_page.manage_articles.edit_article_modal.title")}
-							direction="column"
-							class="[&_.input-form-wrapper]:w-full"
-							showErrorMessage
-							errorMessage={$errors.title}
-							placeholder="Performance Analysis of ..."
-							bind:value={$form.title}
-						/>
+					<div class="flex gap-4">
+						<div class="w-10/12">
+							<InputForm
+								required
+								type="text"
+								label={$t("admin_page.manage_articles.edit_article_modal.title")}
+								direction="column"
+								class="[&_.input-form-wrapper]:w-full"
+								showErrorMessage
+								errorMessage={$errors.title}
+								placeholder="Performance Analysis of ..."
+								bind:value={$form.title}
+							/>
+						</div>
+						<div class="w-2/12">
+							<InputForm
+								required
+								type="select"
+								label={$t("admin_page.manage_articles.edit_article_modal.status")}
+								direction="column"
+								class="[&_.input-form-wrapper]:w-full"
+								showErrorMessage
+								errorMessage={$errors.active}
+								options={[
+									{ label: "Active", value: true },
+									{ label: "Inactive", value: false }
+								]}
+								bind:value={$form.active}
+							/>
+						</div>
+					</div>
+
+					<!-- Area: Attention -->
+					<div class="variant-soft-primary mt-2 flex items-start gap-2 rounded-md p-2 text-sm">
+						<Info />
+						{$t("admin_page.manage_articles.edit_article_modal.status_attention")}
 					</div>
 
 					<!-- Area: Authors -->
@@ -251,6 +277,7 @@
 								on:drop={(e) => handleDrop(e, index)}
 							>
 								<InputForm
+									required
 									type="text"
 									label={$t("admin_page.manage_articles.edit_article_modal.first_name")}
 									direction="column"
@@ -260,6 +287,7 @@
 									bind:value={$form.authors[index].first_name}
 								/>
 								<InputForm
+									required
 									type="text"
 									label={$t("admin_page.manage_articles.edit_article_modal.last_name")}
 									direction="column"
@@ -332,12 +360,12 @@
 								</button>
 							</div>
 						{/if}
+					</div>
 
-						<!-- Area: Attention -->
-						<div class="variant-soft-primary flex items-center gap-2 rounded-md p-2 text-sm">
-							<Info />
-							{$t("admin_page.manage_articles.edit_article_modal.file_attention")}
-						</div>
+					<!-- Area: Attention -->
+					<div class="variant-soft-primary mt-2 flex items-start gap-2 rounded-md p-2 text-sm">
+						<Info />
+						{$t("admin_page.manage_articles.edit_article_modal.file_attention")}
 					</div>
 				</div>
 			{/if}

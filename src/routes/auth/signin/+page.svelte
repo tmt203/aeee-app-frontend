@@ -149,7 +149,13 @@
 	{/if}
 
 	<!-- Area: Submit Button -->
-	<Button type="submit" label={$t("auth.signin")} isLoading={$isSubmitting} class="mt-3" />
+	<Button
+		type="submit"
+		label={$t("auth.signin")}
+		icon="uil uil-signin"
+		isLoading={$isSubmitting}
+		class="mt-3"
+	/>
 
 	<div class="mx-auto">
 		<p class="text-sm text-slate-400">

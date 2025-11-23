@@ -22,7 +22,7 @@
 	 */
 	const handleGetArticles = async (params?: ArticleQueryParams) => {
 		try {
-			params = { ...params };
+			params = { ...params, active_eq: true };
 			const response = await apiGetArticles(params);
 
 			if (response.code !== "OK") {
@@ -43,26 +43,6 @@
 		} catch (error) {
 			console.log(error);
 		}
-	};
-
-	/**
-	 * Handle cite article
-	 * @param citations Citation
-	 */
-	const handleCiteArticle = (citations: Citation) => () => {
-		const modal: ModalSettings = {
-			type: "component",
-			backdropClasses: "!bg-tertiary-800/50",
-			component: {
-				ref: CiteModal,
-				props: {
-					apa: citations?.apa ?? "",
-					bibTex: citations?.bib_tex ?? ""
-				}
-			}
-		};
-
-		modalStore.trigger(modal);
 	};
 
 	onMount(() => {

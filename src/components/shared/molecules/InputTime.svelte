@@ -183,8 +183,12 @@
 <div class="flex w-full min-w-fit flex-col gap-2">
 	<div
 		class={clsx(
-			"j border-surface-600-300-token flex min-w-fit cursor-pointer items-center gap-1 rounded-xl border bg-surface-200 px-2 dark:bg-gray-700",
+			"flex min-w-fit cursor-pointer items-center gap-1 rounded-xl border bg-surface-200 px-2 dark:bg-gray-700",
 			{ "cursor-not-allowed opacity-50": disabled },
+			{
+				"!border-slate-300 focus:!border-primary-500 focus:shadow-md": !errorMessage?.length,
+				"!border-error-500": errorMessage?.length
+			},
 			{
 				// Size
 				"h-7": size === "sm",

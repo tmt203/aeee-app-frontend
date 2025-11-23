@@ -12,6 +12,7 @@ import SidebarItem from "./SidebarItem.svelte";
 import Spinner from "./Spinner.svelte";
 import TableAction from "./TableAction.svelte";
 import TinyEditor from "./TinyEditor.svelte";
+import Chip from "./Chip.svelte";
 
 export {
 	Breadcrumb,
@@ -27,5 +28,6 @@ export {
 	SidebarItem,
 	Spinner,
 	TableAction,
-	TinyEditor
+	TinyEditor,
+	Chip
 };
