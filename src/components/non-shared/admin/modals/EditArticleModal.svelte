@@ -1,27 +1,36 @@
 <script lang="ts">
+	import { page } from "$app/stores";
 	import { API_HOST } from "$lib/env/client";
+	import {
+		apiDeleteArticleFile,
+		apiPatchArticleById,
+		apiUploadArticleFile
+	} from "@api/article.api";
 	import { Spinner } from "@components/shared/atoms";
 	import { Button, InputForm, InputTime } from "@components/shared/molecules";
-	import type { ArticleValidationSchema } from "@components/shared/pages/admin/manage-articles/manageArticlesPage.interface";
-	import { getModalStore } from "@skeletonlabs/skeleton";
-	import type { Article, ArticleBody, Author } from "@type/api/article.type";
+	import { STATUS_OPTIONS } from "@components/shared/pages/admin/manage-articles/manageArticlesPage.constant";
+	import { generateToast } from "@constants/toast.constants";
+	import { getModalStore, getToastStore } from "@skeletonlabs/skeleton";
+	import type { Article, ArticleBody, Author, UploadFileQueryParams } from "@type/api/article.type";
 	import { sanitizeFileName } from "@utils/string";
 	import { Info, Move, X } from "lucide-svelte";
 	import { createForm } from "svelte-forms-lib";
 	import { t } from "svelte-i18n";
-	import { array, object, string } from "yup";
+	import { array, number, object, string } from "yup";
 
 	export let article: Article;
-	export let onSave: (id: string, body: ArticleBody) => void;
+	export let onSave: (id: string, body: ArticleBody) => Promise<void>;
 
+	const { token } = $page.data.session;
+	const toastStore = getToastStore();
 	const modalStore = getModalStore();
 
 	let isLoading: boolean = false;
+	let pdfFiles: FileList | null = null;
+	let draggedIndex: number | null = null;
 	let authors: Author[] = [
 		...(article.authors.length ? article.authors : [{ first_name: "", last_name: "" }])
 	];
-	let draggedIndex: number | null = null;
-	let files: FileList | null = null;
 
 	/**
 	 * Get history date by status
@@ -51,6 +60,7 @@
 
 	// Form
 	const initialValues = {
+		id: article.id || "",
 		title: article.title || "",
 		doi: article.doi || "",
 		volume: article.volume || 0,
@@ -65,9 +75,11 @@
 		accepted_date: getHistoryDate("accepted") || "",
 		published_date: article.pub_date.day
 			? `${article.pub_date.day}/${article.pub_date.month}/${article.pub_date.year}`
-			: ""
+			: "",
+		active: article.active || false
 	};
 	const validationSchema = object().shape({
+		id: string().required("error.input_required"),
 		title: string().required("error.input_required"),
 		doi: string().required("error.input_required"),
 		volume: string().required("error.input_required"),
@@ -79,31 +91,34 @@
 		revised_date: string().required("error.select_required"),
 		accepted_date: string().required("error.select_required"),
 		published_date: string().required("error.select_required"),
-		pdf_path: string().required("error.select_required"),
 		authors: array().of(
 			object().shape({
 				first_name: string().required("error.input_required"),
 				last_name: string().required("error.input_required")
 			})
-		)
+		),
+		pdf_path: string().required("error.select_required")
 	});
-	const { form, errors, handleSubmit } = createForm<ArticleValidationSchema>({
+	const { form, errors, handleSubmit } = createForm({
 		initialValues,
 		validationSchema,
-		onSubmit: (values) => {
-			const body: ArticleBody = {
+		onSubmit: async (values) => {
+			let reqBody: ArticleBody = {
+				_id: values.id,
+				id: values.id,
 				doi: values.doi,
-				year: article.year,
 				title: values.title,
 				views: article.views,
+				active: values.active,
 				authors: values.authors,
 				abstract: values.abstract,
-				language: article.language,
 				pdf_path: article.pdf_path,
-				category: article.category,
-				citations: article.citations,
 				issue: Number(values.issue),
 				volume: Number(values.volume),
+				citations: article.citations,
+				language: article.language || "en",
+				category: article.category || "Undefined",
+				year: parseInt(values.published_date.split("/")[2], 10),
 
 				pages: {
 					first: Number(values.first_page),
@@ -136,7 +151,41 @@
 				]
 			};
 
-			onSave(article.id, body);
+			// Upload pdf file
+			if (pdfFiles && pdfFiles.length > 0) {
+				// Check if file is pdf
+				if (pdfFiles[0].type !== "application/pdf") {
+					$errors.pdf_path = "error.invalid_file_type";
+					return;
+				}
+
+				try {
+					// Upload info file
+					const fileName: string = `${sanitizeFileName(values.title)}.pdf`;
+					const params: UploadFileQueryParams = {
+						folder: `/uploads/articles/${values.published_date.split("/").pop()}/Vol ${values.volume}, No ${values.issue}`,
+						name: fileName
+					};
+					const body: BodyInit = new FormData();
+					if (pdfFiles && pdfFiles.length > 0) {
+						body.append("file", pdfFiles[0]);
+					}
+					const response = await apiUploadArticleFile(params, body, token);
+					if (response.code !== "OK") {
+						toastStore.trigger(
+							generateToast("error", {
+								message: response.message || "Error uploading file."
+							})
+						);
+						return;
+					}
+					reqBody.pdf_path = response.data.file_path;
+				} catch (error) {
+					console.log(error);
+				}
+			}
+
+			await onSave(article.id, reqBody);
 		}
 	});
 
@@ -184,6 +233,7 @@
 
 	/**
 	 * Handle remove author
+	 * @param index number
 	 */
 	const handleRemoveAuthor = (index: number) => () => {
 		if ($form.authors.length > 0) {
@@ -199,14 +249,52 @@
 		$form.authors = [...$form.authors, { first_name: "", last_name: "" }];
 	};
 
-	$: {
-		if (files && files.length > 0) {
-			const file = files[0];
-			console.log("Selected file:", file);
-			// Change pdf path to the selected file name for demonstration
-			$form.pdf_path = `/uploads/articles/${$form.published_date.split("/").pop()}/Vol ${$form.volume}, No ${$form.issue}/${sanitizeFileName(file.name)}`;
+	/**
+	 * Handle delete file
+	 * @param filePath string
+	 */
+	const handleDeleteFile = async (filePath: string) => {
+		try {
+			const response = await apiDeleteArticleFile(filePath, token);
+			if (response.code !== "OK") {
+				toastStore.trigger(
+					generateToast("error", {
+						message: response.message || "An error occurred while deleting the file."
+					})
+				);
+				return;
+			}
+
+			toastStore.trigger(
+				generateToast("success", {
+					message: $t("toast.success.delete", {
+						values: {
+							field: "file"
+						}
+					})
+				})
+			);
+
+			// Update file path to empty
+			apiPatchArticleById(article.id, { pdf_path: "" }, token);
+
+			modalStore.close();
+		} catch (error) {
+			console.log(error);
 		}
+	};
+
+	$: if (pdfFiles && pdfFiles.length > 0) {
+		$form.pdf_path = `/uploads/articles/${$form.published_date.split("/").pop()}/Vol ${$form.volume}, No ${$form.issue}/${sanitizeFileName($form.title)}.pdf`;
 	}
+
+	// Reactivity for author error messages
+	$: authorErrorMessages = $errors.authors
+		? ($errors.authors as any).map((err: Record<string, any>) => ({
+				first_name: err.first_name,
+				last_name: err.last_name
+			}))
+		: [];
 </script>
 
 <form
@@ -233,18 +321,44 @@
 						{$t("admin_page.manage_articles.edit_article_modal.basic_info")}
 					</span>
 					<div class="flex flex-col gap-4">
-						<InputForm
-							type="text"
-							label={$t("admin_page.manage_articles.edit_article_modal.title")}
-							direction="column"
-							class="[&_.input-form-wrapper]:w-full"
-							showErrorMessage
-							errorMessage={$errors.title}
-							placeholder="Performance Analysis of ..."
-							bind:value={$form.title}
-						/>
+						<div class="flex items-start gap-4">
+							<div class="w-10/12">
+								<InputForm
+									required
+									type="text"
+									label={$t("admin_page.manage_articles.edit_article_modal.title")}
+									direction="column"
+									class="[&_.input-form-wrapper]:w-full"
+									showErrorMessage
+									errorMessage={$errors.title}
+									placeholder="Performance Analysis of ..."
+									bind:value={$form.title}
+								/>
+							</div>
+							<div class="w-2/12">
+								<InputForm
+									required
+									type="select"
+									label={$t("admin_page.manage_articles.edit_article_modal.status")}
+									direction="column"
+									class="[&_.input-form-wrapper]:w-full"
+									showErrorMessage
+									errorMessage={$errors.active}
+									options={STATUS_OPTIONS}
+									bind:value={$form.active}
+								/>
+							</div>
+						</div>
+
+						<!-- Area: Attention -->
+						<div class="variant-soft-primary mt-2 flex items-start gap-2 rounded-md p-2 text-sm">
+							<Info />
+							{$t("admin_page.manage_articles.edit_article_modal.status_attention")}
+						</div>
+
 						<div class="flex items-start gap-4">
 							<InputForm
+								required
 								type="text"
 								label={$t("admin_page.manage_articles.edit_article_modal.doi")}
 								direction="column"
@@ -255,6 +369,18 @@
 								bind:value={$form.doi}
 							/>
 							<InputForm
+								required
+								type="text"
+								label={$t("admin_page.manage_articles.edit_article_modal.id")}
+								direction="column"
+								class="[&_.input-form-wrapper]:w-full"
+								showErrorMessage
+								errorMessage={$errors.id}
+								placeholder="250211"
+								bind:value={$form.id}
+							/>
+							<InputForm
+								required
 								type="number"
 								min={0}
 								label={$t("admin_page.manage_articles.edit_article_modal.volume")}
@@ -265,6 +391,7 @@
 								bind:value={$form.volume}
 							/>
 							<InputForm
+								required
 								type="number"
 								min={0}
 								label={$t("admin_page.manage_articles.edit_article_modal.issue")}
@@ -275,6 +402,7 @@
 								bind:value={$form.issue}
 							/>
 							<InputForm
+								required
 								type="number"
 								min={0}
 								label={$t("admin_page.manage_articles.edit_article_modal.first_page")}
@@ -285,6 +413,7 @@
 								bind:value={$form.first_page}
 							/>
 							<InputForm
+								required
 								type="number"
 								min={0}
 								label={$t("admin_page.manage_articles.edit_article_modal.last_page")}
@@ -298,6 +427,7 @@
 
 						<div class="flex items-start gap-4">
 							<InputTime
+								required
 								id="received-date"
 								label="admin_page.manage_articles.edit_article_modal.received_date"
 								showErrorMessage
@@ -305,6 +435,7 @@
 								bind:value={$form.received_date}
 							/>
 							<InputTime
+								required
 								id="revised-date"
 								label="admin_page.manage_articles.edit_article_modal.revised_date"
 								showErrorMessage
@@ -312,6 +443,7 @@
 								bind:value={$form.revised_date}
 							/>
 							<InputTime
+								required
 								id="accepted-date"
 								label="admin_page.manage_articles.edit_article_modal.accepted_date"
 								showErrorMessage
@@ -319,6 +451,7 @@
 								bind:value={$form.accepted_date}
 							/>
 							<InputTime
+								required
 								id="published-date"
 								label="admin_page.manage_articles.edit_article_modal.published_date"
 								showErrorMessage
@@ -328,6 +461,7 @@
 						</div>
 
 						<InputForm
+							required
 							type="textarea"
 							rows={6}
 							label={$t("admin_page.manage_articles.edit_article_modal.abstract")}
@@ -354,20 +488,22 @@
 								on:drop={(e) => handleDrop(e, index)}
 							>
 								<InputForm
+									required
 									type="text"
 									label={$t("admin_page.manage_articles.edit_article_modal.first_name")}
 									direction="column"
 									class="[&_.input-form-wrapper]:w-full"
-									errorMessage={""}
+									errorMessage={authorErrorMessages[index]?.first_name || ""}
 									showErrorMessage
 									bind:value={$form.authors[index].first_name}
 								/>
 								<InputForm
+									required
 									type="text"
 									label={$t("admin_page.manage_articles.edit_article_modal.last_name")}
 									direction="column"
 									class="[&_.input-form-wrapper]:w-full"
-									errorMessage={""}
+									errorMessage={authorErrorMessages[index]?.last_name || ""}
 									showErrorMessage
 									bind:value={$form.authors[index].last_name}
 								/>
@@ -407,31 +543,37 @@
 						{$t("admin_page.manage_articles.edit_article_modal.pdf_file")}
 					</span>
 					<div class="flex flex-col gap-2">
-						<p class="text-sm font-bold">
-							File path:
-							{#if $form.pdf_path}
-								<span class="italic text-success-500">{$form.pdf_path}</span>
-								<a
-									href={`${API_HOST}/${$form.pdf_path}`}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="ml-4 text-primary-500">View PDF</a
-								>
-							{:else}
-								<span class="italic text-gray-500">No file uploaded</span>
-							{/if}
-						</p>
 						<InputForm
 							type="file"
 							direction="column"
 							class="[&_.input-form-wrapper]:w-full"
-							errorMessage=""
 							showErrorMessage
-							bind:files
+							errorMessage={$errors.pdf_path}
+							bind:files={pdfFiles}
 						/>
 
+						{#if !pdfFiles && $form.pdf_path}
+							<div class="flex items-start gap-4 text-sm">
+								<a
+									href={`${API_HOST}${$form.pdf_path}`}
+									target="_blank"
+									class="flex items-center text-primary-500 underline"
+								>
+									View current file
+								</a>
+
+								<button
+									type="button"
+									class="text-error-500 underline"
+									on:click={() => handleDeleteFile($form.pdf_path)}
+								>
+									{$t("form.delete")}
+								</button>
+							</div>
+						{/if}
+
 						<!-- Area: Attention -->
-						<div class="variant-ghost-primary flex items-center gap-2 rounded-lg p-3 text-sm">
+						<div class="variant-soft-primary flex items-start gap-2 rounded-md p-2 text-sm">
 							<Info />
 							{$t("admin_page.manage_articles.edit_article_modal.file_attention")}
 						</div>

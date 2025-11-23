@@ -1,4 +1,6 @@
 {
+	"active": "Active",
+	"inactive": "Inactive",
 	"undefined": "Undefined data",
 	"no_data": "No data",
 	"choose_file": "Choose file to upload",

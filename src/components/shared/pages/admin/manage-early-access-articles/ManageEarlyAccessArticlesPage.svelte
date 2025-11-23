@@ -8,7 +8,7 @@
 		apiUpdateEarlyAccessArticleById
 	} from "@api/early_access_article.api";
 	import EditEarlyAccessArticleModal from "@components/non-shared/admin/modals/EditEarlyAccessArticleModal.svelte";
-	import { ConfirmModal, Icon } from "@components/shared/atoms";
+	import { Chip, ConfirmModal, Icon } from "@components/shared/atoms";
 	import { Button, InputSearch, InputSelect, Table } from "@components/shared/molecules";
 	import { AdminPageLayout } from "@components/shared/templates";
 	import { generateToast } from "@constants/toast.constants";
@@ -18,7 +18,6 @@
 		EarlyAccessArticleBody,
 		EarlyAccessArticleQueryParams
 	} from "@type/api/early_access_article.type";
-	import type { SelectOption } from "@type/common.type";
 	import type { RowActionIconData } from "@type/components/icon.type";
 	import { ColumnType, type TableColumn } from "@type/components/table.type";
 	import { toCapitalCase } from "@utils/string";
@@ -26,14 +25,20 @@
 	import { AlignJustify, SquarePen, Trash2 } from "lucide-svelte";
 	import { onMount } from "svelte";
 	import { t } from "svelte-i18n";
-	import type { ArticleFilterParams } from "../manage-articles/manageArticlesPage.interface";
+	import type { ArticleFilterParams } from "./manageEarlyAccessArticles.interface";
+	import { STATUS_OPTIONS } from "../manage-articles/manageArticlesPage.constant";
+	import { removeEmptyFields } from "@utils/obj";
 
 	const { token } = $page.data.session;
 	const toastStore = getToastStore();
 	const modalStore = getModalStore();
 
 	let filterParams: ArticleFilterParams = {
-		title_contains: ""
+		title_contains: "",
+		active_eq: {
+			label: "",
+			value: null
+		}
 	};
 
 	// Data Table
@@ -48,7 +53,7 @@
 		{ key: "index", width: 80, label: "table.no", dataType: ColumnType.Text, isHidden: true },
 		{
 			key: "title",
-			width: 640,
+			width: 520,
 			label: "admin_page.manage_articles.table.title",
 			dataType: ColumnType.Text
 		},
@@ -57,6 +62,28 @@
 			width: 480,
 			label: "admin_page.manage_articles.table.authors",
 			dataType: ColumnType.Text
+		},
+		{
+			label: "admin_page.manage_articles.table.status",
+			width: 160,
+			dataType: ColumnType.Action,
+			data: [
+				{
+					component: () => Chip,
+					props: (row) => {
+						const variant = row.active ? "success" : "error";
+						const children = row.active ? "active" : "inactive";
+						return {
+							variant,
+							outline: true,
+							size: "sm",
+							rounded: "2xl",
+							icon: "custom-filled-circle-icon",
+							children
+						};
+					}
+				}
+			]
 		},
 		{
 			label: "action",
@@ -258,7 +285,8 @@
 			created_at: "",
 			updated_at: "",
 			created_by: "",
-			updated_by: ""
+			updated_by: "",
+			active: false
 		};
 
 		// Show modal
@@ -285,7 +313,11 @@
 		try {
 			isLoading = true;
 
-			params = { ...filterParams, ...params };
+			params = {
+				...params,
+				title_contains: filterParams.title_contains,
+				...(filterParams.active_eq.value !== null && { active_eq: !!filterParams.active_eq.value })
+			};
 			const response = await apiGetEarlyAccessArticles(params);
 
 			if (response.code !== "OK") {
@@ -372,6 +404,20 @@
 						bind:value={filterParams.title_contains}
 					/>
 				</form>
+
+				<!-- Area: Status Select -->
+				<InputSelect
+					id="status-select"
+					label="admin_page.manage_articles.table.status"
+					icon="uil uil-filter"
+					clearable
+					options={STATUS_OPTIONS}
+					selectClasses="min-w-40"
+					bind:selectedOptionLabel={filterParams.active_eq.label}
+					bind:value={filterParams.active_eq.value}
+					onChange={() => handlePaging(1)}
+					onAfterRemove={() => handlePaging(1)}
+				/>
 			</div>
 
 			<!-- Area: Right Table Header -->

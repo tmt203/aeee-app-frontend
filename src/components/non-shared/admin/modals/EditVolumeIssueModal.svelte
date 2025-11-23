@@ -1,17 +1,20 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { API_HOST } from "$lib/env/client";
+	import { apiPostPublishIssue } from "@api/issue.api";
 	import {
 		apiDeleteManagerFile,
 		apiPatchManagerById,
 		apiUploadManagerFile
 	} from "@api/manager.api";
-	import { ConfirmModal, Spinner } from "@components/shared/atoms";
-	import { Button, InputForm } from "@components/shared/molecules";
+	import { Spinner } from "@components/shared/atoms";
+	import { Button, InputForm, InputTime } from "@components/shared/molecules";
+	import { STATUS_OPTIONS } from "@components/shared/pages/admin/manage-articles/manageArticlesPage.constant";
 	import { generateToast } from "@constants/toast.constants";
-	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+	import { getModalStore, getToastStore } from "@skeletonlabs/skeleton";
+	import type { PublishIssueBody } from "@type/api/issue.type";
 	import type { Manager, ManagerBody, UploadFileQueryParams } from "@type/api/manager.type";
-	import { FileText, Info, X } from "lucide-svelte";
+	import { Info, X } from "lucide-svelte";
 	import { createForm } from "svelte-forms-lib";
 	import { t } from "svelte-i18n";
 	import { number, object, string } from "yup";
@@ -29,14 +32,17 @@
 
 	// Form
 	const initialValues = {
+		publish_date: `${manager?.year}-${manager?.month.toString().padStart(2, "0")}` || "",
 		volume: manager?.volume || 0,
 		issue: manager?.issue || 0,
 		foreword: manager?.foreword || "",
 		avatar_url: manager?.avatar_url || "",
 		info_file_url: manager?.info_file_url || "",
-		foreword_content: manager?.foreword_content || ""
+		foreword_content: manager?.foreword_content || "",
+		active: manager?.active || false,
 	};
 	const validationSchema = object().shape({
+		publish_date: string().required("error.input_required"),
 		volume: number().required("error.input_required"),
 		issue: number().required("error.input_required"),
 		foreword: string(),
@@ -44,7 +50,7 @@
 		info_file_url: string(),
 		foreword_content: string()
 	});
-	const { form, errors, handleSubmit } = createForm({
+	const { form, errors, isSubmitting, handleSubmit } = createForm({
 		initialValues,
 		validationSchema,
 		onSubmit: async (values) => {
@@ -117,7 +123,11 @@
 				}
 			}
 
-			onSave(manager.id || "", values);
+			onSave(manager.id || "", {
+				...values,
+				year: Number(values.publish_date.split("-")[0]),
+				month: Number(values.publish_date.split("-")[1])
+			});
 		}
 	});
 
@@ -169,11 +179,45 @@
 		}
 	};
 
-	$: console.log("token", token);
+	/**
+	 * Handle sync articles
+	 */
+	const handleSyncArticles = async () => {
+		try {
+			isSubmitting.set(true);
+
+			const body: PublishIssueBody = {
+				volume: $form.volume,
+				issue: $form.issue
+			};
+			const response = await apiPostPublishIssue(body, token);
+
+			if (response.code !== "OK") {
+				toastStore.trigger(
+					generateToast("error", {
+						message: "An error occurred while syncing the articles."
+					})
+				);
+				return;
+			}
+
+			toastStore.trigger(
+				generateToast("success", {
+					message: "Sync articles successfully."
+				})
+			);
+
+			modalStore.close();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			isSubmitting.set(false);
+		}
+	};
 </script>
 
 <form
-	class="edit-page-modal h-full w-6/12 rounded-xl bg-white dark:bg-gray-800"
+	class="edit-page-modal h-full w-8/12 rounded-xl bg-white dark:bg-gray-800"
 	on:submit|preventDefault={handleSubmit}
 >
 	<div class="flex flex-col justify-between">
@@ -193,6 +237,17 @@
 			{:else if manager}
 				<div class="flex max-h-[calc(100vh-240px)] flex-col gap-4 overflow-auto p-4">
 					<div class="flex items-start gap-4">
+						<InputForm
+							required
+							type="month"
+							label={$t("admin_page.manage_volumes_issues.edit_volume_issue_modal.publish_date")}
+							direction="column"
+							class="[&_.input-form-wrapper]:w-full"
+							showErrorMessage
+							errorMessage={$errors.publish_date}
+							bind:value={$form.publish_date}
+						/>
+
 						<InputForm
 							required
 							type="number"
@@ -215,6 +270,18 @@
 							showErrorMessage
 							errorMessage={$errors.issue}
 							bind:value={$form.issue}
+						/>
+
+						<InputForm
+							required
+							type="select"
+							label={$t("admin_page.manage_articles.edit_article_modal.status")}
+							direction="column"
+							class="[&_.input-form-wrapper]:w-full"
+							showErrorMessage
+							errorMessage={$errors.active}
+							options={STATUS_OPTIONS}
+							bind:value={$form.active}
 						/>
 					</div>
 
@@ -310,7 +377,7 @@
 						</div>
 					</div>
 
-					<div class="variant-soft-primary mt-2 flex items-center gap-2 rounded-md p-2 text-sm">
+					<div class="variant-soft-primary mt-2 flex items-start gap-2 rounded-md p-2 text-sm">
 						<Info />
 						{@html $t(
 							"admin_page.manage_volumes_issues.edit_volume_issue_modal.info_file_attention"
@@ -323,6 +390,18 @@
 		<!-- Area: Modal Footer -->
 		<hr class="!border-t-1 w-full !border-surface-700/70" />
 		<div class="flex items-center justify-end gap-4 p-4">
+			{#if manager.id}
+				<!-- Area: Sync Articles Button -->
+				<Button
+					type="button"
+					label={$t("admin_page.manage_volumes_issues.edit_volume_issue_modal.sync_articles")}
+					variant="primary"
+					size="sm"
+					icon="uil uil-sync"
+					onClick={handleSyncArticles}
+					loading={$isSubmitting}
+				/>
+			{/if}
 			<!-- Area: Copy Button -->
 			<Button
 				type="submit"
@@ -330,6 +409,7 @@
 				variant="secondary"
 				size="sm"
 				icon="uil uil-copy"
+				loading={$isSubmitting}
 			/>
 		</div>
 	</div>

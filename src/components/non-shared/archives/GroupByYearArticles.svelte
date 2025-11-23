@@ -33,7 +33,11 @@
 		isLoading = true;
 
 		try {
-			const response = await apiGetIssues({ year });
+			const response = await apiGetIssues({
+				year,
+				manager__active_eq: true,
+				sort: "-volume,-issue"
+			});
 
 			if (response.code !== "OK") {
 				toastStore.trigger(
@@ -58,7 +62,6 @@
 	});
 </script>
 
-<!-- ================= UI ================= -->
 <div class="flex flex-col gap-6">
 	<!-- Area: Years -->
 	<div>

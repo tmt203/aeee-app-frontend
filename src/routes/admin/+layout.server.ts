@@ -5,18 +5,19 @@ import { apiPostVerifyToken } from "@api/auth.api";
 export const load: LayoutServerLoad = async ({ locals }) => {
 	let session = locals.session.data;
 
+	console.log("Current session data:", session);
+
 	// If there's no session, redirect to the login page
-	if (!session?.id) {
+	if (!session || !session.token) {
 		throw redirect(303, "/auth/signin");
 	}
 
 	try {
 		const response = await apiPostVerifyToken(session.token);
 
-		if (response.code !== "OK") {
-			// Clear the session and redirect to login if the token is invalid
-			await locals.session.destroy();
+		// console.log("Token verification response:", response);
 
+		if (response.code !== "OK") {
 			let errorCode: string = "";
 
 			if (response.code === "ERR_JWT_INVALID") {

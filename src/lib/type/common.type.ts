@@ -26,10 +26,11 @@ export type TableIndex = {
 
 export type FilterParams = {
 	label: string;
-	value: string;
+	value: string | number | boolean | null;
 };
 
 export type InputElementType =
+	| "month"
 	| "email"
 	| "file"
 	| "hidden"
@@ -53,7 +54,7 @@ export type AuditInfo = {
 
 export type SelectOption = {
 	label: string;
-	value: string;
+	value: string | number | boolean;
 	disabled?: boolean;
 	notAllowed?: boolean;
 	noTranslate?: boolean;

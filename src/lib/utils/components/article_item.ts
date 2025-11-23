@@ -28,7 +28,7 @@ export const mappingToArticleItem = ({
 	);
 
 	return {
-		id: article.id,
+		id: `${article.id}`,
 		title: article.title,
 		views: article.views,
 		doi: article.doi,

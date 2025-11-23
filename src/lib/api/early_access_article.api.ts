@@ -6,7 +6,7 @@ import type {
 	UploadFile,
 	UploadFileQueryParams
 } from "@type/api/early_access_article.type";
-import { apiDelete, apiGet, apiPost, apiPostFile, apiPut } from "@utils/api";
+import { apiDelete, apiGet, apiPatch, apiPost, apiPostFile, apiPut } from "@utils/api";
 
 const PATH = "/api/v1/early-access-articles";
 
@@ -79,7 +79,7 @@ export const apiPatchEarlyAccessArticleById = async (
 	body: Partial<EarlyAccessArticleBody>,
 	token: string
 ) => {
-	return await apiPut<ApiResponse<EarlyAccessArticle>>({
+	return await apiPatch<ApiResponse<EarlyAccessArticle>>({
 		token,
 		path: `${PATH}/${id}`,
 		body: JSON.stringify(body)
