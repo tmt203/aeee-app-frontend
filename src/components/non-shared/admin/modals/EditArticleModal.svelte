@@ -561,14 +561,6 @@
 								>
 									View current file
 								</a>
-
-								<button
-									type="button"
-									class="text-error-500 underline"
-									on:click={() => handleDeleteFile($form.pdf_path)}
-								>
-									{$t("form.delete")}
-								</button>
 							</div>
 						{/if}
 

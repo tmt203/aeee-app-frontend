@@ -199,6 +199,11 @@
 				last_name: err.last_name
 			}))
 		: [];
+
+	// Reactivity for pdf file name
+	$: if (pdfFiles && pdfFiles.length > 0) {
+		$form.pdf_path = pdfFiles[0].name;
+	}
 </script>
 
 <form
@@ -350,14 +355,6 @@
 								>
 									View current file
 								</a>
-
-								<button
-									type="button"
-									class="text-error-500 underline"
-									on:click={() => handleDeleteFile($form.pdf_path)}
-								>
-									{$t("form.delete")}
-								</button>
 							</div>
 						{/if}
 					</div>
