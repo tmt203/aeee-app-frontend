@@ -99,7 +99,7 @@
 		),
 		pdf_path: string().required("error.select_required")
 	});
-	const { form, errors, handleSubmit } = createForm({
+	const { form, errors, isSubmitting, handleSubmit } = createForm({
 		initialValues,
 		validationSchema,
 		onSubmit: async (values) => {
@@ -584,6 +584,7 @@
 				variant="secondary"
 				size="sm"
 				icon="uil uil-copy"
+				isLoading={$isSubmitting}
 			/>
 		</div>
 	</div>
