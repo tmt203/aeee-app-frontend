@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { apiGetArticles } from "@api/article.api";
 	import GroupByYearArticles from "@components/non-shared/archives/GroupByYearArticles.svelte";
-	import { CiteModal } from "@components/shared/atoms";
 	import { DefaultPageLayout } from "@components/shared/templates";
 	import { generateToast } from "@constants/toast.constants";
-	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
-	import type { ArticleQueryParams, Citation } from "@type/api/article.type";
+	import { getModalStore, getToastStore } from "@skeletonlabs/skeleton";
+	import type { ArticleQueryParams } from "@type/api/article.type";
 	import type { ArticleItemProps } from "@type/components/articleItem.type";
 	import { onMount } from "svelte";
 	import { t } from "svelte-i18n";

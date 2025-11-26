@@ -5,9 +5,7 @@
 		apiGetAnnouncements,
 		apiUpdateAnnouncementById
 	} from "@api/announcement.api";
-	import { apiGetPages, apiPutPageBySlug } from "@api/page.api";
 	import EditAnnouncementModal from "@components/non-shared/admin/modals/EditAnnouncementModal.svelte";
-	import EditPageModal from "@components/non-shared/admin/modals/EditPageModal.svelte";
 	import { Icon } from "@components/shared/atoms";
 	import { Button, Table } from "@components/shared/molecules";
 	import { AdminPageLayout } from "@components/shared/templates";
@@ -18,7 +16,6 @@
 		AnnouncementBody,
 		AnnouncementQueryParams
 	} from "@type/api/announcement.type";
-	import type { PageBody, PageQueryParams } from "@type/api/page.type";
 	import { ColumnType, type TableColumn } from "@type/components/table.type";
 	import { SquarePen } from "lucide-svelte";
 	import { onMount } from "svelte";
